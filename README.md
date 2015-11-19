@@ -1,5 +1,9 @@
 # babel-plugin-antd
 
+[![NPM version](https://img.shields.io/npm/v/babel-plugin-antd.svg?style=flat)](https://npmjs.org/package/babel-plugin-antd)
+
+----
+
 ## Example
 
 Converts
