@@ -39,6 +39,7 @@
     "collectCoverageOnlyFrom": {
       "src/index.js": true
     },
+    "collectCoverage": true,
     "unmockedModulePathPatterns": [],
     "verbose": true
   },
