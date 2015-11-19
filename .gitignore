@@ -1,3 +1,5 @@
 .idea
 tmp
 node_modules
+coverage
+

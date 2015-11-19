@@ -36,6 +36,9 @@
     "testPathDirs": [
       "<rootDir>/src"
     ],
+    "collectCoverageOnlyFrom": {
+      "src/index.js": true
+    },
     "unmockedModulePathPatterns": [],
     "verbose": true
   },
