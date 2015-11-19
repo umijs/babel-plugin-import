@@ -1,0 +1,40 @@
+{
+  "name": "babel-plugin-antd",
+  "version": "0.1.0",
+  "description": "Modular antd build.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "babel-plugin",
+    "antd"
+  ],
+  "author": "chencheng <sorrycc@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "~6.1.21",
+    "babel-jest": "~6.0.1",
+    "babel-preset-es2015": "~6.1.18",
+    "babel-preset-react": "~6.1.18",
+    "jest-cli": "~0.8.0",
+    "jest.automockoff": "~0.1.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testPathIgnorePatterns": [
+      "__tests__/fixtures",
+      "__tests__/expect"
+    ],
+    "testPathDirs": [
+      "<rootDir>/src"
+    ],
+    "unmockedModulePathPatterns": [],
+    "verbose": true
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
+}
