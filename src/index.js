@@ -6,7 +6,7 @@ export default function({ types }) {
 
   function importMethod(methodName, file) {
     if (!selectedMethods[methodName]) {
-      let path =  `antd/lib/${methodName.toLowerCase()}`; // resolveModule(methodName);
+      const path = `antd/lib/${methodName.toLowerCase()}`;
       selectedMethods[methodName] = file.addImport(path, 'default');
     }
     return selectedMethods[methodName];
@@ -21,12 +21,12 @@ export default function({ types }) {
           antdObjs = Object.create(null);
           selectedMethods = Object.create(null);
         },
-        exit({hub, node}) {
+        exit() {
         },
       },
 
       ImportDeclaration(path) {
-        const { node, scope } = path;
+        const { node } = path;
         const { value } = node.source;
 
         if (value === 'antd') {
@@ -42,9 +42,9 @@ export default function({ types }) {
       },
 
       CallExpression(path) {
-        let { node } = path;
-        let { file } = path.hub;
-        let { name, object, property } = node.callee;
+        const { node } = path;
+        const { file } = path.hub;
+        const { name, object, property } = node.callee;
 
         if (types.isIdentifier(node.callee)) {
           if (specified[name]) {
@@ -54,12 +54,11 @@ export default function({ types }) {
           // React.createElement(Button) -> React.createElement(_Button)
           if (object.name === 'React' && property.name === 'createElement' && node.arguments) {
             node.arguments = node.arguments.map(arg => {
-              const { name } = arg;
-              if (specified[name]) {
-                return importMethod(specified[name], file);
-              } else {
-                return arg;
+              const { name: argName } = arg;
+              if (specified[argName]) {
+                return importMethod(specified[argName], file);
               }
+              return arg;
             });
           }
         }

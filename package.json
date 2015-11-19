@@ -4,8 +4,12 @@
   "description": "Modular antd build plugin for babel.",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint --ext .js src"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "keywords": [
     "babel-plugin",
     "antd"
@@ -17,8 +21,11 @@
     "babel-jest": "~6.0.1",
     "babel-preset-es2015": "~6.1.18",
     "babel-preset-react": "~6.1.18",
+    "eslint": "~1.9.0",
+    "eslint-config-airbnb": "~1.0.0",
     "jest-cli": "~0.8.0",
-    "jest.automockoff": "~0.1.0"
+    "jest.automockoff": "~0.1.0",
+    "pre-commit": "~1.1.2"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
