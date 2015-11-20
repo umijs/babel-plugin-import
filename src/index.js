@@ -4,9 +4,16 @@ export default function({ types }) {
   let antdObjs;
   let selectedMethods;
 
+  function camel2Dash(_str) {
+    const str = _str[0].toLowerCase() + _str.substr(1);
+    return str.replace( /([A-Z])/g, function camel2DashReplace($1) {
+      return '-' + $1.toLowerCase();
+    });
+  }
+
   function importMethod(methodName, file) {
     if (!selectedMethods[methodName]) {
-      const path = `antd/lib/${methodName.toLowerCase()}`;
+      const path = `antd/lib/${camel2Dash(methodName)}`;
       selectedMethods[methodName] = file.addImport(path, 'default');
     }
     return selectedMethods[methodName];
