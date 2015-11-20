@@ -15,14 +15,10 @@ export default function({ types }) {
   return {
     visitor: {
 
-      Program: {
-        enter() {
-          specified = Object.create(null);
-          antdObjs = Object.create(null);
-          selectedMethods = Object.create(null);
-        },
-        exit() {
-        },
+      Program() {
+        specified = Object.create(null);
+        antdObjs = Object.create(null);
+        selectedMethods = Object.create(null);
       },
 
       ImportDeclaration(path) {
