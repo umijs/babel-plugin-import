@@ -1,9 +1,11 @@
 {
   "name": "babel-plugin-antd",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Modular antd build plugin for babel.",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "build": "rm -rf lib && ./node_modules/.bin/babel src --out-dir lib --ignore __tests__",
+    "prepublish": "npm run build",
     "test": "jest",
     "lint": "eslint --ext .js src"
   },
@@ -17,6 +19,7 @@
   "author": "chencheng <sorrycc@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.3.13",
     "babel-core": "~6.1.21",
     "babel-jest": "~6.0.1",
     "babel-preset-es2015": "~6.1.18",
