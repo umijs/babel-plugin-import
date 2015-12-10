@@ -55,7 +55,7 @@ export default function({ types }) {
           }
         } else {
           // React.createElement(Button) -> React.createElement(_Button)
-          if (object.name === 'React' && property.name === 'createElement' && node.arguments) {
+          if (object && object.name === 'React' && property && property.name === 'createElement' && node.arguments) {
             node.arguments = node.arguments.map(arg => {
               const { name: argName } = arg;
               if (specified[argName]) {
