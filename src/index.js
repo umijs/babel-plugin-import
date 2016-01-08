@@ -6,7 +6,7 @@ export default function({ types }) {
 
   function camel2Dash(_str) {
     const str = _str[0].toLowerCase() + _str.substr(1);
-    return str.replace( /([A-Z])/g, function camel2DashReplace($1) {
+    return str.replace(/([A-Z])/g, function camel2DashReplace($1) {
       return '-' + $1.toLowerCase();
     });
   }

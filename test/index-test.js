@@ -1,8 +1,8 @@
-import 'jest.automockoff';
 import { transformFileSync } from "babel-core";
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
-import plugin from '../index';
+import plugin from '../src/index';
+import expect from 'expect';
 
 describe('index', () => {
 
