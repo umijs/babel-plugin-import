@@ -4,6 +4,6 @@ publish:
 	npm publish
 
 publish-sync: publish
-	cnpm sync dora-plugin-proxy
-	tnpm sync dora-plugin-proxy
+	cnpm sync babel-plugin-antd
+	tnpm sync babel-plugin-antd
 
