@@ -17,8 +17,7 @@ export default function(libraryName) {
         const path = `${libraryName}/lib/${camel2Dash(methodName)}`;
         selectedMethods[methodName] = file.addImport(path, 'default');
         if (opts.style) {
-          const cssPath = `${libraryName}/style/components/${camel2Dash(methodName)}`;
-          file.addImport(cssPath);
+          file.addImport(`${path}/style`);
         }
       }
       return selectedMethods[methodName];
