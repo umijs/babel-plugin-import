@@ -44,12 +44,10 @@ describe('index', () => {
   });
 
   xit(`tmp`, () => {
-    const actualFile = join(fixturesDir, `import-css/actual.js`);
+    const actualFile = join(fixturesDir, `conditions/actual.js`);
     const actual = transformFileSync(actualFile, {
       presets: ['react'],
-      plugins: [[plugin, {
-        style: true
-      }]],
+      plugins: [plugin],
     }).code;
     console.log(actual);
   });
