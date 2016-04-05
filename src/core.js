@@ -12,10 +12,14 @@ export default function(libraryName) {
       });
     }
 
-    function importMethod(methodName, file) {
+    function importMethod(methodName, file, opts) {
       if (!selectedMethods[methodName]) {
         const path = `${libraryName}/lib/${camel2Dash(methodName)}`;
         selectedMethods[methodName] = file.addImport(path, 'default');
+        if (opts.style) {
+          const cssPath = `${libraryName}/style/components/${camel2Dash(methodName)}`;
+          file.addImport(cssPath);
+        }
       }
       return selectedMethods[methodName];
     }
@@ -45,14 +49,14 @@ export default function(libraryName) {
           }
         },
 
-        CallExpression(path) {
+        CallExpression(path, { opts }) {
           const { node } = path;
           const { file } = path.hub;
           const { name, object, property } = node.callee;
 
           if (types.isIdentifier(node.callee)) {
             if (specified[name]) {
-              node.callee = importMethod(specified[name], file);
+              node.callee = importMethod(specified[name], file, opts);
             }
           } else {
             // React.createElement(Button) -> React.createElement(_Button)
@@ -60,7 +64,7 @@ export default function(libraryName) {
               node.arguments = node.arguments.map(arg => {
                 const { name: argName } = arg;
                 if (specified[argName]) {
-                  return importMethod(specified[argName], file);
+                  return importMethod(specified[argName], file, opts);
                 }
                 return arg;
               });
@@ -68,15 +72,15 @@ export default function(libraryName) {
           }
         },
 
-        MemberExpression(path) {
+        MemberExpression(path, { opts }) {
           const { node } = path;
           const { file } = path.hub;
 
           if (libraryObjs[node.object.name]) {
             // antd.Button -> _Button
-            path.replaceWith(importMethod(node.property.name, file));
+            path.replaceWith(importMethod(node.property.name, file, opts));
           } else if (specified[node.object.name]) {
-            node.object = importMethod(node.object.name, file);
+            node.object = importMethod(node.object.name, file, opts);
           }
         },
       },

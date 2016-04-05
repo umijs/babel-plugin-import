@@ -20,9 +20,17 @@ describe('index', () => {
     const expectedFile = join(fixtureDir, 'expected.js');
 
     it(`should work with ${caseName.split('-').join(' ')}`, () => {
+
+      let cssPlugin;
+      if (caseName === 'import-css') {
+        cssPlugin = [plugin, {
+          style: true,
+        }];
+      }
+
       const actual = transformFileSync(actualFile, {
         presets: ['react'],
-        plugins: [plugin],
+        plugins: [cssPlugin || plugin],
       }).code;
 
       if (onlyFixtures.length) {
@@ -33,5 +41,16 @@ describe('index', () => {
       const expected = readFileSync(expectedFile, 'utf-8');
       expect(actual.trim()).toEqual(expected.trim());
     });
+  });
+
+  xit(`tmp`, () => {
+    const actualFile = join(fixturesDir, `import-css/actual.js`);
+    const actual = transformFileSync(actualFile, {
+      presets: ['react'],
+      plugins: [[plugin, {
+        style: true
+      }]],
+    }).code;
+    console.log(actual);
   });
 });
