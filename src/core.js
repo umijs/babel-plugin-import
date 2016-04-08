@@ -34,6 +34,14 @@ export default function(libraryName) {
       });
     }
 
+    function buildDeclaratorHandler(node, prop, path, opts) {
+      const { file } = path.hub;
+      if (!types.isIdentifier(node[prop])) return;
+      if (specified[node[prop].name]) {
+        node[prop] = importMethod(node[prop].name, file, opts);
+      }
+    }
+
     return {
       visitor: {
 
@@ -92,6 +100,15 @@ export default function(libraryName) {
           } else if (specified[node.object.name]) {
             node.object = importMethod(node.object.name, file, opts);
           }
+        },
+
+        Property(path, {opts}) {
+          const { node } = path;
+          buildDeclaratorHandler(node, 'value', path, opts);
+        },
+        VariableDeclarator(path, {opts}) {
+          const { node } = path;
+          buildDeclaratorHandler(node, 'init', path, opts);
         },
 
         LogicalExpression(path, {opts}) {

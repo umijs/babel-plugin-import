@@ -44,7 +44,7 @@ describe('index', () => {
   });
 
   xit(`tmp`, () => {
-    const actualFile = join(fixturesDir, `conditions/actual.js`);
+    const actualFile = join(fixturesDir, `variable-declaration/actual.js`);
     const actual = transformFileSync(actualFile, {
       presets: ['react'],
       plugins: [plugin],
