@@ -19,7 +19,7 @@ export default function(defaultLibraryName) {
         selectedMethods[methodName] = file.addImport(path, 'default');
         if (style === true) {
           file.addImport(`${path}/style`);
-        } else {
+        } else if(style === 'css') {
           file.addImport(`${path}/style/css`);
         }
       }
