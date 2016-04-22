@@ -1,5 +1,5 @@
 
-export default function(libraryName) {
+export default function(defaultLibraryName) {
   return ({ types }) => {
     let specified;
     let libraryObjs;
@@ -14,11 +14,13 @@ export default function(libraryName) {
 
     function importMethod(methodName, file, opts) {
       if (!selectedMethods[methodName]) {
-        const { libDir = 'lib' } = opts;
+        const { libDir = 'lib', libraryName = defaultLibraryName, style } = opts;
         const path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
         selectedMethods[methodName] = file.addImport(path, 'default');
-        if (opts.style) {
+        if (style === true) {
           file.addImport(`${path}/style`);
+        } else {
+          file.addImport(`${path}/style/css`);
         }
       }
       return selectedMethods[methodName];
@@ -51,10 +53,10 @@ export default function(libraryName) {
           selectedMethods = Object.create(null);
         },
 
-        ImportDeclaration(path) {
+        ImportDeclaration(path, { opts }) {
           const { node } = path;
           const { value } = node.source;
-
+          const { libraryName = defaultLibraryName } = opts;
           if (value === libraryName) {
             node.specifiers.forEach(spec => {
               if (types.isImportSpecifier(spec)) {
