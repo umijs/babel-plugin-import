@@ -33,6 +33,12 @@ ReactDOM.render(<div>
 
 ```json
 {
-  "plugins": ["antd"]
+  "plugins": ["antd", options]
 }
 ```
+
+#### options.style
+
+true: use less source.
+
+'css': use css built.
