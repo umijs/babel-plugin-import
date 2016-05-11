@@ -31,7 +31,7 @@ ReactDOM.render(<div>
 
 ### Via `.babelrc`
 
-```json
+```js
 {
   "plugins": ["antd", options]
 }
