@@ -33,7 +33,7 @@ ReactDOM.render(<div>
 
 ```js
 {
-  "plugins": ["antd", options]
+  "plugins": [["antd", options]]
 }
 ```
 
