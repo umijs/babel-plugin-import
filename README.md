@@ -33,7 +33,7 @@ ReactDOM.render(<div>
 npm install babel-plugin-antd --save-dev
 ```
 
-Via `.babelrc`
+Via `.babelrc` or babel-loader.
 
 ```js
 {
