@@ -29,7 +29,11 @@ ReactDOM.render(<div>
 
 ## Usage
 
-### Via `.babelrc`
+```bash
+npm install babel-plugin-antd --save-dev
+```
+
+Via `.babelrc`
 
 ```js
 {
@@ -37,7 +41,7 @@ ReactDOM.render(<div>
 }
 ```
 
-#### options.style
+### options.style
 
 true: use less source.
 
