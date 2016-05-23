@@ -43,6 +43,6 @@ Via `.babelrc` or babel-loader.
 
 ### options.style
 
-true: use less source.
-
-'css': use css built.
+- `["antd"]`: import js modularly
+- `["antd", { style: true }]`: import js and css modularly (less source files)
+- `["antd", { style: 'css }]`: import style css modularly (css built files)
