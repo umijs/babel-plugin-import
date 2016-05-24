@@ -1,3 +1,4 @@
+
 'use strict';
 
 var _message = require('antd/lib/message');

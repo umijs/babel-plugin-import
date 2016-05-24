@@ -28,6 +28,10 @@ describe('index', () => {
         }];
       }
 
+      if (caseName === 'custom-css-filename') {
+        cssPlugin = [plugin, { style: 'style.css' }];
+      }
+
       const actual = transformFileSync(actualFile, {
         presets: ['react'],
         plugins: [cssPlugin || plugin],

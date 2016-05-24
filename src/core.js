@@ -21,6 +21,8 @@ export default function(defaultLibraryName) {
           file.addImport(`${path}/style`);
         } else if(style === 'css') {
           file.addImport(`${path}/style/css`);
+        } else if(style) {
+          file.addImport(`${path}/${style}`);
         }
       }
       return selectedMethods[methodName];
