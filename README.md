@@ -2,6 +2,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/babel-plugin-component.svg)](https://npmjs.org/package/babel-plugin-component)
 [![Build Status](https://img.shields.io/travis/qingwei-li/babel-plugin-component.svg)](https://travis-ci.org/qingwei-li/babel-plugin-component)
+[![Coverage Status](https://coveralls.io/repos/github/QingWei-Li/babel-plugin-component/badge.svg?branch=master)](https://coveralls.io/github/QingWei-Li/babel-plugin-component?branch=master)
 
 ## Install
 
