@@ -13,14 +13,25 @@ export default function (defaultLibraryName) {
     function importMethod(methodName, file, opts) {
       if (!selectedMethods[methodName]) {
         let options;
+        let path;
+
         if (Array.isArray(opts)) {
-          options = opts.find(option => moduleArr[methodName] === option.libraryName);
-        } else {
-          options = opts;
+          options = opts.find(option => moduleArr[methodName] === option.libraryName || libraryObjs[methodName]); // eslint-disable-line
+        }
+        options = options || opts;
+
+        const { libDir = 'lib', libraryName = defaultLibraryName, style, root = '' } = options;
+        let _root = root;
+
+        if (root) {
+          _root = `/${root}`;
         }
 
-        const { libDir = 'lib', libraryName = defaultLibraryName, style } = options;
-        const path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
+        if (libraryObjs[methodName]) {
+          path = `${libraryName}/${libDir}${_root}`;
+        } else {
+          path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
+        }
 
         selectedMethods[methodName] = file.addImport(path, 'default');
         if (style === true) {
@@ -71,21 +82,16 @@ export default function (defaultLibraryName) {
           const libraryName = result.libraryName || opts.libraryName || defaultLibraryName;
 
           if (value === libraryName) {
-            let remove;
-
             node.specifiers.forEach(spec => {
               if (types.isImportSpecifier(spec)) {
                 specified[spec.local.name] = spec.imported.name;
                 moduleArr[spec.local.name] = value;
-                remove = true;
               } else {
-                libraryObjs[spec.local.name] = true;
+                libraryObjs[spec.local.name] = value;
               }
             });
 
-            if (remove) {
-              path.remove();
-            }
+            path.remove();
           }
         },
 
@@ -106,6 +112,8 @@ export default function (defaultLibraryName) {
               const { name: argName } = arg;
               if (specified[argName]) {
                 return importMethod(specified[argName], file, opts);
+              } else if (libraryObjs[argName]) {
+                return importMethod(argName, file, opts);
               }
               return arg;
             });
@@ -117,10 +125,8 @@ export default function (defaultLibraryName) {
           const { node } = path;
           const { file } = path.hub;
 
-          if (libraryObjs[node.object.name]) {
-            // antd.Button -> _Button
-            path.replaceWith(importMethod(node.property.name, file, opts));
-          } else if (specified[node.object.name]) {
+          if (libraryObjs[node.object.name] || specified[node.object.name]) {
+            // path.replaceWith(importMethod(node.property.name, file, opts));
             node.object = importMethod(node.object.name, file, opts);
           }
         },

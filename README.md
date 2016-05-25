@@ -28,9 +28,25 @@ require('components/lib/button/style.css')
 
 Via `.babelrc` or babel-loader.
 
-```js
+```javascript
 {
   "plugins": [["component", options]]
+}
+```
+
+## Multiple Module
+```javascript
+{
+  "plugins": [xxx, ["component", [
+    {
+      libraryName: 'antd',
+      style: true,
+    },
+    {
+      libraryName: 'test-module',
+      style: true,
+    }
+  ]]]
 }
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Modular build plugin for babel.",
   "main": "lib/index.js",
   "scripts": {
@@ -16,7 +16,10 @@
   "keywords": [
     "babel-plugin"
   ],
-  "author": "chencheng <sorrycc@gmail.com>",
+  "author": [
+    "chencheng <sorrycc@gmail.com>",
+    "qingwei-li <cinwell.li@gmail.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.3.13",
