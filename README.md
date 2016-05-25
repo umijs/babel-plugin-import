@@ -1,48 +1,43 @@
-# babel-plugin-antd
+# babel-plugin-component
 
-[![NPM version](https://img.shields.io/npm/v/babel-plugin-antd.svg?style=flat)](https://npmjs.org/package/babel-plugin-antd)
-[![Build Status](https://img.shields.io/travis/ant-design/babel-plugin-antd.svg?style=flat)](https://travis-ci.org/ant-design/babel-plugin-antd)
+[![NPM version](https://img.shields.io/npm/v/babel-plugin-component.svg)](https://npmjs.org/package/babel-plugin-component)
+[![Build Status](https://img.shields.io/travis/ant-design/babel-plugin-component.svg)](https://travis-ci.org/ant-design/babel-plugin-component)
 
-----
+## Install
+
+```bash
+npm install babel-plugin-component --save-dev
+```
 
 ## Example
 
 Converts
 
 ```javascript
-import { Button } from 'antd';
-
-ReactDOM.render(<div>
-  <Button>xxxx</Button>
-</div>);
+import { Button } from 'components'
 ```
 
-(roughly) to
+to
 
 ```javascript
-var _button = require('antd/lib/button');
-
-ReactDOM.render(<div>
-  <_button>xxxx</_button>
-</div>);
+var button = require('components/lib/button')
+require('components/lib/button/style.css')
 ```
 
 ## Usage
-
-```bash
-npm install babel-plugin-antd --save-dev
-```
 
 Via `.babelrc` or babel-loader.
 
 ```js
 {
-  "plugins": [["antd", options]]
+  "plugins": [["component", options]]
 }
 ```
 
-### options.style
+### options
 
-- `["antd"]`: import js modularly
-- `["antd", { style: true }]`: import js and css modularly (less source files)
-- `["antd", { style: 'css }]`: import style css modularly (css built files)
+- `["component"]`: import js modularly
+- `["component", { "libraryName": "componnet" }]`: module name
+- `["component", { "style": true }]`: import js and css from 'style.css'
+- `["component", { "style": cssFilePath }]`: import style css from filePath
+- `["component", { "libDir": "lib" }]`: lib directory

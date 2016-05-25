@@ -1,7 +1,7 @@
 {
-  "name": "babel-plugin-antd",
-  "version": "0.4.0",
-  "description": "Modular antd build plugin for babel.",
+  "name": "babel-plugin-component",
+  "version": "0.1.0",
+  "description": "Modular build plugin for babel.",
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && ./node_modules/.bin/babel src --out-dir lib --ignore __tests__",
@@ -14,8 +14,7 @@
     "lint"
   ],
   "keywords": [
-    "babel-plugin",
-    "antd"
+    "babel-plugin"
   ],
   "author": "chencheng <sorrycc@gmail.com>",
   "license": "MIT",
