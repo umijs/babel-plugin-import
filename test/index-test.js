@@ -28,6 +28,30 @@ describe('index', () => {
         }];
       }
 
+      if (caseName === 'import-module') {
+        cssPlugin = [plugin, {
+          style: true,
+          root: 'abc',
+        }];
+      }
+
+      if (caseName === 'custom-css-filename') {
+        cssPlugin = [plugin, { style: 'style.css' }];
+      }
+
+      if (caseName === 'multiple-module') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'antd',
+            style: true,
+          },
+          {
+            libraryName: 'test-module',
+            style: true,
+          },
+        ]];
+      }
+
       const actual = transformFileSync(actualFile, {
         presets: ['react'],
         plugins: [cssPlugin || plugin],

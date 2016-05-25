@@ -1,26 +1,43 @@
-
-export default function(defaultLibraryName) {
+export default function (defaultLibraryName) {
   return ({ types }) => {
     let specified;
     let libraryObjs;
     let selectedMethods;
+    let moduleArr;
 
     function camel2Dash(_str) {
       const str = _str[0].toLowerCase() + _str.substr(1);
-      return str.replace(/([A-Z])/g, function camel2DashReplace($1) {
-        return '-' + $1.toLowerCase();
-      });
+      return str.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`);
     }
 
     function importMethod(methodName, file, opts) {
       if (!selectedMethods[methodName]) {
-        const { libDir = 'lib', libraryName = defaultLibraryName, style } = opts;
-        const path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
+        let options;
+        let path;
+
+        if (Array.isArray(opts)) {
+          options = opts.find(option => moduleArr[methodName] === option.libraryName || libraryObjs[methodName]); // eslint-disable-line
+        }
+        options = options || opts;
+
+        const { libDir = 'lib', libraryName = defaultLibraryName, style, root = '' } = options;
+        let _root = root;
+
+        if (root) {
+          _root = `/${root}`;
+        }
+
+        if (libraryObjs[methodName]) {
+          path = `${libraryName}/${libDir}${_root}`;
+        } else {
+          path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
+        }
+
         selectedMethods[methodName] = file.addImport(path, 'default');
         if (style === true) {
-          file.addImport(`${path}/style`);
-        } else if(style === 'css') {
-          file.addImport(`${path}/style/css`);
+          file.addImport(`${path}/style.css`);
+        } else if (style) {
+          file.addImport(`${path}/${style}`);
         }
       }
       return selectedMethods[methodName];
@@ -31,7 +48,7 @@ export default function(defaultLibraryName) {
       props.forEach(prop => {
         if (!types.isIdentifier(node[prop])) return;
         if (specified[node[prop].name]) {
-          node[prop] = importMethod(node[prop].name, file, opts);
+          node[prop] = importMethod(node[prop].name, file, opts); // eslint-disable-line
         }
       });
     }
@@ -40,7 +57,7 @@ export default function(defaultLibraryName) {
       const { file } = path.hub;
       if (!types.isIdentifier(node[prop])) return;
       if (specified[node[prop].name]) {
-        node[prop] = importMethod(node[prop].name, file, opts);
+        node[prop] = importMethod(node[prop].name, file, opts); // eslint-disable-line
       }
     }
 
@@ -51,20 +68,29 @@ export default function(defaultLibraryName) {
           specified = Object.create(null);
           libraryObjs = Object.create(null);
           selectedMethods = Object.create(null);
+          moduleArr = Object.create(null);
         },
 
         ImportDeclaration(path, { opts }) {
           const { node } = path;
           const { value } = node.source;
-          const { libraryName = defaultLibraryName } = opts;
+          let result = {};
+
+          if (Array.isArray(opts)) {
+            result = opts.find(option => option.libraryName === value) || {};
+          }
+          const libraryName = result.libraryName || opts.libraryName || defaultLibraryName;
+
           if (value === libraryName) {
             node.specifiers.forEach(spec => {
               if (types.isImportSpecifier(spec)) {
                 specified[spec.local.name] = spec.imported.name;
+                moduleArr[spec.local.name] = value;
               } else {
-                libraryObjs[spec.local.name] = true;
+                libraryObjs[spec.local.name] = value;
               }
             });
+
             path.remove();
           }
         },
@@ -72,7 +98,7 @@ export default function(defaultLibraryName) {
         CallExpression(path, { opts }) {
           const { node } = path;
           const { file } = path.hub;
-          const { name, object, property } = node.callee;
+          const { name } = node.callee;
 
           if (types.isIdentifier(node.callee)) {
             if (specified[name]) {
@@ -80,14 +106,17 @@ export default function(defaultLibraryName) {
             }
           } else {
             // React.createElement(Button) -> React.createElement(_Button)
-            // if (object && object.name === 'React' && property && property.name === 'createElement' && node.arguments) {
-              node.arguments = node.arguments.map(arg => {
-                const { name: argName } = arg;
-                if (specified[argName]) {
-                  return importMethod(specified[argName], file, opts);
-                }
-                return arg;
-              });
+            // if (object && object.name === 'React' && property &&
+            // property.name === 'createElement' && node.arguments) {
+            node.arguments = node.arguments.map(arg => {
+              const { name: argName } = arg;
+              if (specified[argName]) {
+                return importMethod(specified[argName], file, opts);
+              } else if (libraryObjs[argName]) {
+                return importMethod(argName, file, opts);
+              }
+              return arg;
+            });
             // }
           }
         },
@@ -96,40 +125,37 @@ export default function(defaultLibraryName) {
           const { node } = path;
           const { file } = path.hub;
 
-          if (libraryObjs[node.object.name]) {
-            // antd.Button -> _Button
-            path.replaceWith(importMethod(node.property.name, file, opts));
-          } else if (specified[node.object.name]) {
+          if (libraryObjs[node.object.name] || specified[node.object.name]) {
+            // path.replaceWith(importMethod(node.property.name, file, opts));
             node.object = importMethod(node.object.name, file, opts);
           }
         },
 
-        Property(path, {opts}) {
+        Property(path, { opts }) {
           const { node } = path;
           buildDeclaratorHandler(node, 'value', path, opts);
         },
-        VariableDeclarator(path, {opts}) {
+        VariableDeclarator(path, { opts }) {
           const { node } = path;
           buildDeclaratorHandler(node, 'init', path, opts);
         },
 
-        LogicalExpression(path, {opts}) {
+        LogicalExpression(path, { opts }) {
           const { node } = path;
           buildExpressionHandler(node, ['left', 'right'], path, opts);
         },
 
-        ConditionalExpression(path, {opts}) {
+        ConditionalExpression(path, { opts }) {
           const { node } = path;
           buildExpressionHandler(node, ['test', 'consequent', 'alternate'], path, opts);
         },
 
-        IfStatement(path, {opts}) {
+        IfStatement(path, { opts }) {
           const { node } = path;
           buildExpressionHandler(node, ['test'], path, opts);
           buildExpressionHandler(node.test, ['left', 'right'], path, opts);
-        }
+        },
       },
     };
-
   };
 }
