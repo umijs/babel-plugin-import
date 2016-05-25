@@ -32,6 +32,19 @@ describe('index', () => {
         cssPlugin = [plugin, { style: 'style.css' }];
       }
 
+      if (caseName === 'multiple-module') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'antd',
+            style: true,
+          },
+          {
+            libraryName: 'test-module',
+            style: true,
+          },
+        ]];
+      }
+
       const actual = transformFileSync(actualFile, {
         presets: ['react'],
         plugins: [cssPlugin || plugin],

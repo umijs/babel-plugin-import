@@ -3,6 +3,7 @@ export default function (defaultLibraryName) {
     let specified;
     let libraryObjs;
     let selectedMethods;
+    let moduleArr;
 
     function camel2Dash(_str) {
       const str = _str[0].toLowerCase() + _str.substr(1);
@@ -11,7 +12,14 @@ export default function (defaultLibraryName) {
 
     function importMethod(methodName, file, opts) {
       if (!selectedMethods[methodName]) {
-        const { libDir = 'lib', libraryName = defaultLibraryName, style } = opts;
+        let options;
+        if (Array.isArray(opts)) {
+          options = opts.find(option => moduleArr[methodName] === option.libraryName);
+        } else {
+          options = opts;
+        }
+
+        const { libDir = 'lib', libraryName = defaultLibraryName, style } = options;
         const path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
 
         selectedMethods[methodName] = file.addImport(path, 'default');
@@ -49,21 +57,35 @@ export default function (defaultLibraryName) {
           specified = Object.create(null);
           libraryObjs = Object.create(null);
           selectedMethods = Object.create(null);
+          moduleArr = Object.create(null);
         },
 
         ImportDeclaration(path, { opts }) {
           const { node } = path;
           const { value } = node.source;
-          const { libraryName = defaultLibraryName } = opts;
+          let result = {};
+
+          if (Array.isArray(opts)) {
+            result = opts.find(option => option.libraryName === value) || {};
+          }
+          const libraryName = result.libraryName || opts.libraryName || defaultLibraryName;
+
           if (value === libraryName) {
+            let remove;
+
             node.specifiers.forEach(spec => {
               if (types.isImportSpecifier(spec)) {
                 specified[spec.local.name] = spec.imported.name;
+                moduleArr[spec.local.name] = value;
+                remove = true;
               } else {
                 libraryObjs[spec.local.name] = true;
               }
             });
-            path.remove();
+
+            if (remove) {
+              path.remove();
+            }
           }
         },
 
