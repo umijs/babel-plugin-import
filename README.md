@@ -58,3 +58,4 @@ Via `.babelrc` or babel-loader.
 - `["component", { "style": true }]`: import js and css from 'style.css'
 - `["component", { "style": cssFilePath }]`: import style css from filePath
 - `["component", { "libDir": "lib" }]`: lib directory
+- `["component", { "root": "index" }]`: main file dir

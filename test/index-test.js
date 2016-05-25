@@ -28,6 +28,13 @@ describe('index', () => {
         }];
       }
 
+      if (caseName === 'import-module') {
+        cssPlugin = [plugin, {
+          style: true,
+          root: 'abc',
+        }];
+      }
+
       if (caseName === 'custom-css-filename') {
         cssPlugin = [plugin, { style: 'style.css' }];
       }
