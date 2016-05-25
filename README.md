@@ -1,7 +1,7 @@
 # babel-plugin-component
 
 [![NPM version](https://img.shields.io/npm/v/babel-plugin-component.svg)](https://npmjs.org/package/babel-plugin-component)
-[![Build Status](https://img.shields.io/travis/ant-design/babel-plugin-component.svg)](https://travis-ci.org/ant-design/babel-plugin-component)
+[![Build Status](https://img.shields.io/travis/qingwei-li/babel-plugin-component.svg)](https://travis-ci.org/qingwei-li/babel-plugin-component)
 
 ## Install
 
