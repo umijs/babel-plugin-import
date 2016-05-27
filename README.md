@@ -45,4 +45,4 @@ Via `.babelrc` or babel-loader.
 
 - `["antd"]`: import js modularly
 - `["antd", { style: true }]`: import js and css modularly (less source files)
-- `["antd", { style: 'css }]`: import style css modularly (css built files)
+- `["antd", { style: 'css' }]`: import style css modularly (css built files)
