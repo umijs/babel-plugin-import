@@ -20,7 +20,12 @@ export default function (defaultLibraryName) {
         }
         options = options || opts;
 
-        const { libDir = 'lib', libraryName = defaultLibraryName, style, root = '' } = options;
+        const {
+          libDir = 'lib',
+          libraryName = defaultLibraryName,
+          styleLibraryName, style,
+          root = '',
+        } = options;
         let _root = root;
 
         if (root) {
@@ -28,9 +33,9 @@ export default function (defaultLibraryName) {
         }
 
         if (libraryObjs[methodName]) {
-          path = `${libraryName}/${libDir}${_root}`;
+          path = `${styleLibraryName || libraryName}/${libDir}${_root}`;
         } else {
-          path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
+          path = `${styleLibraryName || libraryName}/${libDir}/${camel2Dash(methodName)}`;
         }
 
         selectedMethods[methodName] = file.addImport(path, 'default');

@@ -54,7 +54,8 @@ Via `.babelrc` or babel-loader.
 ### options
 
 - `["component"]`: import js modularly
-- `["component", { "libraryName": "componnet" }]`: module name
+- `["component", { "libraryName": "component" }]`: module name
+- `["component", { "styleLibraryName": "theme_package" }]`: style module name
 - `["component", { "style": true }]`: import js and css from 'style.css'
 - `["component", { "style": cssFilePath }]`: import style css from filePath
 - `["component", { "libDir": "lib" }]`: lib directory
