@@ -66,13 +66,4 @@ describe('index', () => {
       expect(actual.trim()).toEqual(expected.trim());
     });
   });
-
-  xit(`tmp`, () => {
-    const actualFile = join(fixturesDir, `variable-declaration/actual.js`);
-    const actual = transformFileSync(actualFile, {
-      presets: ['react'],
-      plugins: [plugin],
-    }).code;
-    console.log(actual);
-  });
 });

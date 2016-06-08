@@ -131,9 +131,19 @@ export default function (defaultLibraryName) {
           const { file } = path.hub;
 
           if (libraryObjs[node.object.name] || specified[node.object.name]) {
-            // path.replaceWith(importMethod(node.property.name, file, opts));
             node.object = importMethod(node.object.name, file, opts);
           }
+        },
+
+        ArrayExpression(path, { opts }) {
+          const { elements } = path.node;
+          const { file } = path.hub;
+
+          elements.forEach((item, key) => {
+            if (libraryObjs[item.name] || specified[item.name]) {
+              elements[key] = importMethod(item.name, file, opts);
+            }
+          });
         },
 
         Property(path, { opts }) {
