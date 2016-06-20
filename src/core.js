@@ -33,16 +33,27 @@ export default function (defaultLibraryName) {
         }
 
         if (libraryObjs[methodName]) {
-          path = `${styleLibraryName || libraryName}/${libDir}${_root}`;
+          path = `${libraryName}/${libDir}${_root}`;
         } else {
-          path = `${styleLibraryName || libraryName}/${libDir}/${camel2Dash(methodName)}`;
+          path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
         }
 
         selectedMethods[methodName] = file.addImport(path, 'default');
-        if (style === true) {
-          file.addImport(`${path}/style.css`);
-        } else if (style) {
-          file.addImport(`${path}/${style}`);
+
+        if (styleLibraryName) {
+          if (libraryObjs[methodName]) {
+            path = `${libraryName}/${styleLibraryName}/${libDir}${_root || '/index'}.css`;
+          } else {
+            path = `${libraryName}/${styleLibraryName}/${libDir}/${camel2Dash(methodName)}.css`;
+          }
+
+          file.addImport(path);
+        } else {
+          if (style === true) {
+            file.addImport(`${path}/style.css`);
+          } else if (style) {
+            file.addImport(`${path}/${style}`);
+          }
         }
       }
       return selectedMethods[methodName];

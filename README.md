@@ -25,6 +25,22 @@ var button = require('components/lib/button')
 require('components/lib/button/style.css')
 ```
 
+## styleLibraryName Example
+
+Converts
+
+```javascript
+import { Button } from 'components'
+import Components from 'components'
+```
+
+to
+
+```javascript
+var button = require('components/styleLibraryName/lib/button.css')
+require('components/styleLibraryName/lib/index.css')
+```
+
 ## Usage
 
 Via `.babelrc` or babel-loader.
