@@ -30,15 +30,15 @@ require('components/lib/button/style.css')
 Converts
 
 ```javascript
-import { Button } from 'components'
 import Components from 'components'
+import { Button } from 'components'
 ```
 
 to
 
 ```javascript
-var button = require('components/lib/styleLibraryName/lib/button.css')
-require('components/lib/styleLibraryName/lib/index.css')
+require('components/lib/styleLibraryName/index.css')
+var button = require('components/lib/styleLibraryName/button.css')
 ```
 
 ## Usage
