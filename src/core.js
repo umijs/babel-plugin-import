@@ -42,9 +42,9 @@ export default function (defaultLibraryName) {
 
         if (styleLibraryName) {
           if (libraryObjs[methodName]) {
-            path = `${libraryName}/${styleLibraryName}/${libDir}${_root || '/index'}.css`;
+            path = `${libraryName}/${libDir}/${styleLibraryName}/${libDir}${_root || '/index'}.css`; // eslint-disable-line
           } else {
-            path = `${libraryName}/${styleLibraryName}/${libDir}/${camel2Dash(methodName)}.css`;
+            path = `${libraryName}/${libDir}/${styleLibraryName}/${libDir}/${camel2Dash(methodName)}.css`; // eslint-disable-line
           }
 
           file.addImport(path);

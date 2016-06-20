@@ -1,18 +1,18 @@
 'use strict';
 
-var _index = require('components/theme-default/lib/index.css');
+var _index = require('components/lib/theme-default/lib/index.css');
 
 var _lib = require('components/lib');
 
 var _lib2 = _interopRequireDefault(_lib);
 
-var _alert = require('components/theme-default/lib/alert.css');
+var _alert = require('components/lib/theme-default/lib/alert.css');
 
 var _alert2 = require('components/lib/alert');
 
 var _alert3 = _interopRequireDefault(_alert2);
 
-var _button = require('components/theme-default/lib/button.css');
+var _button = require('components/lib/theme-default/lib/button.css');
 
 var _button2 = require('components/lib/button');
 

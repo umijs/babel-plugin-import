@@ -37,8 +37,8 @@ import Components from 'components'
 to
 
 ```javascript
-var button = require('components/styleLibraryName/lib/button.css')
-require('components/styleLibraryName/lib/index.css')
+var button = require('components/lib/styleLibraryName/lib/button.css')
+require('components/lib/styleLibraryName/lib/index.css')
 ```
 
 ## Usage
