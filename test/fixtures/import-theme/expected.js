@@ -1,20 +1,20 @@
 'use strict';
 
-var _index = require('components/lib/theme-default/index.css');
+var _index = require('element-ui/lib/theme-default/index.css');
 
-var _lib = require('components/lib');
+var _lib = require('element-ui/lib');
 
 var _lib2 = _interopRequireDefault(_lib);
 
-var _alert = require('components/lib/theme-default/alert.css');
+var _alert = require('element-ui/lib/theme-default/alert.css');
 
-var _alert2 = require('components/lib/alert');
+var _alert2 = require('element-ui/lib/alert');
 
 var _alert3 = _interopRequireDefault(_alert2);
 
-var _button = require('components/lib/theme-default/button.css');
+var _button = require('element-ui/lib/theme-default/button.css');
 
-var _button2 = require('components/lib/button');
+var _button2 = require('element-ui/lib/button');
 
 var _button3 = _interopRequireDefault(_button2);
 

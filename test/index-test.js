@@ -36,10 +36,12 @@ describe('index', () => {
       }
 
       if (caseName === 'import-theme') {
-        cssPlugin = [plugin, {
-          libraryName: 'components',
-          styleLibraryName: 'theme-default',
-        }];
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-default',
+          },
+        ]];
       }
 
       if (caseName === 'custom-css-filename') {
