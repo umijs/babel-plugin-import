@@ -100,7 +100,7 @@ export default function(defaultLibraryName) {
             // antd.Button -> _Button
             path.replaceWith(importMethod(node.property.name, file, opts));
           } else if (specified[node.object.name]) {
-            node.object = importMethod(node.object.name, file, opts);
+            node.object = importMethod(specified[node.object.name], file, opts);
           }
         },
 
