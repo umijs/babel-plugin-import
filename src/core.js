@@ -83,7 +83,9 @@ export default function(defaultLibraryName) {
             // if (object && object.name === 'React' && property && property.name === 'createElement' && node.arguments) {
               node.arguments = node.arguments.map(arg => {
                 const { name: argName } = arg;
-                if (specified[argName]) {
+                if (specified[argName] &&
+                    path.scope.hasBinding(argName) &&
+                    path.scope.getBinding(argName).path.type === 'ImportSpecifier') {
                   return importMethod(specified[argName], file, opts);
                 }
                 return arg;
