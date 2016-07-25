@@ -14,6 +14,8 @@ var _alert3 = _interopRequireDefault(_alert2);
 
 var _button = require('element-ui/lib/theme-default/button.css');
 
+var _base = require('element-ui/lib/theme-default/base.css');
+
 var _button2 = require('element-ui/lib/button');
 
 var _button3 = _interopRequireDefault(_button2);

@@ -6,7 +6,7 @@
 
 ## Install
 
-```bash
+```shell
 npm install babel-plugin-component --save-dev
 ```
 
@@ -65,6 +65,35 @@ Via `.babelrc` or babel-loader.
     }
   ]]]
 }
+```
+
+### Component directory structure
+```
+- lib // 'libDir'
+  - index.js // or custom 'root' relative path
+  - style.css // or custom 'style' relative path
+  - componentA
+    - index.js
+    - style.css
+  - componentB
+    - index.js
+    - style.css
+```
+
+### Theme library directory structure
+```
+- lib
+  - theme-default // 'styleLibraryName'
+    - base.css // required
+    - index.css // required
+    - componentA.css
+    - componentB.css
+  - theme-material
+    - ...
+  - componentA
+    - index.js
+  - componentB
+    - index.js
 ```
 
 ### options
