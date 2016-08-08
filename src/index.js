@@ -27,7 +27,7 @@ export default function ({ types }) {
           } else {
             opts = opts || {};
             instances = [
-              new Plugin('antd', opts.libraryDirectory || opts.libDir, opts.style, types)
+              new Plugin(opts.libraryName || 'antd', opts.libraryDirectory || opts.libDir, opts.style, types)
             ];
           }
         }
