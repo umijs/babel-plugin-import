@@ -52,8 +52,28 @@ Via `.babelrc` or babel-loader.
 }
 ```
 
-### options.style
+### options
 
-- `["antd"]`: import js modularly
-- `["antd", { "style": true }]`: import js and css modularly (less source files)
-- `["antd", { "style": "css" }]`: import style css modularly (css built files)
+`options` is an array.
+
+For Example: 
+
+```javascript
+[
+  {
+    libraryName: "antd",
+    libraryDirectory: "lib",   // default: lib
+    style: true,
+  },
+  {
+    libraryName: "antd-mobile",
+    libraryDirectory: "component",
+  },
+]
+```
+
+### style
+
+- `["antd", [{ "libraryName": "antd" }]]`: import js modularly
+- `["antd", [{ "libraryName": "antd", "style": true }]]`: import js and css modularly (less source files)
+- `["antd", [{ "libraryName": "antd", "style": "css" }]]`: import style css modularly (css built files)
