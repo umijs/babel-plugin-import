@@ -43,6 +43,9 @@ export default function ({ types }) {
       IfStatement() {
         applyInstance('IfStatement', arguments, this);
       },
+      ExportDefaultDeclaration() {
+        applyInstance('ExportDefaultDeclaration', arguments, this);
+      },
     },
   };
 
