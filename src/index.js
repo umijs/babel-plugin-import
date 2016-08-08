@@ -9,7 +9,7 @@ export default function ({ types }) {
   function applyInstance(method, args, context) {
     for (const instance of instances) {
       if (instance[method]) {
-        instance[method].apply(instance, [...args]);
+        instance[method].apply(instance, [...args, context]);
       }
     }
   }

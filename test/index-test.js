@@ -21,16 +21,16 @@ describe('index', () => {
 
     it(`should work with ${caseName.split('-').join(' ')}`, () => {
 
-      let cssPlugin;
+      let pluginWithOpts;
       if (caseName === 'import-css') {
-        cssPlugin = [plugin, {
+        pluginWithOpts = [plugin, {
           style: true,
         }];
       }
 
       const actual = transformFileSync(actualFile, {
         presets: ['react'],
-        plugins: [cssPlugin || plugin],
+        plugins: [pluginWithOpts || plugin],
       }).code;
 
       if (onlyFixtures.length) {
