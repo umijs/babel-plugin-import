@@ -5,15 +5,24 @@
 
 ----
 
+## CHANGELOG
+
+0.5.0
+
+- [#50](https://github.com/ant-design/babel-plugin-antd/pull/50) - Support both antd and antd-mobile
+- [#51](https://github.com/ant-design/babel-plugin-antd/pull/51) - Support export import
+
 ## Example
 
 Converts
 
 ```javascript
 import { Button } from 'antd';
+import { Button as ButtonMobile } from 'antd-mobile';
 
 ReactDOM.render(<div>
   <Button>xxxx</Button>
+  <ButtonMobile>xxxx</ButtonMobile>
 </div>);
 ```
 
@@ -21,9 +30,11 @@ ReactDOM.render(<div>
 
 ```javascript
 var _button = require('antd/lib/button');
+var _buttonMobile = require('antd-mobile/lib/button');
 
 ReactDOM.render(<div>
   <_button>xxxx</_button>
+  <_buttonMobile>xxxx</_buttonMobile>
 </div>);
 ```
 
