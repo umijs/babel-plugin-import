@@ -136,6 +136,11 @@ export default class AntdPlugin {
     this.buildExpressionHandler(node, ['test'], path, opts);
     this.buildExpressionHandler(node.test, ['left', 'right'], path, opts);
   }
+
+  ExportDefaultDeclaration(path, { opts }) {
+    const { node } = path;
+    this.buildExpressionHandler(node, ['declaration'], path, opts);
+  }
 }
 
 
