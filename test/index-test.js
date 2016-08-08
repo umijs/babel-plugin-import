@@ -24,13 +24,11 @@ describe('index', () => {
     const expectedFile = join(fixtureDir, 'expected.js');
 
     it(`should work with ${caseName.split('-').join(' ')}`, () => {
-      let pluginWithOpts = [
-        plugin, [{ libraryName: 'antd' }]
-      ];
+      let pluginWithOpts;
       caseName = caseName.replace(/-only$/, '');
       if (caseName === 'import-css') {
         pluginWithOpts = [
-          plugin, [{ libraryName: 'antd', style:true }]
+          plugin, { style: true }
         ];
       } else if (caseName === 'multiple-libraries') {
         pluginWithOpts = [
@@ -43,10 +41,10 @@ describe('index', () => {
 
       const actual = transformFileSync(actualFile, {
         presets: ['react'],
-        plugins: [pluginWithOpts],
+        plugins: [pluginWithOpts || plugin],
       }).code;
 
-      if (onlyFixtures.length || caseName === 'multiple-libraries') {
+      if (onlyFixtures.length) {
         console.warn();
         console.warn(actual);
       }

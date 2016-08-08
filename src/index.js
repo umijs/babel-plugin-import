@@ -20,9 +20,16 @@ export default function ({ types }) {
     visitor: {
       Program(path, { opts }) {
         if (!instances) {
-          instances = opts.map(({ libraryName, libraryDirectory, style }) =>
-            new Plugin(libraryName, libraryDirectory, style, types)
-          );
+          if (Array.isArray(opts)) {
+            instances = opts.map(({ libraryName, libraryDirectory, style }) =>
+              new Plugin(libraryName, libraryDirectory, style, types)
+            );
+          } else {
+            opts = opts || {};
+            instances = [
+              new Plugin('antd', opts.libraryDirectory || opts.libDir, opts.style, types)
+            ];
+          }
         }
         applyInstance('Program', arguments, this);
       },
