@@ -1,17 +1,17 @@
 import Plugin from './Plugin';
 
 export default function ({ types }) {
-  let instances = null;
+  let plugins = null;
 
   // For test
   global.__clearBabelAntdPlugin = () => {
-    instances = null;
+    plugins = null;
   };
 
   function applyInstance(method, args, context) {
-    for (const instance of instances) {
-      if (instance[method]) {
-        instance[method].apply(instance, [...args, context]);
+    for (const plugin of plugins) {
+      if (plugin[method]) {
+        plugin[method].apply(plugin, [...args, context]);
       }
     }
   }
@@ -19,14 +19,14 @@ export default function ({ types }) {
   return {
     visitor: {
       Program(path, { opts }) {
-        if (!instances) {
+        if (!plugins) {
           if (Array.isArray(opts)) {
-            instances = opts.map(({ libraryName, libraryDirectory, style }) =>
+            plugins = opts.map(({ libraryName, libraryDirectory, style }) =>
               new Plugin(libraryName, libraryDirectory, style, types)
             );
           } else {
             opts = opts || {};
-            instances = [
+            plugins = [
               new Plugin(opts.libraryName || 'antd', opts.libraryDirectory || opts.libDir, opts.style, types)
             ];
           }
