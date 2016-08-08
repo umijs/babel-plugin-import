@@ -18,11 +18,9 @@ Converts
 
 ```javascript
 import { Button } from 'antd';
-import { Button as ButtonMobile } from 'antd-mobile';
 
 ReactDOM.render(<div>
   <Button>xxxx</Button>
-  <ButtonMobile>xxxx</ButtonMobile>
 </div>);
 ```
 
@@ -30,11 +28,9 @@ ReactDOM.render(<div>
 
 ```javascript
 var _button = require('antd/lib/button');
-var _buttonMobile = require('antd-mobile/lib/button');
 
 ReactDOM.render(<div>
   <_button>xxxx</_button>
-  <_buttonMobile>xxxx</_buttonMobile>
 </div>);
 ```
 
@@ -54,7 +50,16 @@ Via `.babelrc` or babel-loader.
 
 ### options
 
-`options` is an array.
+`options` can be object. (will include antd library)
+
+```javascript
+{
+  style: true,
+  libraryDirectory: "component",  // default: lib
+}
+```
+
+`options` can be an array. (won't include antd library)
 
 For Example: 
 
