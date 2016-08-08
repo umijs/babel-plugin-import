@@ -1,10 +1,12 @@
 import Plugin from './Plugin';
 
 export default function ({ types }) {
-  const instances = [
-    new Plugin('antd', types),
-    new Plugin('antd-mobile', types),
-  ];
+  let instances = null;
+
+  // For test
+  global.__clearBabelAntdPlugin = () => {
+    instances = null;
+  };
 
   function applyInstance(method, args, context) {
     for (const instance of instances) {
@@ -16,10 +18,15 @@ export default function ({ types }) {
 
   return {
     visitor: {
-      Program() {
+      Program(path, { opts }) {
+        if (!instances) {
+          instances = opts.map(({ libraryName, libraryDirectory, style }) =>
+            new Plugin(libraryName, libraryDirectory, style, types)
+          );
+        }
         applyInstance('Program', arguments, this);
       },
-      ImportDeclaration(path, node) {
+      ImportDeclaration() {
         applyInstance('ImportDeclaration', arguments, this);
       },
       CallExpression() {
