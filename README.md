@@ -7,7 +7,7 @@
 
 ## CHANGELOG
 
-0.5.0
+0.5.1
 
 - [#50](https://github.com/ant-design/babel-plugin-antd/pull/50) - Support both antd and antd-mobile
 - [#51](https://github.com/ant-design/babel-plugin-antd/pull/51) - Support export import
@@ -50,16 +50,17 @@ Via `.babelrc` or babel-loader.
 
 ### options
 
-`options` can be object. (will include antd library)
+`options` can be object.
 
 ```javascript
 {
   style: true,
   libraryDirectory: "component",  // default: lib
+  libraryName: "antd",            // default: antd
 }
 ```
 
-`options` can be an array. (won't include antd library)
+`options` can be an array.
 
 For Example: 
 
