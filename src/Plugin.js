@@ -1,18 +1,21 @@
 
 export default class AntdPlugin {
 
-  constructor(libraryName, types) {
+  constructor(libraryName, libraryDirectory, style, types) {
     this.specified = null;
     this.libraryObjs = null;
     this.selectedMethods = null;
     this.libraryName = libraryName;
+    this.libraryDirectory = libraryDirectory || 'lib';
+    this.style = style || false;
     this.types = types;
   }
 
   importMethod(methodName, file, opts) {
     if (!this.selectedMethods[methodName]) {
-      const { libDir = 'lib', style } = opts;
-      const path = `${this.libraryName}/${libDir}/${camel2Dash(methodName)}`;
+      const libraryDirectory = this.libraryDirectory;
+      const style = this.style;
+      const path = `${this.libraryName}/${libraryDirectory}/${camel2Dash(methodName)}`;
       this.selectedMethods[methodName] = file.addImport(path, 'default');
       if (style === true) {
         file.addImport(`${path}/style`);

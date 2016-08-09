@@ -18,11 +18,9 @@ Converts
 
 ```javascript
 import { Button } from 'antd';
-import { Button as ButtonMobile } from 'antd-mobile';
 
 ReactDOM.render(<div>
   <Button>xxxx</Button>
-  <ButtonMobile>xxxx</ButtonMobile>
 </div>);
 ```
 
@@ -30,11 +28,9 @@ ReactDOM.render(<div>
 
 ```javascript
 var _button = require('antd/lib/button');
-var _buttonMobile = require('antd-mobile/lib/button');
 
 ReactDOM.render(<div>
   <_button>xxxx</_button>
-  <_buttonMobile>xxxx</_buttonMobile>
 </div>);
 ```
 
@@ -52,8 +48,37 @@ Via `.babelrc` or babel-loader.
 }
 ```
 
-### options.style
+### options
 
-- `["antd"]`: import js modularly
-- `["antd", { "style": true }]`: import js and css modularly (less source files)
-- `["antd", { "style": "css" }]`: import style css modularly (css built files)
+`options` can be object. (will include antd library)
+
+```javascript
+{
+  style: true,
+  libraryDirectory: "component",  // default: lib
+}
+```
+
+`options` can be an array. (won't include antd library)
+
+For Example: 
+
+```javascript
+[
+  {
+    libraryName: "antd",
+    libraryDirectory: "lib",   // default: lib
+    style: true,
+  },
+  {
+    libraryName: "antd-mobile",
+    libraryDirectory: "component",
+  },
+]
+```
+
+### style
+
+- `["antd", [{ "libraryName": "antd" }]]`: import js modularly
+- `["antd", [{ "libraryName": "antd", "style": true }]]`: import js and css modularly (less source files)
+- `["antd", [{ "libraryName": "antd", "style": "css" }]]`: import style css modularly (css built files)

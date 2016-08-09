@@ -6,6 +6,10 @@ import expect from 'expect';
 
 describe('index', () => {
 
+  afterEach(() => {
+    global.__clearBabelAntdPlugin();
+  });
+
   const fixturesDir = join(__dirname, 'fixtures');
   let fixtures = readdirSync(fixturesDir);
   const onlyFixtures = fixtures.filter(fixture => fixture.indexOf('-only') > -1);
@@ -20,12 +24,19 @@ describe('index', () => {
     const expectedFile = join(fixtureDir, 'expected.js');
 
     it(`should work with ${caseName.split('-').join(' ')}`, () => {
-
       let pluginWithOpts;
+      caseName = caseName.replace(/-only$/, '');
       if (caseName === 'import-css') {
-        pluginWithOpts = [plugin, {
-          style: true,
-        }];
+        pluginWithOpts = [
+          plugin, { style: true }
+        ];
+      } else if (caseName === 'multiple-libraries') {
+        pluginWithOpts = [
+          plugin, [
+            { libraryName: 'antd' },
+            { libraryName: 'antd-mobile' },
+          ]
+        ];
       }
 
       const actual = transformFileSync(actualFile, {
