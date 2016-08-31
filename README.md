@@ -54,9 +54,9 @@ Via `.babelrc` or babel-loader.
 
 ```javascript
 {
-  style: true,
-  libraryDirectory: "component",  // default: lib
-  libraryName: "antd",            // default: antd
+  "style": true,
+  "libraryDirectory": "component",  // default: lib
+  "libraryName": "antd"            // default: antd
 }
 ```
 
@@ -67,13 +67,13 @@ For Example:
 ```javascript
 [
   {
-    libraryName: "antd",
-    libraryDirectory: "lib",   // default: lib
-    style: true,
+    "libraryName": "antd",
+    "libraryDirectory": "lib",   // default: lib
+    "style": true
   },
   {
-    libraryName: "antd-mobile",
-    libraryDirectory: "component",
+    "libraryName": "antd-mobile",
+    "libraryDirectory": "component",
   },
 ]
 ```
