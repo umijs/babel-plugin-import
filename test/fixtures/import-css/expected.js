@@ -2,11 +2,15 @@
 
 var _style = require('antd/lib/button/style.css');
 
+var _style2 = _interopRequireDefault(_style);
+
 var _button = require('antd/lib/button');
 
 var _button2 = _interopRequireDefault(_button);
 
-var _style2 = require('antd/lib/message/style.css');
+var _style3 = require('antd/lib/message/style.css');
+
+var _style4 = _interopRequireDefault(_style3);
 
 var _message = require('antd/lib/message');
 
