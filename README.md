@@ -1,4 +1,6 @@
-# babel-plugin-antd
+# babel-plugin-import
+
+Component modular import plugin for babel, compatible with [antd](https://github.com/ant-design/ant-design), [antd-mobile](https://github.com/ant-design/ant-design-mobile), and so on.
 
 [![NPM version](https://img.shields.io/npm/v/babel-plugin-antd.svg?style=flat)](https://npmjs.org/package/babel-plugin-antd)
 [![Build Status](https://img.shields.io/travis/ant-design/babel-plugin-antd.svg?style=flat)](https://travis-ci.org/ant-design/babel-plugin-antd)
@@ -37,14 +39,14 @@ ReactDOM.render(<div>
 ## Usage
 
 ```bash
-npm install babel-plugin-antd --save-dev
+npm install babel-plugin-import --save-dev
 ```
 
 Via `.babelrc` or babel-loader.
 
 ```js
 {
-  "plugins": [["antd", options]]
+  "plugins": [["import", options]]
 }
 ```
 
@@ -56,7 +58,8 @@ Via `.babelrc` or babel-loader.
 {
   "style": true,
   "libraryDirectory": "component",  // default: lib
-  "libraryName": "antd"            // default: antd
+  "libraryName": "antd",
+  "camel2DashComponentName": false, // default: true
 }
 ```
 
@@ -82,4 +85,4 @@ For Example:
 
 - `["antd", [{ "libraryName": "antd" }]]`: import js modularly
 - `["antd", [{ "libraryName": "antd", "style": true }]]`: import js and css modularly (less source files)
-- `["antd", [{ "libraryName": "antd", "style": "css" }]]`: import style css modularly (css built files)
+- `["antd", [{ "libraryName": "antd", "style": "css" }]]`: import js and css modularly (css built files)
