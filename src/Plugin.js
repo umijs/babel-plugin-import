@@ -1,11 +1,17 @@
+import { join } from 'path';
 
 export default class Plugin {
-  constructor(libraryName, libraryDirectory, style, types) {
+  constructor(libraryName, libraryDirectory, style, camel2DashComponentName, types) {
     this.specified = null;
     this.libraryObjs = null;
     this.selectedMethods = null;
     this.libraryName = libraryName;
-    this.libraryDirectory = libraryDirectory || 'lib';
+    this.libraryDirectory = typeof libraryDirectory === 'undefined'
+      ? 'lib'
+      : libraryDirectory;
+    this.camel2DashComponentName = typeof camel2DashComponentName === 'undefined'
+      ? true
+      : camel2DashComponentName;
     this.style = style || false;
     this.types = types;
   }
@@ -14,7 +20,10 @@ export default class Plugin {
     if (!this.selectedMethods[methodName]) {
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
-      const path = `${this.libraryName}/${libraryDirectory}/${camel2Dash(methodName)}`;
+      const transformedMethodName = this.camel2DashComponentName
+        ? camel2Dash(methodName)
+        : methodName;
+      const path = join(this.libraryName, libraryDirectory, transformedMethodName);
       this.selectedMethods[methodName] = file.addImport(path, 'default');
       if (style === true) {
         file.addImport(`${path}/style`);

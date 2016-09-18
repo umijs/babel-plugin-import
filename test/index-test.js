@@ -30,6 +30,12 @@ describe('index', () => {
         pluginWithOpts = [
           plugin, { libraryName: 'antd', style: true }
         ];
+      } else if (caseName === 'material-ui') {
+        pluginWithOpts = [
+          plugin, [
+            { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
+          ]
+        ];
       } else if (caseName === 'multiple-libraries') {
         pluginWithOpts = [
           plugin, [

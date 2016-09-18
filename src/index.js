@@ -21,15 +21,15 @@ export default function ({ types }) {
     // Init plugin instances once.
     if (!plugins) {
       if (Array.isArray(opts)) {
-        plugins = opts.map(({ libraryName, libraryDirectory, style }) => {
+        plugins = opts.map(({ libraryName, libraryDirectory, style, camel2DashComponentName }) => {
           assert(libraryName, 'libraryName should be provided');
-          return new Plugin(libraryName, libraryDirectory, style, types);
+          return new Plugin(libraryName, libraryDirectory, style, camel2DashComponentName, types);
         });
       } else {
         opts = opts || {};
         assert(opts.libraryName, 'libraryName should be provided');
         plugins = [
-          new Plugin(opts.libraryName, opts.libraryDirectory, opts.style, types)
+          new Plugin(opts.libraryName, opts.libraryDirectory, opts.style, opts.camel2DashComponentName, types)
         ];
       }
     }
