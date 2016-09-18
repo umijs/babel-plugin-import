@@ -28,7 +28,7 @@ describe('index', () => {
       caseName = caseName.replace(/-only$/, '');
       if (caseName === 'import-css') {
         pluginWithOpts = [
-          plugin, { style: true }
+          plugin, { libraryName: 'antd', style: true }
         ];
       } else if (caseName === 'multiple-libraries') {
         pluginWithOpts = [
@@ -36,6 +36,10 @@ describe('index', () => {
             { libraryName: 'antd' },
             { libraryName: 'antd-mobile' },
           ]
+        ];
+      } else {
+        pluginWithOpts = [
+          plugin, { libraryName: 'antd' }
         ];
       }
 

@@ -1,3 +1,4 @@
+import assert from 'assert';
 import Plugin from './Plugin';
 
 export default function ({ types }) {
@@ -17,15 +18,18 @@ export default function ({ types }) {
   }
 
   function Program(path, { opts }) {
+    // Init plugin instances once.
     if (!plugins) {
       if (Array.isArray(opts)) {
-        plugins = opts.map(({ libraryName, libraryDirectory, style }) =>
-          new Plugin(libraryName, libraryDirectory, style, types)
-        );
+        plugins = opts.map(({ libraryName, libraryDirectory, style }) => {
+          assert(libraryName, 'libraryName should be provided');
+          return new Plugin(libraryName, libraryDirectory, style, types);
+        });
       } else {
         opts = opts || {};
+        assert(opts.libraryName, 'libraryName should be provided');
         plugins = [
-          new Plugin(opts.libraryName || 'antd', opts.libraryDirectory || opts.libDir, opts.style, types)
+          new Plugin(opts.libraryName, opts.libraryDirectory, opts.style, types)
         ];
       }
     }
