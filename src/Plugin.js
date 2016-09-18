@@ -1,6 +1,5 @@
 
-export default class AntdPlugin {
-
+export default class Plugin {
   constructor(libraryName, libraryDirectory, style, types) {
     this.specified = null;
     this.libraryObjs = null;
@@ -139,7 +138,7 @@ export default class AntdPlugin {
     this.buildExpressionHandler(node, ['test'], path, opts);
     this.buildExpressionHandler(node.test, ['left', 'right'], path, opts);
   }
-  
+
   ExpressionStatement(path, {opts}){
     const { node } = path;
     const { types } = this;
@@ -147,7 +146,7 @@ export default class AntdPlugin {
       this.buildExpressionHandler(node.expression, ['right'], path, opts);
     }
   }
- 
+
   ExportDefaultDeclaration(path, { opts }) {
     const { node } = path;
     this.buildExpressionHandler(node, ['declaration'], path, opts);

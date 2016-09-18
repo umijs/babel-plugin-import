@@ -3,7 +3,7 @@ import Plugin from './Plugin';
 export default function ({ types }) {
   let plugins = null;
 
-  // For test
+  // Only for test
   global.__clearBabelAntdPlugin = () => {
     plugins = null;
   };
@@ -16,54 +16,44 @@ export default function ({ types }) {
     }
   }
 
-  return {
-    visitor: {
-      Program(path, { opts }) {
-        if (!plugins) {
-          if (Array.isArray(opts)) {
-            plugins = opts.map(({ libraryName, libraryDirectory, style }) =>
-              new Plugin(libraryName, libraryDirectory, style, types)
-            );
-          } else {
-            opts = opts || {};
-            plugins = [
-              new Plugin(opts.libraryName || 'antd', opts.libraryDirectory || opts.libDir, opts.style, types)
-            ];
-          }
-        }
-        applyInstance('Program', arguments, this);
-      },
-      ImportDeclaration() {
-        applyInstance('ImportDeclaration', arguments, this);
-      },
-      CallExpression() {
-        applyInstance('CallExpression', arguments, this);
-      },
-      MemberExpression() {
-        applyInstance('MemberExpression', arguments, this);
-      },
-      Property() {
-        applyInstance('Property', arguments, this);
-      },
-      VariableDeclarator() {
-        applyInstance('VariableDeclarator', arguments, this);
-      },
-      LogicalExpression() {
-        applyInstance('LogicalExpression', arguments, this);
-      },
-      ConditionalExpression() {
-        applyInstance('ConditionalExpression', arguments, this);
-      },
-      IfStatement() {
-        applyInstance('IfStatement', arguments, this);
-      },
-      ExpressionStatement(){
-        applyInstance('ExpressionStatement', arguments, this);
-      },
-      ExportDefaultDeclaration() {
-        applyInstance('ExportDefaultDeclaration', arguments, this);
-      },
-    },
+  function Program(path, { opts }) {
+    if (!plugins) {
+      if (Array.isArray(opts)) {
+        plugins = opts.map(({ libraryName, libraryDirectory, style }) =>
+          new Plugin(libraryName, libraryDirectory, style, types)
+        );
+      } else {
+        opts = opts || {};
+        plugins = [
+          new Plugin(opts.libraryName || 'antd', opts.libraryDirectory || opts.libDir, opts.style, types)
+        ];
+      }
+    }
+    applyInstance('Program', arguments, this);
+  }
+
+  const methods = [
+    'ImportDeclaration',
+    'CallExpression',
+    'MemberExpression',
+    'Property',
+    'VariableDeclarator',
+    'LogicalExpression',
+    'ConditionalExpression',
+    'IfStatement',
+    'ExpressionStatement',
+    'ExportDefaultDeclaration',
+  ];
+
+  const ret = {
+    visitor: { Program },
   };
 
+  for (const method of methods) {
+    ret.visitor[method] = function() {
+      applyInstance(method, arguments, ret.visitor);
+    };
+  }
+
+  return ret;
 }
