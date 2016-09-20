@@ -1,6 +1,6 @@
 # babel-plugin-import
 
-Component modular import plugin for babel, compatible with [antd](https://github.com/ant-design/ant-design), [antd-mobile](https://github.com/ant-design/ant-design-mobile), and so on.
+Modular import plugin for babel, compatible with [antd](https://github.com/ant-design/ant-design), [antd-mobile](https://github.com/ant-design/ant-design-mobile), and so on.
 
 [![NPM version](https://img.shields.io/npm/v/babel-plugin-antd.svg?style=flat)](https://npmjs.org/package/babel-plugin-antd)
 [![Build Status](https://img.shields.io/travis/ant-design/babel-plugin-antd.svg?style=flat)](https://travis-ci.org/ant-design/babel-plugin-antd)
@@ -13,8 +13,8 @@ Component modular import plugin for babel, compatible with [antd](https://github
 
 Rename to babel-plugin-import.
 
-- **BREAKCHANGE: ** Don't support `libDir` anymore, replace it with `libraryDirectory`
-- **BREAKCHANGE: ** Remove `libraryName` default value (previous `antd`)
+- **BREAKCHANGE:** Don't support `libDir` anymore, replace it with `libraryDirectory`
+- **BREAKCHANGE:** Remove `libraryName` default value (previous `antd`)
 - [#66](https://github.com/ant-design/babel-plugin-antd/issues/66), Support material-ui
   - `libraryDirectory` could be empty string
   - add option `camel2DashComponentName`, default `true`
