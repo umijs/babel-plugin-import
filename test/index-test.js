@@ -28,7 +28,13 @@ describe('index', () => {
       caseName = caseName.replace(/-only$/, '');
       if (caseName === 'import-css') {
         pluginWithOpts = [
-          plugin, { style: true }
+          plugin, { libraryName: 'antd', style: true }
+        ];
+      } else if (caseName === 'material-ui') {
+        pluginWithOpts = [
+          plugin, [
+            { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
+          ]
         ];
       } else if (caseName === 'multiple-libraries') {
         pluginWithOpts = [
@@ -36,6 +42,10 @@ describe('index', () => {
             { libraryName: 'antd' },
             { libraryName: 'antd-mobile' },
           ]
+        ];
+      } else {
+        pluginWithOpts = [
+          plugin, { libraryName: 'antd' }
         ];
       }
 
