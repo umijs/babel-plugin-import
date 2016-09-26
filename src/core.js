@@ -16,7 +16,10 @@ export default function (defaultLibraryName) {
         let path;
 
         if (Array.isArray(opts)) {
-          options = opts.find(option => moduleArr[methodName] === option.libraryName || libraryObjs[methodName]); // eslint-disable-line
+          options = opts.find(option =>
+            moduleArr[methodName] === option.libraryName ||
+            libraryObjs[methodName] === option.libraryName
+          ); // eslint-disable-line
         }
         options = options || opts;
 
@@ -102,7 +105,7 @@ export default function (defaultLibraryName) {
             node.specifiers.forEach(spec => {
               if (types.isImportSpecifier(spec)) {
                 specified[spec.local.name] = spec.imported.name;
-                moduleArr[spec.local.name] = value;
+                moduleArr[spec.imported.name] = value;
               } else {
                 libraryObjs[spec.local.name] = value;
               }
