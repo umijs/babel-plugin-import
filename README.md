@@ -94,6 +94,6 @@ For Example:
 
 ### style
 
-- `["antd", [{ "libraryName": "antd" }]]`: import js modularly
-- `["antd", [{ "libraryName": "antd", "style": true }]]`: import js and css modularly (less source files)
-- `["antd", [{ "libraryName": "antd", "style": "css" }]]`: import js and css modularly (css built files)
+- `["import", [{ "libraryName": "antd" }]]`: import js modularly
+- `["import", [{ "libraryName": "antd", "style": true }]]`: import js and css modularly (less source files)
+- `["import", [{ "libraryName": "antd", "style": "css" }]]`: import js and css modularly (css built files)
