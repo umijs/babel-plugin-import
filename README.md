@@ -67,9 +67,15 @@ Via `.babelrc` or babel-loader.
 
 ```javascript
 {
-  "style": true,
-  "libraryDirectory": "components",  // default: lib
+  "libraryName": "antd",
+  "style": true,   // or 'css'
+}
+```
+
+```javascript
+{
   "libraryName": "material-ui",
+  "libraryDirectory": "components",  // default: lib
   "camel2DashComponentName": false,  // default: true
 }
 ```
