@@ -23,7 +23,7 @@ export default class Plugin {
       const transformedMethodName = this.camel2DashComponentName
         ? camel2Dash(methodName)
         : methodName;
-      const path = join(this.libraryName, libraryDirectory, transformedMethodName);
+      const path = winPath(join(this.libraryName, libraryDirectory, transformedMethodName));
       this.selectedMethods[methodName] = file.addImport(path, 'default');
       if (style === true) {
         file.addImport(`${path}/style`);
@@ -162,10 +162,13 @@ export default class Plugin {
   }
 }
 
-
 function camel2Dash(_str) {
   const str = _str[0].toLowerCase() + _str.substr(1);
   return str.replace(/([A-Z])/g, function camel2DashReplace($1) {
     return '-' + $1.toLowerCase();
   });
+}
+
+function winPath(path) {
+  return path.replace(/\\/g, '/');
 }
