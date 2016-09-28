@@ -23,7 +23,7 @@ export default class Plugin {
       const transformedMethodName = this.camel2DashComponentName
         ? camel2Dash(methodName)
         : methodName;
-      const path = join(this.libraryName, libraryDirectory, transformedMethodName);
+      const path = join(this.libraryName, libraryDirectory, transformedMethodName).replace(/\\/g,'/');
       this.selectedMethods[methodName] = file.addImport(path, 'default');
       if (style === true) {
         file.addImport(`${path}/style`);
