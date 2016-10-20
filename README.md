@@ -103,3 +103,7 @@ For Example:
 - `["import", [{ "libraryName": "antd" }]]`: import js modularly
 - `["import", [{ "libraryName": "antd", "style": true }]]`: import js and css modularly (less source files)
 - `["import", [{ "libraryName": "antd", "style": "css" }]]`: import js and css modularly (css built files)
+
+### Note
+
+babel-plugin-import will be not working if you add the library in webpack config [vender](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code). 
