@@ -1,13 +1,5 @@
 'use strict';
 
-var _index = require('element-ui/lib/theme-default/index.css');
-
-var _index2 = _interopRequireDefault(_index);
-
-var _lib = require('element-ui/lib');
-
-var _lib2 = _interopRequireDefault(_lib);
-
 var _alert = require('element-ui/lib/theme-default/alert.css');
 
 var _alert2 = _interopRequireDefault(_alert);
@@ -30,5 +22,5 @@ var _button4 = _interopRequireDefault(_button3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(_button4.default, _alert4.default);
-console.log(_lib2.default);
+console.log(_button4.default);
+console.log(_alert4.default);

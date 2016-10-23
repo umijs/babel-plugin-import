@@ -1,3 +1,5 @@
+const cache = {};
+
 export default function (defaultLibraryName) {
   return ({ types }) => {
     let specified;
@@ -45,10 +47,20 @@ export default function (defaultLibraryName) {
 
         if (styleLibraryName) {
           if (libraryObjs[methodName]) {
+            /* istanbul ingore next */
+            if (cache[libraryName] === 2) {
+              throw Error('[babel-plugin-component] If you are using ' +
+                'on-demand loading and importing all, make sure to invoke the' +
+                ' importing all first.');
+            }
             path = `${libraryName}/${libDir}/${styleLibraryName}${_root || '/index'}.css`;
+            cache[libraryName] = 1;
           } else {
-            path = `${libraryName}/${libDir}/${styleLibraryName}/${camel2Dash(methodName)}.css`;
-            file.addImport(`${libraryName}/${libDir}/${styleLibraryName}/base.css`, 'default');
+            if (cache[libraryName] !== 1) {
+              path = `${libraryName}/${libDir}/${styleLibraryName}/${camel2Dash(methodName)}.css`;
+              file.addImport(`${libraryName}/${libDir}/${styleLibraryName}/base.css`, 'default');
+              cache[libraryName] = 2;
+            }
           }
 
           file.addImport(path, 'default');
@@ -125,9 +137,6 @@ export default function (defaultLibraryName) {
               node.callee = importMethod(specified[name], file, opts);
             }
           } else {
-            // React.createElement(Button) -> React.createElement(_Button)
-            // if (object && object.name === 'React' && property &&
-            // property.name === 'createElement' && node.arguments) {
             node.arguments = node.arguments.map(arg => {
               const { name: argName } = arg;
               if (specified[argName]) {
@@ -137,7 +146,6 @@ export default function (defaultLibraryName) {
               }
               return arg;
             });
-            // }
           }
         },
 

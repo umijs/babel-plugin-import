@@ -1,4 +1,4 @@
-import { transformFileSync } from "babel-core";
+import { transformFileSync } from 'babel-core';
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
@@ -39,6 +39,15 @@ describe('index', () => {
         cssPlugin = [plugin, [
           {
             libraryName: 'element-ui',
+            styleLibraryName: 'theme-default',
+          },
+        ]];
+      }
+
+      if (caseName === 'import-theme-all-compo') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui2',
             styleLibraryName: 'theme-default',
           },
         ]];
