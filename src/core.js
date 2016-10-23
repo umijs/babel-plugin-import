@@ -1,4 +1,5 @@
 const cache = {};
+const cachePath = {};
 
 export default function (defaultLibraryName) {
   return ({ types }) => {
@@ -46,6 +47,13 @@ export default function (defaultLibraryName) {
         selectedMethods[methodName] = file.addImport(path, 'default');
 
         if (styleLibraryName) {
+          if (!cachePath[libraryName]) {
+            const themeName = styleLibraryName.replace(/^~/, '');
+            cachePath[libraryName] = styleLibraryName.indexOf('~') === 0
+              ? themeName
+              : `${libraryName}/${libDir}/${themeName}`;
+          }
+
           if (libraryObjs[methodName]) {
             /* istanbul ingore next */
             if (cache[libraryName] === 2) {
@@ -53,12 +61,12 @@ export default function (defaultLibraryName) {
                 'on-demand loading and importing all, make sure to invoke the' +
                 ' importing all first.');
             }
-            path = `${libraryName}/${libDir}/${styleLibraryName}${_root || '/index'}.css`;
+            path = `${cachePath[libraryName]}${_root || '/index'}.css`;
             cache[libraryName] = 1;
           } else {
             if (cache[libraryName] !== 1) {
-              path = `${libraryName}/${libDir}/${styleLibraryName}/${camel2Dash(methodName)}.css`;
-              file.addImport(`${libraryName}/${libDir}/${styleLibraryName}/base.css`, 'default');
+              path = `${cachePath[libraryName]}/${camel2Dash(methodName)}.css`;
+              file.addImport(`${cachePath[libraryName]}/base.css`, 'default');
               cache[libraryName] = 2;
             }
           }

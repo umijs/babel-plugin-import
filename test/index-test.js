@@ -53,6 +53,15 @@ describe('index', () => {
         ]];
       }
 
+      if (caseName === 'independent-theme-package') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui3',
+            styleLibraryName: '~theme',
+          },
+        ]];
+      }
+
       if (caseName === 'custom-css-filename') {
         cssPlugin = [plugin, { style: 'style.css' }];
       }

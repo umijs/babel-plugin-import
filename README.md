@@ -101,6 +101,7 @@ Via `.babelrc` or babel-loader.
 - `["component"]`: import js modularly
 - `["component", { "libraryName": "component" }]`: module name
 - `["component", { "styleLibraryName": "theme_package" }]`: style module name
+- `["component", { "styleLibraryName": "~independent_theme_package" }]`: Import a independent theme package
 - `["component", { "style": true }]`: import js and css from 'style.css'
 - `["component", { "style": cssFilePath }]`: import style css from filePath
 - `["component", { "libDir": "lib" }]`: lib directory
