@@ -26,9 +26,9 @@ export default class Plugin {
       const path = join(this.libraryName, libraryDirectory, transformedMethodName);
       this.selectedMethods[methodName] = file.addImport(path, 'default');
       if (style === true) {
-        file.addImport(`${path}/style`);
+        file.addImport(`${path}/style`, 'style');
       } else if(style === 'css') {
-        file.addImport(`${path}/style/css`);
+        file.addImport(`${path}/style/css`, 'style');
       }
     }
     return this.selectedMethods[methodName];

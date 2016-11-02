@@ -1,4 +1,4 @@
-import { transformFileSync } from "babel-core";
+import { transformFileSync, transform } from "babel-core";
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
@@ -49,10 +49,21 @@ describe('index', () => {
         ];
       }
 
-      const actual = transformFileSync(actualFile, {
-        presets: ['react'],
-        plugins: [pluginWithOpts || plugin],
-      }).code;
+      const actual = function () {
+        if (caseName === 'modules-false') {
+          return transform(readFileSync(actualFile), {
+            presets: [["es2015", { "modules": false }], "react", "stage-0"],
+            plugins: [[
+              plugin, { libraryName: 'antd', style: true }
+            ]],
+          }).code;
+        } else {
+          return transformFileSync(actualFile, {
+            presets: ['react'],
+            plugins: [pluginWithOpts || plugin],
+          }).code;
+        }
+      }()
 
       if (onlyFixtures.length) {
         console.warn();
