@@ -1,3 +1,4 @@
+const resolve = require('path').resolve;
 const cache = {};
 const cachePath = {};
 
@@ -50,7 +51,7 @@ export default function (defaultLibraryName) {
           if (!cachePath[libraryName]) {
             const themeName = styleLibraryName.replace(/^~/, '');
             cachePath[libraryName] = styleLibraryName.indexOf('~') === 0
-              ? themeName
+              ? resolve(process.cwd(), themeName)
               : `${libraryName}/${libDir}/${themeName}`;
           }
 

@@ -3,9 +3,9 @@ import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
 import expect from 'expect';
+import { resolve } from 'path';
 
 describe('index', () => {
-
   const fixturesDir = join(__dirname, 'fixtures');
   let fixtures = readdirSync(fixturesDir);
   const onlyFixtures = fixtures.filter(fixture => fixture.indexOf('-only') > -1);
@@ -18,6 +18,7 @@ describe('index', () => {
     const fixtureDir = join(fixturesDir, caseName);
     const actualFile = join(fixtureDir, 'actual.js');
     const expectedFile = join(fixtureDir, 'expected.js');
+    let expected = readFileSync(expectedFile, 'utf-8');
 
     it(`should work with ${caseName.split('-').join(' ')}`, () => {
 
@@ -60,6 +61,7 @@ describe('index', () => {
             styleLibraryName: '~theme',
           },
         ]];
+        expected = expected.replace(/__theme__/g, resolve(process.cwd(), 'theme'));
       }
 
       if (caseName === 'custom-css-filename') {
@@ -89,7 +91,6 @@ describe('index', () => {
         console.warn(actual);
       }
 
-      const expected = readFileSync(expectedFile, 'utf-8');
       expect(actual.trim()).toEqual(expected.trim());
     });
   });
