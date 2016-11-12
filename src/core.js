@@ -1,6 +1,6 @@
-const resolve = require('path').resolve;
 const cache = {};
 const cachePath = {};
+const importAll = {};
 
 export default function (defaultLibraryName) {
   return ({ types }) => {
@@ -40,7 +40,12 @@ export default function (defaultLibraryName) {
         }
 
         if (libraryObjs[methodName]) {
-          path = `${libraryName}/${libDir}${_root}`;
+          if (_root) {
+            path = `${libraryName}/${libDir}${_root}`;
+          } else {
+            path = libraryName;
+            importAll[path] = true;
+          }
         } else {
           path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
         }
@@ -51,15 +56,15 @@ export default function (defaultLibraryName) {
           if (!cachePath[libraryName]) {
             const themeName = styleLibraryName.replace(/^~/, '');
             cachePath[libraryName] = styleLibraryName.indexOf('~') === 0
-              ? resolve(process.cwd(), themeName)
+              ? themeName
               : `${libraryName}/${libDir}/${themeName}`;
           }
 
           if (libraryObjs[methodName]) {
             /* istanbul ingore next */
             if (cache[libraryName] === 2) {
-              throw Error('[babel-plugin-component] If you are using ' +
-                'on-demand loading and importing all, make sure to invoke the' +
+              throw Error('[babel-plugin-component] If you are using both' +
+                'on-demand and importing all, make sure to invoke the' +
                 ' importing all first.');
             }
             path = `${cachePath[libraryName]}${_root || '/index'}.css`;
@@ -132,7 +137,9 @@ export default function (defaultLibraryName) {
               }
             });
 
-            path.remove();
+            if (!importAll[value]) {
+              path.remove();
+            }
           }
         },
 

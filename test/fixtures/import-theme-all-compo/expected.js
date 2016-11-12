@@ -12,11 +12,11 @@ var _index = require('element-ui2/lib/theme-default/index.css');
 
 var _index2 = _interopRequireDefault(_index);
 
-var _lib = require('element-ui2/lib');
+var _elementUi = require('element-ui2');
 
-var _lib2 = _interopRequireDefault(_lib);
+var _elementUi2 = _interopRequireDefault(_elementUi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(_lib2.default);
+console.log(_elementUi2.default);
 console.log(_button2.default, _alert2.default);

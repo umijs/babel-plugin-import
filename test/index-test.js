@@ -61,7 +61,6 @@ describe('index', () => {
             styleLibraryName: '~theme',
           },
         ]];
-        expected = expected.replace(/__theme__/g, resolve(process.cwd(), 'theme'));
       }
 
       if (caseName === 'custom-css-filename') {
