@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-component",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Modular build plugin for babel.",
   "main": "lib/index.js",
   "scripts": {
