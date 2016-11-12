@@ -33,7 +33,8 @@
     "expect": "^1.13.4",
     "material-ui": "^0.15.4",
     "mocha": "^2.3.4",
-    "pre-commit": "~1.1.2"
+    "pre-commit": "~1.1.2",
+    "react-toolbox": "^1.2.5"
   },
   "babel": {
     "presets": [
