@@ -7,24 +7,6 @@ Modular import plugin for babel, compatible with [antd](https://github.com/ant-d
 
 ----
 
-## CHANGELOG
-
-1.0.0
-
-Rename to babel-plugin-import.
-
-- **BREAKCHANGE:** Don't support `libDir` anymore, replace it with `libraryDirectory`
-- **BREAKCHANGE:** Remove `libraryName` default value (previous `antd`)
-- [#66](https://github.com/ant-design/babel-plugin-antd/issues/66), Support material-ui
-  - `libraryDirectory` could be empty string
-  - add option `camel2DashComponentName`, default `true`
-- [#67](https://github.com/ant-design/babel-plugin-antd/pull/67), Support ExpressionStatement
-
-0.5.1
-
-- [#50](https://github.com/ant-design/babel-plugin-antd/pull/50) - Support both antd and antd-mobile
-- [#51](https://github.com/ant-design/babel-plugin-antd/pull/51) - Support export import
-
 ## Example
 
 Converts
