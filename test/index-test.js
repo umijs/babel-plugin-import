@@ -36,6 +36,12 @@ describe('index', () => {
             { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
           ]
         ];
+      } else if (caseName === 'react-toolbox') {
+        pluginWithOpts = [
+          plugin, [
+            { libraryName: 'react-toolbox', camel2UnderlineComponentName: true },
+          ]
+        ];
       } else if (caseName === 'multiple-libraries') {
         pluginWithOpts = [
           plugin, [

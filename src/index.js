@@ -21,15 +21,15 @@ export default function ({ types }) {
     // Init plugin instances once.
     if (!plugins) {
       if (Array.isArray(opts)) {
-        plugins = opts.map(({ libraryName, libraryDirectory, style, camel2DashComponentName }) => {
+        plugins = opts.map(({ libraryName, libraryDirectory, style, camel2DashComponentName, camel2UnderlineComponentName }) => {
           assert(libraryName, 'libraryName should be provided');
-          return new Plugin(libraryName, libraryDirectory, style, camel2DashComponentName, types);
+          return new Plugin(libraryName, libraryDirectory, style, camel2DashComponentName, camel2UnderlineComponentName, types);
         });
       } else {
         opts = opts || {};
         assert(opts.libraryName, 'libraryName should be provided');
         plugins = [
-          new Plugin(opts.libraryName, opts.libraryDirectory, opts.style, opts.camel2DashComponentName, types)
+          new Plugin(opts.libraryName, opts.libraryDirectory, opts.style, opts.camel2DashComponentName, opts.camel2UnderlineComponentName, types),
         ];
       }
     }
@@ -54,7 +54,7 @@ export default function ({ types }) {
   };
 
   for (const method of methods) {
-    ret.visitor[method] = function() {
+    ret.visitor[method] = function () {
       applyInstance(method, arguments, ret.visitor);
     };
   }
