@@ -55,6 +55,7 @@ describe('index', () => {
       }
 
       if (caseName === 'independent-theme-package') {
+        expected = expected.replace(/__theme__/g, process.cwd());
         cssPlugin = [plugin, [
           {
             libraryName: 'element-ui3',
