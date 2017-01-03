@@ -36,6 +36,12 @@ describe('index', () => {
         }];
       }
 
+      if (caseName === 'import-all-css') {
+        cssPlugin = [plugin, {
+          style: true
+        }];
+      }
+
       if (caseName === 'import-theme') {
         cssPlugin = [plugin, [
           {

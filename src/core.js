@@ -41,10 +41,8 @@ export default function (defaultLibraryName) {
         }
 
         if (libraryObjs[methodName]) {
-          if (_root) {
-            path = `${libraryName}/${libDir}${_root}`;
-          } else {
-            path = libraryName;
+          path = `${libraryName}/${libDir}${_root}`;
+          if (!_root) {
             importAll[path] = true;
           }
         } else {
