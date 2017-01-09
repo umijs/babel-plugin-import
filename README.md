@@ -7,6 +7,11 @@ Modular import plugin for babel, compatible with [antd](https://github.com/ant-d
 
 ----
 
+## Why babel-plugin-import
+
+- [English Instruction](https://ant.design/docs/react/getting-started#Import-on-Demand)
+- [中文说明](https://ant.design/docs/react/getting-started-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)
+
 ## Example
 
 Converts
