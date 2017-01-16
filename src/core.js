@@ -108,7 +108,6 @@ export default function (defaultLibraryName) {
 
     return {
       visitor: {
-
         Program() {
           specified = Object.create(null);
           libraryObjs = Object.create(null);
@@ -170,6 +169,16 @@ export default function (defaultLibraryName) {
 
           if (libraryObjs[node.object.name] || specified[node.object.name]) {
             node.object = importMethod(node.object.name, file, opts);
+          }
+        },
+
+        AssignmentExpression(path, { opts }) {
+          const { node } = path;
+          const { file } = path.hub;
+
+          if (node.operator !== '=') return;
+          if (libraryObjs[node.right.name] || specified[node.right.name]) {
+            node.right = importMethod(node.right.name, file, opts);
           }
         },
 
