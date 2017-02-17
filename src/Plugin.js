@@ -94,20 +94,17 @@ export default class Plugin {
       if (this.specified[name]) {
         node.callee = this.importMethod(this.specified[name], file, opts);
       }
-    } else {
-      // React.createElement(Button) -> React.createElement(_Button)
-      // if (object && object.name === 'React' && property && property.name === 'createElement' && node.arguments) {
-      node.arguments = node.arguments.map(arg => {
-        const { name: argName } = arg;
-        if (this.specified[argName] &&
-          path.scope.hasBinding(argName) &&
-          path.scope.getBinding(argName).path.type === 'ImportSpecifier') {
-          return this.importMethod(this.specified[argName], file, opts);
-        }
-        return arg;
-      });
-      // }
     }
+
+    node.arguments = node.arguments.map(arg => {
+      const { name: argName } = arg;
+      if (this.specified[argName] &&
+        path.scope.hasBinding(argName) &&
+        path.scope.getBinding(argName).path.type === 'ImportSpecifier') {
+        return this.importMethod(this.specified[argName], file, opts);
+      }
+      return arg;
+    });
   }
 
   MemberExpression(path, { opts }) {
