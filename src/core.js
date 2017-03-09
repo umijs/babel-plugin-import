@@ -187,7 +187,7 @@ export default function (defaultLibraryName) {
           const { file } = path.hub;
 
           elements.forEach((item, key) => {
-            if (libraryObjs[item.name] || specified[item.name]) {
+            if (item && (libraryObjs[item.name] || specified[item.name])) {
               elements[key] = importMethod(item.name, file, opts);
             }
           });
