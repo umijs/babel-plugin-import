@@ -88,7 +88,7 @@ For Example:
 ### style
 
 - `["import", { "libraryName": "antd" }]`: import js modularly
-- `["import", { "libraryName": "antd", "style": true }]`: import js and css modularly (less source files)
+- `["import", { "libraryName": "antd", "style": true }]`: import js and css modularly (LESS/Sass source files)
 - `["import", { "libraryName": "antd", "style": "css" }]`: import js and css modularly (css built files)
 
 ### Note
