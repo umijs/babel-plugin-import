@@ -1,7 +1,28 @@
 import { join } from 'path';
 
+function camel2Dash(_str) {
+  const str = _str[0].toLowerCase() + _str.substr(1);
+  return str.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`);
+}
+
+function camel2Underline(_str) {
+  const str = _str[0].toLowerCase() + _str.substr(1);
+  return str.replace(/([A-Z])/g, ($1) => `_${$1.toLowerCase()}`);
+}
+
+function winPath(path) {
+  return path.replace(/\\/g, '/');
+}
+
 export default class Plugin {
-  constructor(libraryName, libraryDirectory, style, camel2DashComponentName, camel2UnderlineComponentName, types) {
+  constructor(
+    libraryName,
+    libraryDirectory,
+    style,
+    camel2DashComponentName,
+    camel2UnderlineComponentName,
+    types
+  ) {
     this.specified = null;
     this.libraryObjs = null;
     this.selectedMethods = null;
@@ -17,11 +38,11 @@ export default class Plugin {
     this.types = types;
   }
 
-  importMethod(methodName, file, opts) {
+  importMethod(methodName, file) {
     if (!this.selectedMethods[methodName]) {
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
-      const transformedMethodName = this.camel2UnderlineComponentName
+      const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line
         ? camel2Underline(methodName)
         : this.camel2DashComponentName
           ? camel2Dash(methodName)
@@ -30,30 +51,30 @@ export default class Plugin {
       this.selectedMethods[methodName] = file.addImport(path, 'default');
       if (style === true) {
         file.addImport(`${path}/style`, 'style');
-      } else if(style === 'css') {
+      } else if (style === 'css') {
         file.addImport(`${path}/style/css`, 'style');
       }
     }
     return this.selectedMethods[methodName];
   }
 
-  buildExpressionHandler(node, props, path, opts) {
+  buildExpressionHandler(node, props, path) {
     const { file } = path.hub;
     const types = this.types;
     props.forEach(prop => {
       if (!types.isIdentifier(node[prop])) return;
       if (this.specified[node[prop].name]) {
-        node[prop] = this.importMethod(node[prop].name, file, opts);
+        node[prop] = this.importMethod(node[prop].name, file);  // eslint-disable-line
       }
     });
   }
 
-  buildDeclaratorHandler(node, prop, path, opts) {
+  buildDeclaratorHandler(node, prop, path) {
     const { file } = path.hub;
     const types = this.types;
     if (!types.isIdentifier(node[prop])) return;
     if (this.specified[node[prop].name]) {
-      node[prop] = this.importMethod(node[prop].name, file, opts);
+      node[prop] = this.importMethod(node[prop].name, file);  // eslint-disable-line
     }
   }
 
@@ -63,7 +84,7 @@ export default class Plugin {
     this.selectedMethods = Object.create(null);
   }
 
-  ImportDeclaration(path, { opts }) {
+  ImportDeclaration(path) {
     const { node } = path;
 
     // path maybe removed by prev instances.
@@ -84,15 +105,15 @@ export default class Plugin {
     }
   }
 
-  CallExpression(path, { opts }) {
+  CallExpression(path) {
     const { node } = path;
     const { file } = path.hub;
-    const { name, object, property } = node.callee;
+    const { name } = node.callee;
     const types = this.types;
 
     if (types.isIdentifier(node.callee)) {
       if (this.specified[name]) {
-        node.callee = this.importMethod(this.specified[name], file, opts);
+        node.callee = this.importMethod(this.specified[name], file);
       }
     }
 
@@ -101,13 +122,13 @@ export default class Plugin {
       if (this.specified[argName] &&
         path.scope.hasBinding(argName) &&
         path.scope.getBinding(argName).path.type === 'ImportSpecifier') {
-        return this.importMethod(this.specified[argName], file, opts);
+        return this.importMethod(this.specified[argName], file);
       }
       return arg;
     });
   }
 
-  MemberExpression(path, { opts }) {
+  MemberExpression(path) {
     const { node } = path;
     const { file } = path.hub;
 
@@ -116,51 +137,51 @@ export default class Plugin {
 
     if (this.libraryObjs[node.object.name]) {
       // antd.Button -> _Button
-      path.replaceWith(this.importMethod(node.property.name, file, opts));
+      path.replaceWith(this.importMethod(node.property.name, file));
     } else if (this.specified[node.object.name]) {
-      node.object = this.importMethod(this.specified[node.object.name], file, opts);
+      node.object = this.importMethod(this.specified[node.object.name], file);
     }
   }
 
-  Property(path, {opts}) {
+  Property(path, { opts }) {
     const { node } = path;
     this.buildDeclaratorHandler(node, 'value', path, opts);
   }
 
-  VariableDeclarator(path, {opts}) {
+  VariableDeclarator(path, { opts }) {
     const { node } = path;
     this.buildDeclaratorHandler(node, 'init', path, opts);
   }
 
-  LogicalExpression(path, {opts}) {
+  LogicalExpression(path, { opts }) {
     const { node } = path;
     this.buildExpressionHandler(node, ['left', 'right'], path, opts);
   }
 
-  ConditionalExpression(path, {opts}) {
+  ConditionalExpression(path, { opts }) {
     const { node } = path;
     this.buildExpressionHandler(node, ['test', 'consequent', 'alternate'], path, opts);
   }
 
-  IfStatement(path, {opts}) {
+  IfStatement(path, { opts }) {
     const { node } = path;
     this.buildExpressionHandler(node, ['test'], path, opts);
     this.buildExpressionHandler(node.test, ['left', 'right'], path, opts);
   }
 
-  ExpressionStatement(path, {opts}){
+  ExpressionStatement(path, { opts }) {
     const { node } = path;
     const { types } = this;
-    if(types.isAssignmentExpression(node.expression)){
+    if (types.isAssignmentExpression(node.expression)) {
       this.buildExpressionHandler(node.expression, ['right'], path, opts);
     }
   }
 
-  ReturnStatement(path, {opts}) {
+  ReturnStatement(path) {
     const types = this.types;
     const { node, hub: { file } } = path;
     if (node.argument && types.isIdentifier(node.argument) && this.specified[node.argument.name]) {
-      node.argument = this.importMethod(node.argument.name, file, opts);
+      node.argument = this.importMethod(node.argument.name, file);
     }
   }
 
@@ -168,22 +189,4 @@ export default class Plugin {
     const { node } = path;
     this.buildExpressionHandler(node, ['declaration'], path, opts);
   }
-}
-
-function camel2Dash(_str) {
-  const str = _str[0].toLowerCase() + _str.substr(1);
-  return str.replace(/([A-Z])/g, function camel2DashReplace($1) {
-    return '-' + $1.toLowerCase();
-  });
-}
-
-function camel2Underline(_str) {
-  const str = _str[0].toLowerCase() + _str.substr(1);
-  return str.replace(/([A-Z])/g, function ($1) {
-    return '_' + $1.toLowerCase();
-  });
-}
-
-function winPath(path) {
-  return path.replace(/\\/g, '/');
 }

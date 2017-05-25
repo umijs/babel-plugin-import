@@ -17,23 +17,42 @@ export default function ({ types }) {
     }
   }
 
-  function Program(path, { opts }) {
+  function Program(path, { opts = {} }) {
     // Init plugin instances once.
     if (!plugins) {
       if (Array.isArray(opts)) {
-        plugins = opts.map(({ libraryName, libraryDirectory, style, camel2DashComponentName, camel2UnderlineComponentName }) => {
+        plugins = opts.map(({
+          libraryName,
+          libraryDirectory,
+          style,
+          camel2DashComponentName,
+          camel2UnderlineComponentName,
+        }) => {
           assert(libraryName, 'libraryName should be provided');
-          return new Plugin(libraryName, libraryDirectory, style, camel2DashComponentName, camel2UnderlineComponentName, types);
+          return new Plugin(
+            libraryName,
+            libraryDirectory,
+            style,
+            camel2DashComponentName,
+            camel2UnderlineComponentName,
+            types
+          );
         });
       } else {
-        opts = opts || {};
         assert(opts.libraryName, 'libraryName should be provided');
         plugins = [
-          new Plugin(opts.libraryName, opts.libraryDirectory, opts.style, opts.camel2DashComponentName, opts.camel2UnderlineComponentName, types),
+          new Plugin(
+            opts.libraryName,
+            opts.libraryDirectory,
+            opts.style,
+            opts.camel2DashComponentName,
+            opts.camel2UnderlineComponentName,
+            types
+          ),
         ];
       }
     }
-    applyInstance('Program', arguments, this);
+    applyInstance('Program', arguments, this);  // eslint-disable-line
   }
 
   const methods = [
@@ -56,7 +75,7 @@ export default function ({ types }) {
 
   for (const method of methods) {
     ret.visitor[method] = function () {
-      applyInstance(method, arguments, ret.visitor);
+      applyInstance(method, arguments, ret.visitor);  // eslint-disable-line
     };
   }
 
