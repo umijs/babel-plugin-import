@@ -156,6 +156,14 @@ export default class Plugin {
     }
   }
 
+  ReturnStatement(path, {opts}) {
+    const types = this.types;
+    const { node, hub: { file } } = path;
+    if (node.argument && types.isIdentifier(node.argument) && this.specified[node.argument.name]) {
+      node.argument = this.importMethod(node.argument.name, file, opts);
+    }
+  }
+
   ExportDefaultDeclaration(path, { opts }) {
     const { node } = path;
     this.buildExpressionHandler(node, ['declaration'], path, opts);

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf lib && ./node_modules/.bin/babel src --out-dir lib --ignore __tests__",
     "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --no-timeouts",
-    "debug": "./node_modules/.bin/mocha --require babel-core/register --require babel-polyfill --no-timeouts",
+    "debug": "mocha --require babel-core/register --require babel-polyfill --no-timeouts",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },

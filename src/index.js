@@ -46,6 +46,7 @@ export default function ({ types }) {
     'ConditionalExpression',
     'IfStatement',
     'ExpressionStatement',
+    'ReturnStatement',
     'ExportDefaultDeclaration',
   ];
 
