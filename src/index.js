@@ -74,7 +74,7 @@ export default function ({ types }) {
   };
 
   for (const method of methods) {
-    ret.visitor[method] = function () {
+    ret.visitor[method] = function () { // eslint-disable-line
       applyInstance(method, arguments, ret.visitor);  // eslint-disable-line
     };
   }

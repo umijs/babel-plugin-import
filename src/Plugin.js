@@ -73,7 +73,9 @@ export default class Plugin {
     const { file } = path.hub;
     const types = this.types;
     if (!types.isIdentifier(node[prop])) return;
-    if (this.specified[node[prop].name]) {
+    if (this.specified[node[prop].name] &&
+      path.scope.hasBinding(node[prop].name) &&
+      path.scope.getBinding(node[prop].name).path.type === 'ImportSpecifier') {
       node[prop] = this.importMethod(node[prop].name, file);  // eslint-disable-line
     }
   }
