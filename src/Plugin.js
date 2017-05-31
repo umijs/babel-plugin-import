@@ -64,7 +64,7 @@ export default class Plugin {
     props.forEach(prop => {
       if (!types.isIdentifier(node[prop])) return;
       if (this.specified[node[prop].name]) {
-        node[prop] = this.importMethod(node[prop].name, file);  // eslint-disable-line
+        node[prop] = this.importMethod(this.specified[node[prop].name], file);  // eslint-disable-line
       }
     });
   }
