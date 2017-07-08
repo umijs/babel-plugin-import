@@ -109,6 +109,20 @@ describe('index', () => {
         ]];
       }
 
+      if (caseName === 'independent-theme-package-mixin') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui7',
+            styleLibrary: {
+              mixin: true,
+              name: '~theme',
+              path: '[module]/[module].css',
+            },
+            style: true,
+          },
+        ]];
+      }
+
       if (caseName === 'custom-css-filename') {
         cssPlugin = [plugin, { style: 'style.css' }];
       }

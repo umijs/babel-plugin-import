@@ -125,7 +125,8 @@ or
   styleLibrary: {
     "name": "xxx", // same with styleLibraryName
     "base": true,  // if theme package has a base.css
-    "path": "[module]/index.css"  // the style path. e.g. module Alert =>  alert/index.css
+    "path": "[module]/index.css",  // the style path. e.g. module Alert =>  alert/index.css
+    "mixin": true  // if theme-package not found css file, then use [libraryName]'s css file
   }
   ```
 - `["component", { "style": true }]`: import js and css from 'style.css'
