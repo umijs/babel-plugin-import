@@ -95,6 +95,24 @@ Via `.babelrc` or babel-loader.
   - componentB
     - index.js
 ```
+or 
+```
+- lib
+  - theme-custom // 'styleLibrary.name'
+    - base.css // if styleLibrary.base true
+    - index.css // required
+    - componentA.css // default 
+    - componentB.css
+  - theme-material
+    - componentA
+      -index.css  // styleLibrary.path  [module]/index.css
+    - componentB
+      -index.css
+  - componentA
+    - index.js
+  - componentB
+    - index.js
+```
 
 ### options
 
@@ -102,6 +120,14 @@ Via `.babelrc` or babel-loader.
 - `["component", { "libraryName": "component" }]`: module name
 - `["component", { "styleLibraryName": "theme_package" }]`: style module name
 - `["component", { "styleLibraryName": "~independent_theme_package" }]`: Import a independent theme package
+- `["component", { "styleLibrary": {} }]`: Import a independent theme package with more config
+  ```
+  styleLibrary: {
+    "name": "xxx", // same with styleLibraryName
+    "base": true,  // if theme package has a base.css
+    "path": "[module]/index.css"  // the style path. e.g. module Alert =>  alert/index.css
+  }
+  ```
 - `["component", { "style": true }]`: import js and css from 'style.css'
 - `["component", { "style": cssFilePath }]`: import style css from filePath
 - `["component", { "libDir": "lib" }]`: lib directory
