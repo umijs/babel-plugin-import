@@ -51,6 +51,31 @@ describe('index', () => {
         ]];
       }
 
+      if (caseName === 'import-theme-custom') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui4',
+            styleLibrary: {
+              base: false,
+              name: 'theme-custom',
+            },
+          },
+        ]];
+      }
+
+      if (caseName === 'import-theme-custom-path') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui5',
+            styleLibrary: {
+              base: false,
+              name: 'theme-custom-path',
+              path: '[module]/[module].css',
+            },
+          },
+        ]];
+      }
+
       if (caseName === 'import-theme-all-compo') {
         cssPlugin = [plugin, [
           {
@@ -66,6 +91,34 @@ describe('index', () => {
           {
             libraryName: 'element-ui3',
             styleLibraryName: '~theme',
+          },
+        ]];
+      }
+
+      if (caseName === 'independent-theme-package-custom') {
+        expected = expected.replace(/__theme__/g, process.cwd());
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui6',
+            styleLibrary: {
+              base: true,
+              name: '~theme',
+              path: '[module]/[module].css',
+            },
+          },
+        ]];
+      }
+
+      if (caseName === 'independent-theme-package-mixin') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'element-ui7',
+            styleLibrary: {
+              mixin: true,
+              name: '~theme',
+              path: '[module]/[module].css',
+            },
+            style: true,
           },
         ]];
       }

@@ -1,4 +1,5 @@
 const resolve = require('path').resolve;
+const isExist = require('fs').existsSync;
 const cache = {};
 const cachePath = {};
 const importAll = {};
@@ -31,10 +32,15 @@ export default function (defaultLibraryName) {
         const {
           libDir = 'lib',
           libraryName = defaultLibraryName,
-          styleLibraryName, style,
+          style,
+          styleLibrary,
           root = '',
         } = options;
+        let styleLibraryName = options.styleLibraryName;
         let _root = root;
+        let isBaseStyle = true;
+        let modulePathTpl;
+        let mixin = false;
 
         if (root) {
           _root = `/${root}`;
@@ -48,9 +54,15 @@ export default function (defaultLibraryName) {
         } else {
           path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
         }
+        const _path = path;
 
         selectedMethods[methodName] = file.addImport(path, 'default');
-
+        if (styleLibrary && typeof styleLibrary === 'object') {
+          styleLibraryName = styleLibrary.name;
+          isBaseStyle = styleLibrary.base;
+          modulePathTpl = styleLibrary.path;
+          mixin = styleLibrary.mixin;
+        }
         if (styleLibraryName) {
           if (!cachePath[libraryName]) {
             const themeName = styleLibraryName.replace(/^~/, '');
@@ -70,8 +82,19 @@ export default function (defaultLibraryName) {
             cache[libraryName] = 1;
           } else {
             if (cache[libraryName] !== 1) {
-              path = `${cachePath[libraryName]}/${camel2Dash(methodName)}.css`;
-              file.addImport(`${cachePath[libraryName]}/base.css`, 'default');
+              /* if set styleLibrary.path(format: [module]/module.css) */
+              if (modulePathTpl) {
+                const modulePath = modulePathTpl.replace(/\[module]/ig, camel2Dash(methodName));
+                path = `${cachePath[libraryName]}/${modulePath}`;
+              } else {
+                path = `${cachePath[libraryName]}/${camel2Dash(methodName)}.css`;
+              }
+              if (mixin && !isExist(path)) {
+                path = style === true ? `${_path}/style.css` : `${_path}/${style}`;
+              }
+              if (isBaseStyle) {
+                file.addImport(`${cachePath[libraryName]}/base.css`, 'default');
+              }
               cache[libraryName] = 2;
             }
           }
