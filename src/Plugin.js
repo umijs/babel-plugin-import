@@ -191,4 +191,9 @@ export default class Plugin {
     const { node } = path;
     this.buildExpressionHandler(node, ['declaration'], path, opts);
   }
+
+  BinaryExpression(path, { opts }) {
+    const { node } = path;
+    this.buildExpressionHandler(node, ['left', 'right'], path, opts);
+  }
 }
