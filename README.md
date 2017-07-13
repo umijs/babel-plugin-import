@@ -79,8 +79,7 @@ For Example:
     "style": true
   },
   {
-    "libraryName": "antd-mobile",
-    "libraryDirectory": "component",
+    "libraryName": "antd-mobile"
   },
 ]
 ```
