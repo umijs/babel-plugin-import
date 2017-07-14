@@ -92,4 +92,4 @@ For Example:
 
 ### Note
 
-babel-plugin-import will be not working if you add the library in webpack config [vendor](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code). 
+babel-plugin-import will not work properly if you add the library in the webpack config [vendor](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code). 
