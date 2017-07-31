@@ -27,6 +27,7 @@ export default function ({ types }) {
           style,
           camel2DashComponentName,
           camel2UnderlineComponentName,
+          fileName,
         }) => {
           assert(libraryName, 'libraryName should be provided');
           return new Plugin(
@@ -35,6 +36,7 @@ export default function ({ types }) {
             style,
             camel2DashComponentName,
             camel2UnderlineComponentName,
+            fileName,
             types
           );
         });
@@ -47,6 +49,7 @@ export default function ({ types }) {
             opts.style,
             opts.camel2DashComponentName,
             opts.camel2UnderlineComponentName,
+            opts.fileName,
             types
           ),
         ];
