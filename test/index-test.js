@@ -49,6 +49,14 @@ describe('index', () => {
             { libraryName: 'antd-mobile' },
           ]
         ];
+      } else if (caseName === 'file-name') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'antd-mobile-fake-2.0',
+            fileName: 'index.native',
+          },
+        ];
       } else {
         pluginWithOpts = [
           plugin, { libraryName: 'antd' }
