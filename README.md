@@ -14,24 +14,42 @@ Modular import plugin for babel, compatible with [antd](https://github.com/ant-d
 
 ## Example
 
-Converts
+#### `{ "libraryName": "antd" }`
 
 ```javascript
 import { Button } from 'antd';
+ReactDOM.render(<Button>xxxx</Button>);
 
-ReactDOM.render(<div>
-  <Button>xxxx</Button>
-</div>);
+      ↓ ↓ ↓ ↓ ↓ ↓
+      
+var _button = require('antd/lib/button');
+ReactDOM.render(<_button>xxxx</_button>);
 ```
 
-(roughly) to
+#### `{ "libraryName": "antd", style: "css" }`
 
 ```javascript
-var _button = require('antd/lib/button');
+import { Button } from 'antd';
+ReactDOM.render(<Button>xxxx</Button>);
 
-ReactDOM.render(<div>
-  <_button>xxxx</_button>
-</div>);
+      ↓ ↓ ↓ ↓ ↓ ↓
+      
+var _button = require('antd/lib/button');
+require('antd/lib/button/style/css');
+ReactDOM.render(<_button>xxxx</_button>);
+```
+
+#### `{ "libraryName": "antd", style: true }`
+
+```javascript
+import { Button } from 'antd';
+ReactDOM.render(<Button>xxxx</Button>);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+      
+var _button = require('antd/lib/button');
+require('antd/lib/button/style');
+ReactDOM.render(<_button>xxxx</_button>);
 ```
 
 ## Usage
