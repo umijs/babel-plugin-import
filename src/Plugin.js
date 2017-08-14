@@ -22,6 +22,7 @@ export default class Plugin {
     camel2DashComponentName,
     camel2UnderlineComponentName,
     fileName,
+    customName,
     types
   ) {
     this.specified = null;
@@ -37,6 +38,7 @@ export default class Plugin {
     this.camel2UnderlineComponentName = camel2UnderlineComponentName;
     this.style = style || false;
     this.fileName = fileName || '';
+    this.customName = customName;
     this.types = types;
   }
 
@@ -50,7 +52,7 @@ export default class Plugin {
           ? camel2Dash(methodName)
           : methodName;
       const path = winPath(
-        join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName)
+        this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
       this.selectedMethods[methodName] = file.addImport(path, 'default');
       if (style === true) {

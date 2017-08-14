@@ -57,6 +57,14 @@ describe('index', () => {
             fileName: 'index.native',
           },
         ];
+      } else if (caseName === 'custom-name') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'plat/antd',
+            customName: (name) => `antd/lib/${name}`,
+          },
+        ];
       } else {
         pluginWithOpts = [
           plugin, { libraryName: 'antd' }
