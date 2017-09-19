@@ -49,6 +49,23 @@ describe('index', () => {
             { libraryName: 'antd-mobile' },
           ]
         ];
+      } else if (caseName === 'multiple-libraries-hilojs') {
+        pluginWithOpts = [
+          plugin, [
+            { libraryName: 'antd' },
+            {
+              libraryName: 'hilojs',
+              customName(name) {
+                switch (name) {
+                  case 'class':
+                    return `hilojs/core/${name}`;
+                  default:
+                    return `hilojs/${name}`;
+                }
+              },
+            },
+          ]
+        ];
       } else if (caseName === 'file-name') {
         pluginWithOpts = [
           plugin,
