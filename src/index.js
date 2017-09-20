@@ -74,6 +74,7 @@ export default function ({ types }) {
     'ReturnStatement',
     'ExportDefaultDeclaration',
     'BinaryExpression',
+    'NewExpression',
   ];
 
   const ret = {
