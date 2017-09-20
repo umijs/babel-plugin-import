@@ -140,6 +140,15 @@ describe('index', () => {
         ]];
       }
 
+      if (caseName === 'camel-to-dash-option') {
+        cssPlugin = [plugin, [
+          {
+            libraryName: 'antd',
+            camel2Dash: false
+          },
+        ]];
+      }
+
       const actual = transformFileSync(actualFile, {
         presets: ['react'],
         plugins: [cssPlugin || plugin],
