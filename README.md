@@ -133,3 +133,4 @@ or
 - `["component", { "style": cssFilePath }]`: import style css from filePath
 - `["component", { "libDir": "lib" }]`: lib directory
 - `["component", { "root": "index" }]`: main file dir
+- `["component", { "camel2Dash": false }]`: whether parse name to dash mode or not
