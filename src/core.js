@@ -11,7 +11,10 @@ export default function (defaultLibraryName) {
     let selectedMethods;
     let moduleArr;
 
-    function camel2Dash(_str) {
+    function parseName(_str, camel2Dash) {
+      if (!camel2Dash) {
+        return _str;
+      }
       const str = _str[0].toLowerCase() + _str.substr(1);
       return str.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`);
     }
@@ -35,6 +38,7 @@ export default function (defaultLibraryName) {
           style,
           styleLibrary,
           root = '',
+          camel2Dash = true,
         } = options;
         let styleLibraryName = options.styleLibraryName;
         let _root = root;
@@ -52,7 +56,7 @@ export default function (defaultLibraryName) {
             importAll[path] = true;
           }
         } else {
-          path = `${libraryName}/${libDir}/${camel2Dash(methodName)}`;
+          path = `${libraryName}/${libDir}/${parseName(methodName, camel2Dash)}`;
         }
         const _path = path;
 
@@ -83,11 +87,12 @@ export default function (defaultLibraryName) {
           } else {
             if (cache[libraryName] !== 1) {
               /* if set styleLibrary.path(format: [module]/module.css) */
+              const parsedMethodName = parseName(methodName, camel2Dash);
               if (modulePathTpl) {
-                const modulePath = modulePathTpl.replace(/\[module]/ig, camel2Dash(methodName));
+                const modulePath = modulePathTpl.replace(/\[module]/ig, parsedMethodName);
                 path = `${cachePath[libraryName]}/${modulePath}`;
               } else {
-                path = `${cachePath[libraryName]}/${camel2Dash(methodName)}.css`;
+                path = `${cachePath[libraryName]}/${parsedMethodName}.css`;
               }
               if (mixin && !isExist(path)) {
                 path = style === true ? `${_path}/style.css` : `${_path}/${style}`;
