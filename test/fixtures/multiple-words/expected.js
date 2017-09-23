@@ -1,9 +1,7 @@
-'use strict';
+"use strict";
 
-var _inputNumber = require('antd/lib/input-number');
-
-var _inputNumber2 = _interopRequireDefault(_inputNumber);
+var _inputNumber = _interopRequireDefault(require("antd/lib/input-number"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-React.createElement(_inputNumber2.default, null);
+React.createElement(_inputNumber.default, null);
