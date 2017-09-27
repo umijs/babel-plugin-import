@@ -9,7 +9,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && ./node_modules/.bin/babel src --out-dir lib --ignore __tests__",
-    "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --no-timeouts",
+    "test": "node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha  -- --require babel-register --no-timeouts",
     "debug": "mocha --require babel-register --require babel-polyfill --no-timeouts",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
@@ -26,7 +26,7 @@
   "devDependencies": {
     "babel-cli": "^7.0.0-beta.1",
     "babel-core": "^7.0.0-beta.1",
-    "babel-istanbul": "^0.7.0",
+    "babel-istanbul": "^0.12.2",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-preset-es2015": "^7.0.0-beta.1",
     "babel-preset-react": "^7.0.0-beta.1",
