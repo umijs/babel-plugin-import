@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _datePicker = require('antd/lib/date-picker');
-
-var _datePicker2 = _interopRequireDefault(_datePicker);
+var _datePicker = _interopRequireDefault(require("antd/lib/date-picker"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _datePicker2.default;
+var _default2 = _datePicker.default;
+exports.default = _default2;
 module.exports = exports['default'];

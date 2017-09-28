@@ -64,8 +64,8 @@ export default class Plugin {
     return this.selectedMethods[methodName];
   }
 
-  buildExpressionHandler(node, props, path) {
-    const { file } = path.hub;
+  buildExpressionHandler(node, props, path, state) {
+    const file = (path && path.hub && path.hub.file) || (state && state.file);
     const types = this.types;
     props.forEach(prop => {
       if (!types.isIdentifier(node[prop])) return;
@@ -75,8 +75,8 @@ export default class Plugin {
     });
   }
 
-  buildDeclaratorHandler(node, prop, path) {
-    const { file } = path.hub;
+  buildDeclaratorHandler(node, prop, path, state) {
+    const file = (path && path.hub && path.hub.file) || (state && state.file);
     const types = this.types;
     if (!types.isIdentifier(node[prop])) return;
     if (this.specified[node[prop].name] &&
@@ -113,9 +113,9 @@ export default class Plugin {
     }
   }
 
-  CallExpression(path) {
+  CallExpression(path, state) {
     const { node } = path;
-    const { file } = path.hub;
+    const file = (path && path.hub && path.hub.file) || (state && state.file);
     const { name } = node.callee;
     const types = this.types;
 
@@ -136,9 +136,9 @@ export default class Plugin {
     });
   }
 
-  MemberExpression(path) {
+  MemberExpression(path, state) {
     const { node } = path;
-    const { file } = path.hub;
+    const file = (path && path.hub && path.hub.file) || (state && state.file);
 
     // multiple instance check.
     if (!node.object || !node.object.name) return;
@@ -151,60 +151,61 @@ export default class Plugin {
     }
   }
 
-  Property(path, { opts }) {
+  Property(path, state) {
     const { node } = path;
-    this.buildDeclaratorHandler(node, 'value', path, opts);
+    this.buildDeclaratorHandler(node, 'value', path, state);
   }
 
-  VariableDeclarator(path, { opts }) {
+  VariableDeclarator(path, state) {
     const { node } = path;
-    this.buildDeclaratorHandler(node, 'init', path, opts);
+    this.buildDeclaratorHandler(node, 'init', path, state);
   }
 
-  LogicalExpression(path, { opts }) {
+  LogicalExpression(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['left', 'right'], path, opts);
+    this.buildExpressionHandler(node, ['left', 'right'], path, state);
   }
 
-  ConditionalExpression(path, { opts }) {
+  ConditionalExpression(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['test', 'consequent', 'alternate'], path, opts);
+    this.buildExpressionHandler(node, ['test', 'consequent', 'alternate'], path, state);
   }
 
-  IfStatement(path, { opts }) {
+  IfStatement(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['test'], path, opts);
-    this.buildExpressionHandler(node.test, ['left', 'right'], path, opts);
+    this.buildExpressionHandler(node, ['test'], path, state);
+    this.buildExpressionHandler(node.test, ['left', 'right'], path, state);
   }
 
-  ExpressionStatement(path, { opts }) {
+  ExpressionStatement(path, state) {
     const { node } = path;
     const { types } = this;
     if (types.isAssignmentExpression(node.expression)) {
-      this.buildExpressionHandler(node.expression, ['right'], path, opts);
+      this.buildExpressionHandler(node.expression, ['right'], path, state);
     }
   }
 
-  ReturnStatement(path) {
+  ReturnStatement(path, state) {
     const types = this.types;
-    const { node, hub: { file } } = path;
+    const file = (path && path.hub && path.hub.file) || (state && state.file);
+    const { node } = path;
     if (node.argument && types.isIdentifier(node.argument) && this.specified[node.argument.name]) {
       node.argument = this.importMethod(node.argument.name, file);
     }
   }
 
-  ExportDefaultDeclaration(path, { opts }) {
+  ExportDefaultDeclaration(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['declaration'], path, opts);
+    this.buildExpressionHandler(node, ['declaration'], path, state);
   }
 
-  BinaryExpression(path, { opts }) {
+  BinaryExpression(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['left', 'right'], path, opts);
+    this.buildExpressionHandler(node, ['left', 'right'], path, state);
   }
 
-  NewExpression(path, { opts }) {
+  NewExpression(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['callee', 'arguments'], path, opts);
+    this.buildExpressionHandler(node, ['callee', 'arguments'], path, state);
   }
 }

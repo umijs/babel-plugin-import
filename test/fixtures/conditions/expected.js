@@ -1,16 +1,14 @@
-'use strict';
+"use strict";
 
-var _select = require('antd/lib/select');
-
-var _select2 = _interopRequireDefault(_select);
+var _select = _interopRequireDefault(require("antd/lib/select"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (a === _select2.default) {}
-if (_select2.default) {}
+if (a === _select.default) {}
 
-_select2.default ? 'a' : 'b';
-a ? _select2.default : 2;
+if (_default) {}
 
-_select2.default || 'a';
-a || _select2.default;
+_default ? 'a' : 'b';
+a ? _default : 2;
+_default || 'a';
+a || _default;
