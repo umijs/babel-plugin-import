@@ -12,6 +12,11 @@ Modular import plugin for babel, compatible with [antd](https://github.com/ant-d
 - [English Instruction](https://ant.design/docs/react/getting-started#Import-on-Demand)
 - [中文说明](https://ant.design/docs/react/getting-started-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)
 
+## Where to add babel-plugin-import
+
+- [babelrc](https://babeljs.io/docs/usage/babelrc/)
+- [babel-loader](https://github.com/babel/babel-loader)
+
 ## Example
 
 #### `{ "libraryName": "antd" }`
