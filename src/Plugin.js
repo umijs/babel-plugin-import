@@ -43,7 +43,8 @@ export default class Plugin {
   }
 
   importMethod(methodName, file) {
-    if (!this.selectedMethods[methodName]) {
+    // disable selectedMethods cache, it don't work in babel7
+    if (true /* !this.selectedMethods[methodName] */) {
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line

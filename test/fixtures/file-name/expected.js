@@ -6,4 +6,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 if (_index.default) {}
 
-console.log(_default);
+console.log(_index.default);

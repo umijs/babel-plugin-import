@@ -6,9 +6,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 if (a === _select.default) {}
 
-if (_default) {}
+if (_select.default) {}
 
-_default ? 'a' : 'b';
-a ? _default : 2;
-_default || 'a';
-a || _default;
+_select.default ? 'a' : 'b';
+a ? _select.default : 2;
+_select.default || 'a';
+a || _select.default;

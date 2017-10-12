@@ -42,7 +42,7 @@ describe('index', () => {
             { libraryName: 'react-toolbox', camel2UnderlineComponentName: true },
           ]
         ];
-      } else if (caseName === 'multiple-children') {
+      } else if (caseName === 'use-multiple-times') {
         pluginWithOpts = [
           plugin, [
             { libraryName: 'antd-mobile' },
