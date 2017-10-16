@@ -1,8 +1,6 @@
-"use strict";
-
-var _button = _interopRequireDefault(require("antd/lib/button"));
+var _Button = _interopRequireDefault(require("antd/lib/button")).default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var foo = _button.default.foo;
-ReactDOM.render(React.createElement("div", null, React.createElement(_button.default, null, "xxxx")));
+var foo = _Button.foo;
+ReactDOM.render(React.createElement("div", null, React.createElement(_Button, null, "xxxx")));

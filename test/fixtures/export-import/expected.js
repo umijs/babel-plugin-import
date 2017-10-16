@@ -9,6 +9,6 @@ var _datePicker = _interopRequireDefault(require("antd/lib/date-picker"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _default2 = _datePicker.default;
-exports.default = _default2;
+var _default = _datePicker.default;
+exports.default = _default;
 module.exports = exports['default'];

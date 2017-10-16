@@ -1,14 +1,13 @@
-"use strict";
+require("antd/lib/button/style");
 
-var _style3 = require("antd/lib/button/style");
+var _Button = _interopRequireDefault(require("antd/lib/button")).default;
 
-var _button = _interopRequireDefault(require("antd/lib/button"));
+require("antd/lib/message/style");
 
-var _style4 = require("antd/lib/message/style");
-
-var _message = _interopRequireDefault(require("antd/lib/message"));
+var _message = _interopRequireDefault(require("antd/lib/message")).default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _message.default)('xxx');
-ReactDOM.render(React.createElement("div", null, React.createElement(_button.default, null, "xxxx")));
+_message('xxx');
+
+ReactDOM.render(React.createElement("div", null, React.createElement(_Button, null, "xxxx")));
