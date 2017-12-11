@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { addSideEffect, addDefault } from 'babel-helper-module-imports';
+import { addSideEffect, addDefault } from '@babel/helper-module-imports';
 
 function camel2Dash(_str) {
   const str = _str[0].toLowerCase() + _str.substr(1);
@@ -45,7 +45,7 @@ export default class Plugin {
 
   importMethod(methodName, file) {
     // disable selectedMethods cache, it don't work in babel7
-    if (!this.selectedMethods[methodName]) {
+    if (true /*!this.selectedMethods[methodName]*/) { // eslint-disable-line
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line

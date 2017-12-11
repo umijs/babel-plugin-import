@@ -1,4 +1,4 @@
-import { transformFileSync, transform } from "babel-core";
+import { transformFileSync, transform } from "@babel/core";
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
@@ -32,45 +32,15 @@ describe('index', () => {
         ];
       } else if (caseName === 'material-ui') {
         pluginWithOpts = [
-          plugin, [
-            { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
-          ]
+          plugin, { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
         ];
       } else if (caseName === 'react-toolbox') {
         pluginWithOpts = [
-          plugin, [
-            { libraryName: 'react-toolbox', camel2UnderlineComponentName: true },
-          ]
+          plugin, { libraryName: 'react-toolbox', camel2UnderlineComponentName: true },
         ];
       } else if (caseName === 'use-multiple-times') {
         pluginWithOpts = [
-          plugin, [
-            { libraryName: 'antd-mobile' },
-          ]
-        ];
-      } else if (caseName === 'multiple-libraries') {
-        pluginWithOpts = [
-          plugin, [
-            { libraryName: 'antd' },
-            { libraryName: 'antd-mobile' },
-          ]
-        ];
-      } else if (caseName === 'multiple-libraries-hilojs') {
-        pluginWithOpts = [
-          plugin, [
-            { libraryName: 'antd' },
-            {
-              libraryName: 'hilojs',
-              customName(name) {
-                switch (name) {
-                  case 'class':
-                    return `hilojs/core/${name}`;
-                  default:
-                    return `hilojs/${name}`;
-                }
-              },
-            },
-          ]
+          plugin, { libraryName: 'antd-mobile' },
         ];
       } else if (caseName === 'file-name') {
         pluginWithOpts = [
@@ -97,10 +67,36 @@ describe('index', () => {
       const actual = function () {
         if (caseName === 'modules-false') {
           return transform(readFileSync(actualFile), {
-            presets: [["es2015", { "modules": false }], "react", "stage-0"],
+            presets: ["umi"],
             plugins: [[
-              plugin, { libraryName: 'antd', style: true }
+              plugin, {libraryName: 'antd', style: true}
             ]],
+          }).code;
+        } else if (caseName === 'multiple-libraries') {
+          return transformFileSync(actualFile, {
+            presets: ['react'],
+            plugins: [
+              [plugin, { libraryName: 'antd' }, 'antd'],
+              [plugin, { libraryName: 'antd-mobile' }, 'antd-mobile'],
+            ],
+          }).code;
+        } else if (caseName === 'multiple-libraries-hilojs') {
+          return transformFileSync(actualFile, {
+            presets: ['react'],
+            plugins: [
+              [plugin, { libraryName: 'antd' }, 'antd'],
+              [plugin, {
+                libraryName: 'hilojs',
+                customName(name) {
+                  switch (name) {
+                    case 'class':
+                      return `hilojs/core/${name}`;
+                    default:
+                      return `hilojs/${name}`;
+                  }
+                },
+              }, 'hilojs'],
+            ],
           }).code;
         } else {
           return transformFileSync(actualFile, {
