@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Select } from 'element-ui';
 
 if (a === Select) {}
 if (Select) {}

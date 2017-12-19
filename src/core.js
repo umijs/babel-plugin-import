@@ -1,10 +1,11 @@
+const { addSideEffect, addDefault } = require('@babel/helper-module-imports');
 const resolve = require('path').resolve;
 const isExist = require('fs').existsSync;
 const cache = {};
 const cachePath = {};
 const importAll = {};
 
-export default function (defaultLibraryName) {
+module.exports = function core(defaultLibraryName) {
   return ({ types }) => {
     let specified;
     let libraryObjs;
@@ -35,7 +36,7 @@ export default function (defaultLibraryName) {
         const {
           libDir = 'lib',
           libraryName = defaultLibraryName,
-          style,
+          style = true,
           styleLibrary,
           root = '',
           camel2Dash = true,
@@ -61,7 +62,7 @@ export default function (defaultLibraryName) {
         }
         const _path = path;
 
-        selectedMethods[methodName] = file.addImport(path, 'default');
+        selectedMethods[methodName] = addDefault(file.path, path, { nameHint: methodName });
         if (styleLibrary && typeof styleLibrary === 'object') {
           styleLibraryName = styleLibrary.name;
           isBaseStyle = styleLibrary.base;
@@ -104,39 +105,39 @@ export default function (defaultLibraryName) {
                 path = style === true ? `${_path}/style.css` : `${_path}/${style}`;
               }
               if (isBaseStyle) {
-                file.addImport(`${cachePath[libraryName]}/base.css`, 'default');
+                addSideEffect(file.path, `${cachePath[libraryName]}/base.css`);
               }
               cache[libraryName] = 2;
             }
           }
 
-          file.addImport(path, 'default');
+          addDefault(file.path, path, { nameHint: methodName });
         } else {
           if (style === true) {
-            file.addImport(`${path}/style.css`, 'default');
+            addSideEffect(file.path, `${path}/style.css`);
           } else if (style) {
-            file.addImport(`${path}/${style}`, 'default');
+            addSideEffect(file.path, `${path}/${style}`);
           }
         }
       }
       return selectedMethods[methodName];
     }
 
-    function buildExpressionHandler(node, props, path, opts) {
-      const { file } = path.hub;
+    function buildExpressionHandler(node, props, path, state) {
+      const file = (path && path.hub && path.hub.file) || (state && state.file);
       props.forEach(prop => {
         if (!types.isIdentifier(node[prop])) return;
         if (specified[node[prop].name]) {
-          node[prop] = importMethod(node[prop].name, file, opts); // eslint-disable-line
+          node[prop] = importMethod(node[prop].name, file, state.opts); // eslint-disable-line
         }
       });
     }
 
-    function buildDeclaratorHandler(node, prop, path, opts) {
-      const { file } = path.hub;
+    function buildDeclaratorHandler(node, prop, path, state) {
+      const file = (path && path.hub && path.hub.file) || (state && state.file);
       if (!types.isIdentifier(node[prop])) return;
       if (specified[node[prop].name]) {
-        node[prop] = importMethod(node[prop].name, file, opts); // eslint-disable-line
+        node[prop] = importMethod(node[prop].name, file, state.opts); // eslint-disable-line
       }
     }
 
@@ -175,34 +176,34 @@ export default function (defaultLibraryName) {
           }
         },
 
-        CallExpression(path, { opts }) {
+        CallExpression(path, state) {
           const { node } = path;
-          const { file } = path.hub;
+          const file = (path && path.hub && path.hub.file) || (state && state.file);
           const { name } = node.callee;
 
           if (types.isIdentifier(node.callee)) {
             if (specified[name]) {
-              node.callee = importMethod(specified[name], file, opts);
+              node.callee = importMethod(specified[name], file, state.opts);
             }
           } else {
             node.arguments = node.arguments.map(arg => {
               const { name: argName } = arg;
               if (specified[argName]) {
-                return importMethod(specified[argName], file, opts);
+                return importMethod(specified[argName], file, state.opts);
               } else if (libraryObjs[argName]) {
-                return importMethod(argName, file, opts);
+                return importMethod(argName, file, state.opts);
               }
               return arg;
             });
           }
         },
 
-        MemberExpression(path, { opts }) {
+        MemberExpression(path, state) {
           const { node } = path;
-          const { file } = path.hub;
+          const file = (path && path.hub && path.hub.file) || (state && state.file);
 
           if (libraryObjs[node.object.name] || specified[node.object.name]) {
-            node.object = importMethod(node.object.name, file, opts);
+            node.object = importMethod(node.object.name, file, state.opts);
           }
         },
 
@@ -227,31 +228,32 @@ export default function (defaultLibraryName) {
           });
         },
 
-        Property(path, { opts }) {
+        Property(path, state) {
           const { node } = path;
-          buildDeclaratorHandler(node, 'value', path, opts);
-        },
-        VariableDeclarator(path, { opts }) {
-          const { node } = path;
-          buildDeclaratorHandler(node, 'init', path, opts);
+          buildDeclaratorHandler(node, 'value', path, state);
         },
 
-        LogicalExpression(path, { opts }) {
+        VariableDeclarator(path, state) {
           const { node } = path;
-          buildExpressionHandler(node, ['left', 'right'], path, opts);
+          buildDeclaratorHandler(node, 'init', path, state);
         },
 
-        ConditionalExpression(path, { opts }) {
+        LogicalExpression(path, state) {
           const { node } = path;
-          buildExpressionHandler(node, ['test', 'consequent', 'alternate'], path, opts);
+          buildExpressionHandler(node, ['left', 'right'], path, state);
         },
 
-        IfStatement(path, { opts }) {
+        ConditionalExpression(path, state) {
           const { node } = path;
-          buildExpressionHandler(node, ['test'], path, opts);
-          buildExpressionHandler(node.test, ['left', 'right'], path, opts);
+          buildExpressionHandler(node, ['test', 'consequent', 'alternate'], path, state);
+        },
+
+        IfStatement(path, state) {
+          const { node } = path;
+          buildExpressionHandler(node, ['test'], path, state);
+          buildExpressionHandler(node.test, ['left', 'right'], path, state);
         },
       },
     };
   };
-}
+};

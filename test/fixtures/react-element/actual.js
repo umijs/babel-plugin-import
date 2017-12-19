@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button } from 'element-ui';
 
 ReactDOM.render(<div>
   <Button>xxxx</Button>

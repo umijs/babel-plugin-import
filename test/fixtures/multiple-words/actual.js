@@ -1,3 +1,3 @@
-import { InputNumber } from 'antd';
+import { InputNumber } from 'element-ui';
 
 <InputNumber />;

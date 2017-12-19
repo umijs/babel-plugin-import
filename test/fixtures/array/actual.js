@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button } from 'element-ui';
 
 new Vue({
   components: [Button]

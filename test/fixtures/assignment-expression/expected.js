@@ -1,13 +1,11 @@
-'use strict';
+"use strict";
 
-var _messageBox = require('antd/lib/message-box');
+require("element-ui/lib/message-box/style.css");
 
-var _messageBox2 = _interopRequireDefault(_messageBox);
+var _messageBox = _interopRequireDefault(require("element-ui/lib/message-box"));
 
-var _vue = require('vue');
-
-var _vue2 = _interopRequireDefault(_vue);
+var _vue = _interopRequireDefault(require("vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_vue2.default.$prototype.$message = _messageBox2.default;
+_vue.default.$prototype.$message = _messageBox.default;

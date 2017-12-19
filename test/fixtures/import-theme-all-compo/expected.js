@@ -1,22 +1,16 @@
-'use strict';
+var _Alert2 = _interopRequireDefault(require("element-ui2/lib/alert")).default;
 
-var _alert = require('element-ui2/lib/alert');
+var _Alert = _interopRequireDefault(require("element-ui2/lib/alert")).default;
 
-var _alert2 = _interopRequireDefault(_alert);
+var _Button2 = _interopRequireDefault(require("element-ui2/lib/button")).default;
 
-var _button = require('element-ui2/lib/button');
+var _Button = _interopRequireDefault(require("element-ui2/lib/button")).default;
 
-var _button2 = _interopRequireDefault(_button);
+var _Components2 = _interopRequireDefault(require("element-ui2/lib/theme-default/index.css")).default;
 
-var _index = require('element-ui2/lib/theme-default/index.css');
-
-var _index2 = _interopRequireDefault(_index);
-
-var _lib = require('element-ui2/lib');
-
-var _lib2 = _interopRequireDefault(_lib);
+var _Components = _interopRequireDefault(require("element-ui2/lib")).default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(_lib2.default);
-console.log(_button2.default, _alert2.default);
+console.log(_Components);
+console.log(_Button, _Alert);

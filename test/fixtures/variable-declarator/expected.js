@@ -1,9 +1,8 @@
-'use strict';
+require("element-ui/lib/button/style.css");
 
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
+var _Button = _interopRequireDefault(require("element-ui/lib/button")).default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var a = _button2.default;
+var a = _Button;
+

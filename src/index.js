@@ -1,1 +1,1 @@
-export default require('./core')('antd');
+module.exports = require('./core')('element-ui');

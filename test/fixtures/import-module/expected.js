@@ -1,14 +1,8 @@
-'use strict';
+require("element-ui/lib/abc/style.css");
 
-var _style = require('antd/lib/abc/style.css');
-
-var _style2 = _interopRequireDefault(_style);
-
-var _abc = require('antd/lib/abc');
-
-var _abc2 = _interopRequireDefault(_abc);
+var _Element = _interopRequireDefault(require("element-ui/lib/abc")).default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(_abc2.default.Button);
-console.log(_abc2.default);
+console.log(_Element.Button);
+console.log(_Element);

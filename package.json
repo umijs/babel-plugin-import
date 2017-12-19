@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib --ignore __tests__",
-    "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --no-timeouts",
-    "debug": "mocha --require babel-core/register --require babel-polyfill --no-timeouts",
+    "test": "mocha --require @babel/register",
+    "debug": "mocha --require @babel/register --require @babel/polyfill --no-timeouts",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prepublish": "npm run build"
@@ -23,18 +23,18 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.3.13",
-    "babel-core": "^6.7.4",
-    "babel-istanbul": "^0.7.0",
-    "babel-plugin-add-module-exports": "^0.1.2",
-    "babel-preset-es2015": "^6.6.0",
-    "babel-preset-react": "^6.5.0",
-    "babel-preset-stage-0": "^6.3.13",
+    "@babel/cli": "7.0.0-beta.35",
+    "@babel/core": "7.0.0-beta.35",
+    "@babel/node": "7.0.0-beta.35",
+    "@babel/preset-env": "7.0.0-beta.35",
+    "@babel/preset-react": "7.0.0-beta.35",
+    "@babel/preset-stage-0": "7.0.0-beta.35",
+    "@babel/register": "7.0.0-beta.35",
     "coveralls": "^2.11.6",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
     "expect": "^1.13.4",
-    "mocha": "^2.3.4",
+    "mocha": "4.0.1",
     "pre-commit": "~1.1.2"
   },
   "repository": {
@@ -47,16 +47,16 @@
   },
   "babel": {
     "presets": [
-      "es2015",
-      "stage-0"
-    ],
-    "plugins": [
-      "add-module-exports"
+      "@babel/preset-env",
+      "@babel/preset-react"
     ]
   },
   "files": [
     "lib",
     "package.json",
     "README.md"
-  ]
+  ],
+  "dependencies": {
+    "@babel/helper-module-imports": "7.0.0-beta.35"
+  }
 }

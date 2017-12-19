@@ -1,56 +1,21 @@
-'use strict';
+require("antd/lib/alert2/style.css");
 
-var _style = require('antd/lib/alert2/style.css');
+var _Alert2 = _interopRequireDefault(require("antd/lib/alert2")).default;
 
-var _style2 = _interopRequireDefault(_style);
+require("test-module/lib/alert/style.css");
 
-var _alert = require('antd/lib/alert2');
+var _Alert = _interopRequireDefault(require("test-module/lib/alert")).default;
 
-var _alert2 = _interopRequireDefault(_alert);
+require("antd/lib/button/style.css");
 
-var _style3 = require('test-module/lib/alert/style.css');
+var _Button = _interopRequireDefault(require("antd/lib/button")).default;
 
-var _style4 = _interopRequireDefault(_style3);
+require("antd/lib/message/style.css");
 
-var _alert3 = require('test-module/lib/alert');
-
-var _alert4 = _interopRequireDefault(_alert3);
-
-var _style5 = require('antd/lib/button/style.css');
-
-var _style6 = _interopRequireDefault(_style5);
-
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
-var _style7 = require('antd/lib/message/style.css');
-
-var _style8 = _interopRequireDefault(_style7);
-
-var _message = require('antd/lib/message');
-
-var _message2 = _interopRequireDefault(_message);
+var _message = _interopRequireDefault(require("antd/lib/message")).default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _message2.default)('xxx');
-ReactDOM.render(React.createElement(
-  'div',
-  null,
-  React.createElement(
-    _button2.default,
-    null,
-    'xxxx'
-  ),
-  React.createElement(
-    _alert4.default,
-    null,
-    'xxxx'
-  ),
-  React.createElement(
-    _alert2.default,
-    null,
-    'xxx'
-  )
-));
+_message('xxx');
+
+ReactDOM.render(React.createElement("div", null, React.createElement(_Button, null, "xxxx"), React.createElement(_Alert, null, "xxxx"), React.createElement(_Alert2, null, "xxx")));

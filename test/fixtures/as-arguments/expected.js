@@ -1,9 +1,7 @@
-'use strict';
+require("element-ui/lib/modal/style.css");
 
-var _modal = require('antd/lib/modal');
-
-var _modal2 = _interopRequireDefault(_modal);
+var _Modal2 = _interopRequireDefault(require("element-ui/lib/modal")).default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _Modal = bind({})(_modal2.default);
+var _Modal = bind({})(_Modal2);

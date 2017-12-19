@@ -1,4 +1,4 @@
-import antd from 'antd';
+import Element from 'element-ui';
 
-console.log(antd.Button);
-console.log(antd);
+console.log(Element.Button);
+console.log(Element);

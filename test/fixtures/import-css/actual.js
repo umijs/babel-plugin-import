@@ -1,5 +1,5 @@
-import { message } from 'antd';
-import { Button } from 'antd';
+import { message } from 'element-ui';
+import { Button } from 'element-ui';
 
 message('xxx');
 ReactDOM.render(<div>
