@@ -44,6 +44,7 @@ export default function (defaultLibraryName) {
         let _root = root;
         let isBaseStyle = true;
         let modulePathTpl;
+        let styleRoot;
         let mixin = false;
 
         if (root) {
@@ -66,6 +67,7 @@ export default function (defaultLibraryName) {
           isBaseStyle = styleLibrary.base;
           modulePathTpl = styleLibrary.path;
           mixin = styleLibrary.mixin;
+          styleRoot = styleLibrary.root;
         }
         if (styleLibraryName) {
           if (!cachePath[libraryName]) {
@@ -82,7 +84,11 @@ export default function (defaultLibraryName) {
                 'on-demand and importing all, make sure to invoke the' +
                 ' importing all first.');
             }
-            path = `${cachePath[libraryName]}${_root || '/index'}.css`;
+            if (styleRoot) {
+              path = `${cachePath[libraryName]}${styleRoot}.css`;
+            } else {
+              path = `${cachePath[libraryName]}${_root || '/index'}.css`;
+            }
             cache[libraryName] = 1;
           } else {
             if (cache[libraryName] !== 1) {
