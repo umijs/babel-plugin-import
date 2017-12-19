@@ -37,13 +37,10 @@
     "mocha": "4.0.1",
     "pre-commit": "~1.1.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/qingwei-li/babel-plugin-component.git"
-  },
-  "homepage": "https://github.com/qingwei-li/babel-plugin-component#readme",
+  "repository": "ElementUI/babel-plugin-component",
+  "homepage": "https://github.com/ElementUI/babel-plugin-component#readme",
   "bugs": {
-    "url": "https://github.com/qingwei-li/babel-plugin-component/issues"
+    "url": "https://github.com/ElementUI/babel-plugin-component/issues"
   },
   "babel": {
     "presets": [
