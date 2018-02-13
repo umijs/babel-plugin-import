@@ -88,10 +88,15 @@ export default class Plugin {
     }
   }
 
-  Program() {
+  ProgramEnter() {
     this.specified = Object.create(null);
     this.libraryObjs = Object.create(null);
     this.selectedMethods = Object.create(null);
+    this.pathsToRemove = [];
+  }
+
+  ProgramExit() {
+    this.pathsToRemove.forEach(p => p.remove());
   }
 
   ImportDeclaration(path) {
@@ -111,7 +116,7 @@ export default class Plugin {
           this.libraryObjs[spec.local.name] = true;
         }
       });
-      path.remove();
+      this.pathsToRemove.push(path);
     }
   }
 

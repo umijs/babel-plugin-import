@@ -1,9 +1,11 @@
-var _Select2 = _interopRequireDefault(require("antd-mobile/lib/select")).default;
+"use strict";
 
-var _Select = _interopRequireDefault(require("antd/lib/select")).default;
+var _select = _interopRequireDefault(require("antd-mobile/lib/select"));
+
+var _select2 = _interopRequireDefault(require("antd/lib/select"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (_Select) {}
+if (_select2.default) {}
 
-if (_Select2) {}
+if (_select.default) {}

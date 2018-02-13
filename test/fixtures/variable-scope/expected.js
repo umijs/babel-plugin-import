@@ -2,11 +2,11 @@
 
 var _react = _interopRequireDefault(require("react"));
 
-var _message = _interopRequireDefault(require("antd/lib/message")).default;
+var _message2 = _interopRequireDefault(require("antd/lib/message"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_message('xxx');
+(0, _message2.default)('xxx');
 
 function App() {
   var message = 'xxx';

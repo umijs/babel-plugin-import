@@ -1,11 +1,13 @@
-var _Abc = _interopRequireDefault(require("hilojs/abc")).default;
+"use strict";
 
-var _Class = _interopRequireDefault(require("hilojs/core/class")).default;
+var _abc = _interopRequireDefault(require("hilojs/abc"));
 
-var _Select = _interopRequireDefault(require("antd/lib/select")).default;
+var _class = _interopRequireDefault(require("hilojs/core/class"));
+
+var _select = _interopRequireDefault(require("antd/lib/select"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (_Select) {}
+if (_select.default) {}
 
-if (_Class && _Abc) {}
+if (_class.default && _abc.default) {}
