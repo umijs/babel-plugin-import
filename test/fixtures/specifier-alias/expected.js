@@ -2,11 +2,9 @@
 
 var _react = _interopRequireDefault(require("react"));
 
-var _Button2 = _interopRequireDefault(require("antd/lib/button")).default;
-
-var _Button = _interopRequireDefault(require("antd/lib/button")).default;
+var _button = _interopRequireDefault(require("antd/lib/button"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var foo = _Button.foo;
-ReactDOM.render(_react.default.createElement("div", null, _react.default.createElement(_Button2, null, "xxxx")));
+var foo = _button.default.foo;
+ReactDOM.render(_react.default.createElement("div", null, _react.default.createElement(_button.default, null, "xxxx")));
