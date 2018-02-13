@@ -74,7 +74,7 @@ describe('index', () => {
           }).code;
         } else if (caseName === 'multiple-libraries') {
           return transformFileSync(actualFile, {
-            presets: ['react'],
+            presets: ['@babel/preset-react'],
             plugins: [
               [plugin, { libraryName: 'antd' }, 'antd'],
               [plugin, { libraryName: 'antd-mobile' }, 'antd-mobile'],
@@ -82,7 +82,7 @@ describe('index', () => {
           }).code;
         } else if (caseName === 'multiple-libraries-hilojs') {
           return transformFileSync(actualFile, {
-            presets: ['react'],
+            presets: ['@babel/preset-react'],
             plugins: [
               [plugin, { libraryName: 'antd' }, 'antd'],
               [plugin, {
@@ -100,7 +100,7 @@ describe('index', () => {
           }).code;
         } else {
           return transformFileSync(actualFile, {
-            presets: ['react'],
+            presets: ['@babel/preset-react'],
             plugins: [pluginWithOpts || plugin],
           }).code;
         }
@@ -119,7 +119,7 @@ describe('index', () => {
   xit(`tmp`, () => {
     const actualFile = join(fixturesDir, `variable-declaration/actual.js`);
     const actual = transformFileSync(actualFile, {
-      presets: ['react'],
+      presets: ['@babel/preset-react'],
       plugins: [plugin],
     }).code;
     console.log(actual);
