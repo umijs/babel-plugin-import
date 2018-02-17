@@ -96,7 +96,7 @@ export default class Plugin {
   }
 
   ProgramExit() {
-    this.pathsToRemove.forEach(p => p.remove());
+    this.pathsToRemove.forEach(p => !p.removed && p.remove());
   }
 
   ImportDeclaration(path) {
