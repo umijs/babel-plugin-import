@@ -57,6 +57,10 @@ require('antd/lib/button/style');
 ReactDOM.render(<_button>xxxx</_button>);
 ```
 
+Note : with `style: true` css source files are imported and optimizations can be done during compilation time. With `style: "css"`, pre bundled css files are imported as they are.  
+
+`style: true` can reduce the bundle size significantly, depending on your usage of the library.
+
 ## Usage
 
 ```bash
