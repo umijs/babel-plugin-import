@@ -44,8 +44,7 @@ export default class Plugin {
   }
 
   importMethod(methodName, file) {
-    // disable selectedMethods cache, it don't work in babel7
-    if (true /*!this.selectedMethods[methodName]*/) { // eslint-disable-line
+    if (!this.selectedMethods[methodName]) {
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line
@@ -63,7 +62,7 @@ export default class Plugin {
         addSideEffect(file.path, `${path}/style/css`);
       }
     }
-    return this.selectedMethods[methodName];
+    return Object.assign({}, this.selectedMethods[methodName]);
   }
 
   buildExpressionHandler(node, props, path, state) {
