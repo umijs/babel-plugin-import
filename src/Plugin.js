@@ -167,6 +167,12 @@ export default class Plugin {
     this.buildDeclaratorHandler(node, 'init', path, state);
   }
 
+  ArrayExpression(path, state) {
+    const { node } = path;
+    const props = node.elements.map((_, index) => index);
+    this.buildExpressionHandler(node.elements, props, path, state);
+  }
+
   LogicalExpression(path, state) {
     const { node } = path;
     this.buildExpressionHandler(node, ['left', 'right'], path, state);

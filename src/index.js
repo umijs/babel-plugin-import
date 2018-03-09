@@ -72,6 +72,7 @@ export default function ({ types }) {
     'MemberExpression',
     'Property',
     'VariableDeclarator',
+    'ArrayExpression',
     'LogicalExpression',
     'ConditionalExpression',
     'IfStatement',
