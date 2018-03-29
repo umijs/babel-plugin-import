@@ -117,6 +117,11 @@ For Example:
 - `["import", { "libraryName": "antd", "style": true }]`: import js and css modularly (LESS/Sass source files)
 - `["import", { "libraryName": "antd", "style": "css" }]`: import js and css modularly (css built files)
 
+If option style is a `String` value, `babel-plugin-import` will auto import the file which filename equal the string value from conponent style folder. This is useful for component library developers.
+
+e.g. 
+- `["import", { "libraryName": "antd", "style": "2x" }]`: import js and css modularly & css file path is `Component/style/2x`
+
 ### Note
 
 babel-plugin-import will not work properly if you add the library to the webpack config [vendor](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code). 
