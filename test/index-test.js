@@ -58,6 +58,14 @@ describe('index', () => {
             customName: (name) => `antd/lib/${name}`,
           },
         ];
+      } else if (caseName === 'custom-style-path') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'antd',
+            style: (name) => `${name}/style/2x`,
+          },
+        ];
       } else {
         pluginWithOpts = [
           plugin, { libraryName: 'antd' }
