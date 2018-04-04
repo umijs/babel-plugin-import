@@ -63,7 +63,7 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'antd',
-            style: '2x',
+            style: (name) => `${name}/style/2x`,
           },
         ];
       } else {
