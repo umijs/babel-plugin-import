@@ -120,7 +120,7 @@ For Example:
 If option style is a `Function`, `babel-plugin-import` will auto import the file which filepath equal to the function return value. This is useful for the components library developers.
 
 e.g. 
-- `["import", { "libraryName": "antd", "style": (name) => `${name}/style/2x` }]`: import js and css modularly & css file path is `ComponentName/style/2x`
+- ``["import", { "libraryName": "antd", "style": (name) => `${name}/style/2x` }]``: import js and css modularly & css file path is `ComponentName/style/2x`
 
 ### Note
 
