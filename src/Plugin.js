@@ -45,7 +45,7 @@ export default class Plugin {
 
   importMethod(methodName, file) {
     if (!this.selectedMethods[methodName]) {
-      const libraryDirectory = this.libraryDirectory;
+      const libraryDirectory = typeof this.libraryDirectory === 'function' ? this.libraryDirectory(methodName) : this.libraryDirectory;
       const style = this.style;
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line
         ? camel2Underline(methodName)
