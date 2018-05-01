@@ -88,6 +88,14 @@ Via `.babelrc` or babel-loader.
 
 ```javascript
 {
+  "libraryName": "lodash",
+  "libraryDirectory": "",
+  "camel2DashComponentName": false,  // default: true
+}
+```
+
+```javascript
+{
   "libraryName": "material-ui",
   "libraryDirectory": "components",  // default: lib
   "camel2DashComponentName": false,  // default: true
