@@ -45,7 +45,7 @@ export default class Plugin {
 
   importMethod(methodName, file) {
     if (!this.selectedMethods[methodName]) {
-      const libraryDirectory = this.libraryDirectory;
+      const libraryDirectory = typeof this.libraryDirectory === 'function' ? this.libraryDirectory(methodName) : this.libraryDirectory;
       const style = this.style;
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line
         ? camel2Underline(methodName)
@@ -53,7 +53,7 @@ export default class Plugin {
           ? camel2Dash(methodName)
           : methodName;
       const path = winPath(
-        this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
+        this.customName ? this.customName(transformedMethodName, methodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
       this.selectedMethods[methodName] = addDefault(file.path, path, { nameHint: methodName });
       if (style === true) {
