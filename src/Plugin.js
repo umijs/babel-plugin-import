@@ -43,6 +43,12 @@ export default class Plugin {
     this.types = types;
   }
 
+  isInGlobalScope(path, name) {
+    const parentPath = path.findParent((_path) =>
+    _path.scope.hasOwnBinding(this.specified[name]));
+    return !!parentPath && parentPath.isProgram();
+  }
+
   importMethod(methodName, file) {
     if (!this.selectedMethods[methodName]) {
       const libraryDirectory = this.libraryDirectory;
@@ -203,7 +209,9 @@ export default class Plugin {
     const types = this.types;
     const file = (path && path.hub && path.hub.file) || (state && state.file);
     const { node } = path;
-    if (node.argument && types.isIdentifier(node.argument) && this.specified[node.argument.name]) {
+
+    if (node.argument && types.isIdentifier(node.argument) && this.specified[node.argument.name] &&
+    this.isInGlobalScope(path, node.argument.name)) {
       node.argument = this.importMethod(node.argument.name, file);
     }
   }
