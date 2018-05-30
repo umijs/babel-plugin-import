@@ -102,7 +102,7 @@ Via `.babelrc` or babel-loader.
 }
 ```
 
-`options` can be an array.
+~`options` can be an array.~ It's not available in bable@7+
 
 For Example: 
 
@@ -116,6 +116,17 @@ For Example:
   {
     "libraryName": "antd-mobile"
   },
+]
+```
+`Options` can't be an array in babel@7+, but you can add plugins with name to support multiple dependencies.
+
+For Example:
+
+```javascrit
+// .babelrc
+"plugins": [
+  ["import", { "libraryName": "antd", "libraryDirectory": "lib"}, "ant"],
+  ["import", { "libraryName": "ant-mobile", "libraryDirectory": "lib"}, "ant-mobile"]
 ]
 ```
 
