@@ -66,6 +66,19 @@ describe('index', () => {
             style: (name) => `${name}/style/2x`,
           },
         ];
+      } else if (caseName === 'custom-style-path-ignore') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'antd',
+            style: (name) => {
+              if(name === 'antd/lib/animation'){
+                return false;
+              }
+              return `${name}/style/2x`;
+            },
+          },
+        ];
       } else {
         pluginWithOpts = [
           plugin, { libraryName: 'antd' }
