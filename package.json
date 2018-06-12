@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-import",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Component modular import plugin for babel.",
   "repository": {
     "type": "git",
@@ -43,10 +43,13 @@
   },
   "babel": {
     "presets": [
-      ["umi", {
-        "commonjs": true,
-        "disableTransform": true
-      }]
+      [
+        "umi",
+        {
+          "commonjs": true,
+          "disableTransform": true
+        }
+      ]
     ]
   },
   "files": [
