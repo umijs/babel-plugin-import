@@ -141,6 +141,24 @@ If option style is a `Function`, `babel-plugin-import` will auto import the file
 e.g. 
 - ``["import", { "libraryName": "antd", "style": (name) => `${name}/style/2x` }]``: import js and css modularly & css file path is `ComponentName/style/2x`
 
+If a component has no style, you can use the `style` function to return a `false` and the style will be ignored.
+
+e.g. 
+```js
+[
+  "import", 
+    { 
+      "libraryName": "antd", 
+      "style": (name: string, file: Object) => {
+        if(name === 'antd/lib/utils'){
+          return false;
+        }
+        return `${name}/style/2x`;
+      }
+    }
+]
+```
+
 ### Note
 
 babel-plugin-import will not work properly if you add the library to the webpack config [vendor](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code). 

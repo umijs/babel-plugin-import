@@ -67,7 +67,10 @@ export default class Plugin {
       } else if (style === 'css') {
         addSideEffect(file.path, `${path}/style/css`);
       } else if (typeof style === 'function') {
-        addSideEffect(file.path, style(path));
+        const stylePath = style(path, file);
+        if (stylePath) {
+          addSideEffect(file.path, stylePath);
+        }
       }
     }
     return Object.assign({}, this.selectedMethods[methodName]);
