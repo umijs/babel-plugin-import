@@ -7,3 +7,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function a() {
   return _toast2.default;
 }
+
+function b(toast) {
+  return toast;
+}
+
+function c() {
+  var toast = 'toast';
+  return toast;
+}
+
+function d() {
+  var toast = 'toast';
+  return function () {
+    return toast;
+  };
+}
