@@ -102,7 +102,7 @@ Via `.babelrc` or babel-loader.
 }
 ```
 
-~`options` can be an array.~ It's not available in bable@7+
+~`options` can be an array.~ It's not available in babel@7+
 
 For Example: 
 
