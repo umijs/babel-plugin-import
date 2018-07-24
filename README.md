@@ -159,6 +159,51 @@ e.g.
 ]
 ```
 
+### customName
+
+We can use `customName` to customize import file path.
+
+For example, the default behavior:
+
+```typescript
+import { TimePicker } from "antd"
+↓ ↓ ↓ ↓ ↓ ↓
+var _button = require('antd/lib/time-picker');
+```
+
+You can set `camel2DashComponentName` to `false` to disable transfer from camel to dash:
+
+```typescript
+import { TimePicker } from "antd"
+↓ ↓ ↓ ↓ ↓ ↓
+var _button = require('antd/lib/TimePicker');
+```
+
+And finally, you can use `customName` to customize each name parsing:
+
+```js
+[
+  "import", 
+    { 
+      "libraryName": "antd", 
+      "customName": (name: string) => {
+        if (name === 'TimePicker'){
+          return 'antd/lib/custom-time-picker';
+        }
+        return `antd/lib/${name}`;
+      }
+    }
+]
+```
+
+So this result is:
+
+```typescript
+import { TimePicker } from "antd"
+↓ ↓ ↓ ↓ ↓ ↓
+var _button = require('antd/lib/custom-time-picker');
+```
+
 ### Note
 
 babel-plugin-import will not work properly if you add the library to the webpack config [vendor](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code). 
