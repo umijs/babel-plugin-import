@@ -24,11 +24,11 @@
   "author": "chencheng <sorrycc@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.34",
-    "@babel/core": "^7.0.0-beta.34",
-    "@babel/polyfill": "^7.0.0-beta.34",
-    "@babel/preset-react": "^7.0.0-beta.40",
-    "@babel/register": "^7.0.0-beta.34",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-istanbul": "^0.12.2",
     "babel-preset-umi": "^0.2.0",
@@ -58,6 +58,6 @@
     "README.md"
   ],
   "dependencies": {
-    "@babel/helper-module-imports": "^7.0.0-beta.34"
+    "@babel/helper-module-imports": "^7.0.0"
   }
 }
