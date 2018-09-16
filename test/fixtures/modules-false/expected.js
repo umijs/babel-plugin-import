@@ -1,5 +1,13 @@
-import "antd/lib/button/style";
-import _Button from "antd/lib/button";
-import React from 'react';
-import ReactDom from 'react-dom';
-ReactDOM.render(React.createElement("div", null, React.createElement(_Button, null, "xxxx")), document.getElementById('react-container'));
+"use strict";
+
+require("antd/lib/button/style");
+
+var _button = _interopRequireDefault(require("antd/lib/button"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+ReactDOM.render(_react.default.createElement("div", null, _react.default.createElement(_button.default, null, "xxxx")), document.getElementById('react-container'));

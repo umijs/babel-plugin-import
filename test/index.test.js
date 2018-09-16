@@ -2,7 +2,6 @@ import { transformFileSync, transform } from "@babel/core";
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
-import expect from 'expect';
 
 describe('index', () => {
 
@@ -88,7 +87,7 @@ describe('index', () => {
       const actual = function () {
         if (caseName === 'modules-false') {
           return transform(readFileSync(actualFile), {
-            presets: ["umi"],
+            presets: ['umi'],
             plugins: [[
               plugin, {libraryName: 'antd', style: true}
             ]],

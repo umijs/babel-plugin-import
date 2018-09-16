@@ -9,8 +9,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && ./node_modules/.bin/babel src --out-dir lib --ignore __tests__",
-    "test": "node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha  -- --require @babel/register --no-timeouts",
-    "debug": "mocha --require @babel/register --require @babel/polyfill --no-timeouts",
+    "test": "umi-test --coverage",
+    "debug": "umi-test",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
@@ -26,30 +26,23 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "@babel/polyfill": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
     "babel-core": "^7.0.0-0",
-    "babel-istanbul": "^0.12.2",
-    "babel-preset-umi": "^0.2.0",
+    "babel-preset-umi": "^1.0.0",
     "coveralls": "^2.11.6",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
     "expect": "^1.13.4",
     "material-ui": "^0.15.4",
-    "mocha": "^2.3.4",
     "pre-commit": "~1.1.2",
-    "react-toolbox": "^1.2.5"
+    "react-toolbox": "^1.2.5",
+    "umi-test": "^1.0.0"
   },
   "babel": {
     "presets": [
-      [
-        "umi",
-        {
-          "commonjs": true,
-          "disableTransform": true
-        }
-      ]
+      "umi"
     ]
   },
   "files": [
