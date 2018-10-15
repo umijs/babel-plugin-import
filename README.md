@@ -130,7 +130,7 @@ For Example:
 ]
 ```
 
-### style
+#### style
 
 - `["import", { "libraryName": "antd" }]`: import js modularly
 - `["import", { "libraryName": "antd", "style": true }]`: import js and css modularly (LESS/Sass source files)
@@ -159,7 +159,7 @@ e.g.
 ]
 ```
 
-### customName
+#### customName
 
 We can use `customName` to customize import file path.
 
@@ -203,6 +203,10 @@ import { TimePicker } from "antd"
 ↓ ↓ ↓ ↓ ↓ ↓
 var _button = require('antd/lib/custom-time-picker');
 ```
+
+#### transformToDefaultImport
+
+Set this option to `false` if your module does not have a `default` export.
 
 ### Note
 
