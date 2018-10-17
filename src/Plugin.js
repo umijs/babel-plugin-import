@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { addSideEffect, addDefault } from '@babel/helper-module-imports';
+import { addSideEffect, addDefault, addNamed } from '@babel/helper-module-imports';
 
 function camel2Dash(_str) {
   const str = _str[0].toLowerCase() + _str.substr(1);
@@ -24,6 +24,7 @@ export default class Plugin {
     camel2UnderlineComponentName,
     fileName,
     customName,
+    transformToDefaultImport,
     types
   ) {
     this.specified = null;
@@ -40,6 +41,9 @@ export default class Plugin {
     this.style = style || false;
     this.fileName = fileName || '';
     this.customName = customName;
+    this.transformToDefaultImport = typeof transformToDefaultImport === 'undefined'
+      ? true
+      : transformToDefaultImport;
     this.types = types;
   }
 
@@ -61,7 +65,9 @@ export default class Plugin {
       const path = winPath(
         this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
-      this.selectedMethods[methodName] = addDefault(file.path, path, { nameHint: methodName });
+      this.selectedMethods[methodName] = this.transformToDefaultImport
+        ? addDefault(file.path, path, { nameHint: methodName })
+        : addNamed(file.path, methodName, path);
       if (style === true) {
         addSideEffect(file.path, `${path}/style`);
       } else if (style === 'css') {

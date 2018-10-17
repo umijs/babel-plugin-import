@@ -30,6 +30,7 @@ export default function ({ types }) {
             camel2UnderlineComponentName,
             fileName,
             customName,
+            transformToDefaultImport,
           }) => {
             assert(libraryName, 'libraryName should be provided');
             return new Plugin(
@@ -40,6 +41,7 @@ export default function ({ types }) {
               camel2UnderlineComponentName,
               fileName,
               customName,
+              transformToDefaultImport,
               types
             );
           });
@@ -54,6 +56,7 @@ export default function ({ types }) {
               opts.camel2UnderlineComponentName,
               opts.fileName,
               opts.customName,
+              opts.transformToDefaultImport,
               types
             ),
           ];

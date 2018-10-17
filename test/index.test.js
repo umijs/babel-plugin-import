@@ -33,6 +33,10 @@ describe('index', () => {
         pluginWithOpts = [
           plugin, { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
         ];
+      } else if (caseName === 'keep-named-import') {
+        pluginWithOpts = [
+          plugin, { libraryName: 'stream', transformToDefaultImport: false },
+        ];
       } else if (caseName === 'react-toolbox') {
         pluginWithOpts = [
           plugin, { libraryName: 'react-toolbox', camel2UnderlineComponentName: true },
