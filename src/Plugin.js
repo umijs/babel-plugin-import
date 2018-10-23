@@ -25,7 +25,8 @@ export default class Plugin {
     fileName,
     customName,
     transformToDefaultImport,
-    types
+    types,
+    index = 0
   ) {
     this.libraryName = libraryName;
     this.libraryDirectory = typeof libraryDirectory === 'undefined'
@@ -42,16 +43,24 @@ export default class Plugin {
       ? true
       : transformToDefaultImport;
     this.types = types;
+    this.pluginStateKey = `importPluginState${index}`;
   }
 
-  isInGlobalScope(path, name, state) {
+  getPluginState(state) {
+    if (!state[this.pluginStateKey]) {
+      state[this.pluginStateKey] = {};  // eslint-disable-line
+    }
+    return state[this.pluginStateKey];
+  }
+
+  isInGlobalScope(path, name, pluginState) {
     const parentPath = path.findParent((_path) =>
-    _path.scope.hasOwnBinding(state.specified[name]));
+    _path.scope.hasOwnBinding(pluginState.specified[name]));
     return !!parentPath && parentPath.isProgram();
   }
 
-  importMethod(methodName, file, state) {
-    if (!state.selectedMethods[methodName]) {
+  importMethod(methodName, file, pluginState) {
+    if (!pluginState.selectedMethods[methodName]) {
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line
@@ -62,7 +71,7 @@ export default class Plugin {
       const path = winPath(
         this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
-      state.selectedMethods[methodName] = this.transformToDefaultImport
+      pluginState.selectedMethods[methodName] = this.transformToDefaultImport  // eslint-disable-line
         ? addDefault(file.path, path, { nameHint: methodName })
         : addNamed(file.path, methodName, path);
       if (style === true) {
@@ -76,16 +85,17 @@ export default class Plugin {
         }
       }
     }
-    return Object.assign({}, state.selectedMethods[methodName]);
+    return Object.assign({}, pluginState.selectedMethods[methodName]);
   }
 
   buildExpressionHandler(node, props, path, state) {
     const file = (path && path.hub && path.hub.file) || (state && state.file);
     const types = this.types;
+    const pluginState = this.getPluginState(state);
     props.forEach(prop => {
       if (!types.isIdentifier(node[prop])) return;
-      if (state.specified[node[prop].name]) {
-        node[prop] = this.importMethod(state.specified[node[prop].name], file, state);  // eslint-disable-line
+      if (pluginState.specified[node[prop].name]) {
+        node[prop] = this.importMethod(pluginState.specified[node[prop].name], file, pluginState);  // eslint-disable-line
       }
     });
   }
@@ -93,23 +103,25 @@ export default class Plugin {
   buildDeclaratorHandler(node, prop, path, state) {
     const file = (path && path.hub && path.hub.file) || (state && state.file);
     const types = this.types;
+    const pluginState = this.getPluginState(state);
     if (!types.isIdentifier(node[prop])) return;
-    if (state.specified[node[prop].name] &&
+    if (pluginState.specified[node[prop].name] &&
       path.scope.hasBinding(node[prop].name) &&
       path.scope.getBinding(node[prop].name).path.type === 'ImportSpecifier') {
-      node[prop] = this.importMethod(node[prop].name, file, state);  // eslint-disable-line
+      node[prop] = this.importMethod(node[prop].name, file, pluginState);  // eslint-disable-line
     }
   }
 
   ProgramEnter(path, state) {
-    state.specified = Object.create(null);
-    state.libraryObjs = Object.create(null);
-    state.selectedMethods = Object.create(null);
-    state.pathsToRemove = [];
+    const pluginState = this.getPluginState(state);
+    pluginState.specified = Object.create(null);
+    pluginState.libraryObjs = Object.create(null);
+    pluginState.selectedMethods = Object.create(null);
+    pluginState.pathsToRemove = [];
   }
 
   ProgramExit(path, state) {
-    state.pathsToRemove.forEach(p => !p.removed && p.remove());
+    this.getPluginState(state).pathsToRemove.forEach(p => !p.removed && p.remove());
   }
 
   ImportDeclaration(path, state) {
@@ -121,15 +133,16 @@ export default class Plugin {
     const { value } = node.source;
     const libraryName = this.libraryName;
     const types = this.types;
+    const pluginState = this.getPluginState(state);
     if (value === libraryName) {
       node.specifiers.forEach(spec => {
         if (types.isImportSpecifier(spec)) {
-          state.specified[spec.local.name] = spec.imported.name;
+          pluginState.specified[spec.local.name] = spec.imported.name;
         } else {
-          state.libraryObjs[spec.local.name] = true;
+          pluginState.libraryObjs[spec.local.name] = true;
         }
       });
-      state.pathsToRemove.push(path);
+      pluginState.pathsToRemove.push(path);
     }
   }
 
@@ -138,19 +151,20 @@ export default class Plugin {
     const file = (path && path.hub && path.hub.file) || (state && state.file);
     const { name } = node.callee;
     const types = this.types;
+    const pluginState = this.getPluginState(state);
 
     if (types.isIdentifier(node.callee)) {
-      if (state.specified[name]) {
-        node.callee = this.importMethod(state.specified[name], file, state);
+      if (pluginState.specified[name]) {
+        node.callee = this.importMethod(pluginState.specified[name], file, pluginState);
       }
     }
 
     node.arguments = node.arguments.map(arg => {
       const { name: argName } = arg;
-      if (state.specified[argName] &&
+      if (pluginState.specified[argName] &&
         path.scope.hasBinding(argName) &&
         path.scope.getBinding(argName).path.type === 'ImportSpecifier') {
-        return this.importMethod(state.specified[argName], file, state);
+        return this.importMethod(pluginState.specified[argName], file, pluginState);
       }
       return arg;
     });
@@ -159,15 +173,16 @@ export default class Plugin {
   MemberExpression(path, state) {
     const { node } = path;
     const file = (path && path.hub && path.hub.file) || (state && state.file);
+    const pluginState = this.getPluginState(state);
 
     // multiple instance check.
     if (!node.object || !node.object.name) return;
 
-    if (state.libraryObjs[node.object.name]) {
+    if (pluginState.libraryObjs[node.object.name]) {
       // antd.Button -> _Button
-      path.replaceWith(this.importMethod(node.property.name, file, state));
-    } else if (state.specified[node.object.name]) {
-      node.object = this.importMethod(state.specified[node.object.name], file, state);
+      path.replaceWith(this.importMethod(node.property.name, file, pluginState));
+    } else if (pluginState.specified[node.object.name]) {
+      node.object = this.importMethod(pluginState.specified[node.object.name], file, pluginState);
     }
   }
 
@@ -215,10 +230,12 @@ export default class Plugin {
     const types = this.types;
     const file = (path && path.hub && path.hub.file) || (state && state.file);
     const { node } = path;
+    const pluginState = this.getPluginState(state);
 
-    if (node.argument && types.isIdentifier(node.argument) && state.specified[node.argument.name] &&
-    this.isInGlobalScope(path, node.argument.name, state)) {
-      node.argument = this.importMethod(node.argument.name, file, state);
+    if (node.argument && types.isIdentifier(node.argument) &&
+    pluginState.specified[node.argument.name] &&
+    this.isInGlobalScope(path, node.argument.name, pluginState)) {
+      node.argument = this.importMethod(node.argument.name, file, pluginState);
     }
   }
 
