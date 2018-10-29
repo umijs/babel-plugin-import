@@ -8,11 +8,12 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "build": "rm -rf lib && ./node_modules/.bin/babel src --out-dir lib --ignore __tests__",
-    "test": "umi-test --coverage",
-    "debug": "umi-test",
+    "build": "umi-tools build",
+    "test": "umi-tools test --coverage",
+    "debug": "umi-tools test",
     "lint": "eslint --ext .js src",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "publish":  "npm run build && npm publish"
   },
   "pre-commit": [
     "lint"
@@ -24,20 +25,17 @@
   "author": "chencheng <sorrycc@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-preset-umi": "^1.0.0",
     "coveralls": "^2.11.6",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
-    "expect": "^1.13.4",
     "material-ui": "^0.15.4",
     "pre-commit": "~1.1.2",
     "react-toolbox": "^1.2.5",
-    "umi-test": "^1.0.0"
+    "umi-tools": "^0.1.4"
   },
   "babel": {
     "presets": [

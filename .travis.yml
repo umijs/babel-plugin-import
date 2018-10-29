@@ -1,12 +1,6 @@
 language: node_js
 node_js:
-  - 6
   - 8
-cache:
-  directories:
-  - node_modules
-install:
-  - npm install
-  - npm prune
+  - 10
 after_success:
   - npm run test
