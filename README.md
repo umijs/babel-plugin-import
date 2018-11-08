@@ -126,7 +126,7 @@ For Example:
 // .babelrc
 "plugins": [
   ["import", { "libraryName": "antd", "libraryDirectory": "lib"}, "ant"],
-  ["import", { "libraryName": "ant-mobile", "libraryDirectory": "lib"}, "ant-mobile"]
+  ["import", { "libraryName": "antd-mobile", "libraryDirectory": "lib"}, "antd-mobile"]
 ]
 ```
 
