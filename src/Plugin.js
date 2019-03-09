@@ -1,14 +1,9 @@
 import { join } from 'path';
 import { addSideEffect, addDefault, addNamed } from '@babel/helper-module-imports';
 
-function camel2Dash(_str) {
+function transCamel(_str, symbol) {
   const str = _str[0].toLowerCase() + _str.substr(1);
-  return str.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`);
-}
-
-function camel2Underline(_str) {
-  const str = _str[0].toLowerCase() + _str.substr(1);
-  return str.replace(/([A-Z])/g, ($1) => `_${$1.toLowerCase()}`);
+  return str.replace(/([A-Z])/g, ($1) => `${symbol}${$1.toLowerCase()}`);
 }
 
 function winPath(path) {
@@ -64,9 +59,9 @@ export default class Plugin {
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line
-        ? camel2Underline(methodName)
+        ? transCamel(methodName, '_')
         : this.camel2DashComponentName
-          ? camel2Dash(methodName)
+          ? transCamel(methodName, '-')
           : methodName;
       const path = winPath(
         this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
