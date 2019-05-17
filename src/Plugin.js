@@ -253,4 +253,9 @@ export default class Plugin {
     const { node } = path;
     this.buildExpressionHandler(node, ['callee', 'arguments'], path, state);
   }
+
+  ClassDeclaration(path, state) {
+    const { node } = path;
+    this.buildExpressionHandler(node, ['superClass'], path, state);
+  }
 }

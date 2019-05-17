@@ -122,6 +122,11 @@ describe('index', () => {
               }, 'hilojs'],
             ],
           }).code;
+        } else if (caseName === 'super-class') {
+          return transformFileSync(actualFile, {
+            plugins: [[plugin, { libraryName: 'antd' }]],
+            babelrc: false,
+          }).code;
         } else {
           return transformFileSync(actualFile, {
             presets: ['@babel/preset-react'],

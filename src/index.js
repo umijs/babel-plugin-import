@@ -85,6 +85,7 @@ export default function ({ types }) {
     'ExportDefaultDeclaration',
     'BinaryExpression',
     'NewExpression',
+    'ClassDeclaration',
   ];
 
   const ret = {
