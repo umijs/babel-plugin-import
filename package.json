@@ -13,7 +13,7 @@
     "debug": "umi-tools test",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "publish":  "npm run build && npm publish"
+    "prepublish":  "npm run build"
   },
   "pre-commit": [
     "lint"
