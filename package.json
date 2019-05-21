@@ -37,11 +37,6 @@
     "react-toolbox": "^1.2.5",
     "umi-tools": "^0.1.4"
   },
-  "babel": {
-    "presets": [
-      "umi"
-    ]
-  },
   "files": [
     "src",
     "lib",

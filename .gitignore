@@ -5,3 +5,4 @@ coverage
 lib
 *.log
 *.log.*
+.DS_Store
