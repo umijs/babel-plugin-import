@@ -61,6 +61,14 @@ describe('index', () => {
             customName: (name) => `antd/lib/${name}`,
           },
         ];
+      } else if (caseName === 'custom-name-source-file') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'plat/antd',
+            customName: join(__dirname, 'fixtures', 'custom-name-source-file', 'customName.js'),
+          },
+        ];
       } else if (caseName === 'custom-style-path') {
         pluginWithOpts = [
           plugin,

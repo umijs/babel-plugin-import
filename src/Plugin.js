@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { addSideEffect, addDefault, addNamed } from '@babel/helper-module-imports';
+import util from 'util';
 
 function camel2Dash(_str) {
   const str = _str[0].toLowerCase() + _str.substr(1);
@@ -13,6 +14,24 @@ function camel2Underline(_str) {
 
 function winPath(path) {
   return path.replace(/\\/g, '/');
+}
+
+const debug = util.debuglog('babel-plugin-import');
+
+function normalizeCustomName(originCustomName) {
+  // If set to a string, treat it as a JavaScript source file path.
+  if (typeof originCustomName === 'string') {
+    try {
+      const customNameExports = require(originCustomName);
+      return typeof customNameExports === 'function'
+        ? customNameExports : customNameExports.default;
+    } catch (e) {
+      debug(e);
+    }
+    return undefined;
+  }
+
+  return originCustomName;
 }
 
 export default class Plugin {
@@ -38,7 +57,7 @@ export default class Plugin {
     this.camel2UnderlineComponentName = camel2UnderlineComponentName;
     this.style = style || false;
     this.fileName = fileName || '';
-    this.customName = customName;
+    this.customName = normalizeCustomName(customName);
     this.transformToDefaultImport = typeof transformToDefaultImport === 'undefined'
       ? true
       : transformToDefaultImport;
