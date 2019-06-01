@@ -15,6 +15,17 @@ function winPath(path) {
   return path.replace(/\\/g, '/');
 }
 
+function normalizeCustomName(originCustomName) {
+  // If set to a string, treat it as a JavaScript source file path.
+  if (typeof originCustomName === 'string') {
+    const customNameExports = require(originCustomName);
+    return typeof customNameExports === 'function'
+      ? customNameExports : customNameExports.default;
+  }
+
+  return originCustomName;
+}
+
 export default class Plugin {
   constructor(
     libraryName,
@@ -38,7 +49,7 @@ export default class Plugin {
     this.camel2UnderlineComponentName = camel2UnderlineComponentName;
     this.style = style || false;
     this.fileName = fileName || '';
-    this.customName = customName;
+    this.customName = normalizeCustomName(customName);
     this.transformToDefaultImport = typeof transformToDefaultImport === 'undefined'
       ? true
       : transformToDefaultImport;

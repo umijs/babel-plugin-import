@@ -26,7 +26,7 @@ import { Button } from 'antd';
 ReactDOM.render(<Button>xxxx</Button>);
 
       ↓ ↓ ↓ ↓ ↓ ↓
-      
+
 var _button = require('antd/lib/button');
 ReactDOM.render(<_button>xxxx</_button>);
 ```
@@ -38,7 +38,7 @@ import { Button } from 'antd';
 ReactDOM.render(<Button>xxxx</Button>);
 
       ↓ ↓ ↓ ↓ ↓ ↓
-      
+
 var _button = require('antd/lib/button');
 require('antd/lib/button/style/css');
 ReactDOM.render(<_button>xxxx</_button>);
@@ -51,13 +51,13 @@ import { Button } from 'antd';
 ReactDOM.render(<Button>xxxx</Button>);
 
       ↓ ↓ ↓ ↓ ↓ ↓
-      
+
 var _button = require('antd/lib/button');
 require('antd/lib/button/style');
 ReactDOM.render(<_button>xxxx</_button>);
 ```
 
-Note : with `style: true` css source files are imported and optimizations can be done during compilation time. With `style: "css"`, pre bundled css files are imported as they are.  
+Note : with `style: true` css source files are imported and optimizations can be done during compilation time. With `style: "css"`, pre bundled css files are imported as they are.
 
 `style: true` can reduce the bundle size significantly, depending on your usage of the library.
 
@@ -104,7 +104,7 @@ Via `.babelrc` or babel-loader.
 
 ~`options` can be an array.~ It's not available in babel@7+
 
-For Example: 
+For Example:
 
 ```javascript
 [
@@ -138,17 +138,17 @@ For Example:
 
 If option style is a `Function`, `babel-plugin-import` will auto import the file which filepath equal to the function return value. This is useful for the components library developers.
 
-e.g. 
+e.g.
 - ``["import", { "libraryName": "antd", "style": (name) => `${name}/style/2x` }]``: import js and css modularly & css file path is `ComponentName/style/2x`
 
 If a component has no style, you can use the `style` function to return a `false` and the style will be ignored.
 
-e.g. 
+e.g.
 ```js
 [
-  "import", 
-    { 
-      "libraryName": "antd", 
+  "import",
+    {
+      "libraryName": "antd",
       "style": (name: string, file: Object) => {
         if(name === 'antd/lib/utils'){
           return false;
@@ -183,9 +183,9 @@ And finally, you can use `customName` to customize each name parsing:
 
 ```js
 [
-  "import", 
-    { 
-      "libraryName": "antd", 
+  "import",
+    {
+      "libraryName": "antd",
       "customName": (name: string) => {
         if (name === 'TimePicker'){
           return 'antd/lib/custom-time-picker';
@@ -204,10 +204,32 @@ import { TimePicker } from "antd"
 var _button = require('antd/lib/custom-time-picker');
 ```
 
+In some cases, the transformer may serialize the configuration object. If we set the `customName` to a function, it will lost after the serialization.
+
+So we also support specifying the customName with a JavaScript source file path:
+
+```js
+[
+  "import",
+    {
+      "libraryName": "antd",
+      "customName": require('path').resolve(__dirname, './customName.js')
+    }
+]
+```
+
+The `customName.js` looks like this:
+
+```js
+module.exports = function customName(name) {
+  return `antd/lib/${name}`;
+};
+```
+
 #### transformToDefaultImport
 
 Set this option to `false` if your module does not have a `default` export.
 
 ### Note
 
-babel-plugin-import will not work properly if you add the library to the webpack config [vendor](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code). 
+babel-plugin-import will not work properly if you add the library to the webpack config [vendor](https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code).
