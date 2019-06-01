@@ -23,3 +23,7 @@ function d() {
     return toast;
   };
 }
+
+var e = function e() {
+  return _toast2.default;
+};

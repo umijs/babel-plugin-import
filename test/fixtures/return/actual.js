@@ -19,3 +19,7 @@ function d() {
     return toast;
   };
 }
+
+const e = () => {
+  return toast;
+};
