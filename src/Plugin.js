@@ -111,7 +111,7 @@ export default class Plugin {
     if (pluginState.specified[node[prop].name] &&
       path.scope.hasBinding(node[prop].name) &&
       path.scope.getBinding(node[prop].name).path.type === 'ImportSpecifier') {
-      node[prop] = this.importMethod(node[prop].name, file, pluginState);  // eslint-disable-line
+      node[prop] = this.importMethod(pluginState.specified[node[prop].name], file, pluginState);  // eslint-disable-line
     }
   }
 
