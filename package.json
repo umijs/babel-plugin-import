@@ -13,7 +13,8 @@
     "debug": "umi-tools test",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish"
   },
   "pre-commit": [
     "lint"
@@ -35,7 +36,8 @@
     "material-ui": "^0.15.4",
     "pre-commit": "~1.1.2",
     "react-toolbox": "^1.2.5",
-    "umi-tools": "^0.1.4"
+    "umi-tools": "^0.1.4",
+    "np": "^5.0.3"
   },
   "babel": {
     "presets": [
