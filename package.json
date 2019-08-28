@@ -30,7 +30,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-preset-umi": "^1.0.0",
-    "coveralls": "^2.11.6",
+    "coveralls": "^3.0.6",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
     "material-ui": "^0.15.4",
