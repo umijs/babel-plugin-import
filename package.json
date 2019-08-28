@@ -33,7 +33,7 @@
     "coveralls": "^3.0.6",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
-    "material-ui": "^0.15.4",
+    "material-ui": "^0.20.2",
     "np": "^5.0.3",
     "pre-commit": "~1.2.2",
     "react-toolbox": "^1.2.5",
