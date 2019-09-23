@@ -184,8 +184,16 @@ export default class Plugin {
     if (pluginState.libraryObjs[node.object.name]) {
       // antd.Button -> _Button
       path.replaceWith(this.importMethod(node.property.name, file, pluginState));
-    } else if (pluginState.specified[node.object.name]) {
-      node.object = this.importMethod(pluginState.specified[node.object.name], file, pluginState);
+    } else if (pluginState.specified[node.object.name] && path.scope.hasBinding(node.object.name)) {
+      const scope = path.scope.getBinding(node.object.name).scope;
+      // global variable in file scope
+      if (scope.path.parent.type === 'File') {
+        node.object = this.importMethod(
+          pluginState.specified[node.object.name],
+          file,
+          pluginState
+        );
+      }
     }
   }
 
