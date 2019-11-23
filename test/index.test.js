@@ -90,6 +90,22 @@ describe('index', () => {
             },
           },
         ];
+      } else if (caseName === 'style-library-name') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'element-ui',
+            styleLibraryDirectory: 'lib/theme-chalk',
+          },
+        ];
+      } else if (caseName === 'custom-style-name') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'element-ui',
+            customStyleName: (name) => `element-ui/lib/theme-light/${name}`,
+          },
+        ];
       } else {
         pluginWithOpts = [
           plugin, { libraryName: 'antd' }
