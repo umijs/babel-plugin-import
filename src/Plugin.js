@@ -26,6 +26,8 @@ export default class Plugin {
     libraryName,
     libraryDirectory,
     style,
+    styleLibraryDirectory,
+    customStyleName,
     camel2DashComponentName,
     camel2UnderlineComponentName,
     fileName,
@@ -43,6 +45,8 @@ export default class Plugin {
       : camel2DashComponentName;
     this.camel2UnderlineComponentName = camel2UnderlineComponentName;
     this.style = style || false;
+    this.styleLibraryDirectory = styleLibraryDirectory;
+    this.customStyleName = normalizeCustomName(customStyleName);
     this.fileName = fileName || '';
     this.customName = normalizeCustomName(customName);
     this.transformToDefaultImport = typeof transformToDefaultImport === 'undefined'
@@ -74,7 +78,15 @@ export default class Plugin {
       pluginState.selectedMethods[methodName] = this.transformToDefaultImport  // eslint-disable-line
         ? addDefault(file.path, path, { nameHint: methodName })
         : addNamed(file.path, methodName, path);
-      if (style === true) {
+      if (this.customStyleName) {
+        const stylePath = winPath(this.customStyleName(transformedMethodName));
+        addSideEffect(file.path, `${stylePath}`);
+      } else if (this.styleLibraryDirectory) {
+        const stylePath = winPath(
+          join(this.libraryName, this.styleLibraryDirectory, transformedMethodName, this.fileName)
+        );
+        addSideEffect(file.path, `${stylePath}`);
+      } else if (style === true) {
         addSideEffect(file.path, `${path}/style`);
       } else if (style === 'css') {
         addSideEffect(file.path, `${path}/style/css`);

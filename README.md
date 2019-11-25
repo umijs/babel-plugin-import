@@ -159,6 +159,27 @@ e.g.
 ]
 ```
 
+#### styleLibraryDirectory
+
+- `["import", { "libraryName": "element-ui", "styleLibraryDirectory": "lib/theme-chalk" }]`: import js and css modularly
+
+If `styleLibraryDirectory` is provided (default `null`), it will be used to form style file path,
+`style` will be ignored then. e.g.
+
+```javascript
+{
+  "libraryName": "element-ui",
+  "styleLibraryDirectory": "lib/theme-chalk",
+}
+
+import { Button } from 'element-ui';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var _button = require('element-ui/lib/button');
+require('element-ui/lib/theme-chalk/button');
+```
+
 #### customName
 
 We can use `customName` to customize import file path.
@@ -225,6 +246,10 @@ module.exports = function customName(name) {
   return `antd/lib/${name}`;
 };
 ```
+
+#### customStyleName
+
+`customStyleName` works exactly the same as customName, except that it deals with style file path.
 
 #### transformToDefaultImport
 
