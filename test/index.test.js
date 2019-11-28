@@ -25,7 +25,11 @@ describe('index', () => {
     it(`should work with ${caseName.split('-').join(' ')}`, () => {
       let pluginWithOpts;
       caseName = caseName.replace(/-only$/, '');
-      if (caseName === 'import-css') {
+      if (caseName === 'library-name-function') {
+        pluginWithOpts = [
+          plugin, { libraryName: (value) => /\/components$/.test(value) }
+        ];
+      } else if (caseName === 'import-css') {
         pluginWithOpts = [
           plugin, { libraryName: 'antd', style: true }
         ];

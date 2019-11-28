@@ -73,7 +73,7 @@ export default class Plugin {
           ? transCamel(methodName, '-')
           : methodName;
       const path = winPath(
-        this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
+        this.customName ? this.customName(transformedMethodName) : join(pluginState.sourceLibraryVars[this.libraryName], libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
       pluginState.selectedMethods[methodName] = this.transformToDefaultImport  // eslint-disable-line
         ? addDefault(file.path, path, { nameHint: methodName })
@@ -83,7 +83,12 @@ export default class Plugin {
         addSideEffect(file.path, `${stylePath}`);
       } else if (this.styleLibraryDirectory) {
         const stylePath = winPath(
-          join(this.libraryName, this.styleLibraryDirectory, transformedMethodName, this.fileName)
+          join(
+            pluginState.sourceLibraryVars[this.libraryName],
+            this.styleLibraryDirectory,
+            transformedMethodName,
+            this.fileName
+          )
         );
         addSideEffect(file.path, `${stylePath}`);
       } else if (style === true) {
@@ -133,6 +138,7 @@ export default class Plugin {
     pluginState.libraryObjs = Object.create(null);
     pluginState.selectedMethods = Object.create(null);
     pluginState.pathsToRemove = [];
+    pluginState.sourceLibraryVars = Object.create(null);
   }
 
   ProgramExit(path, state) {
@@ -149,7 +155,10 @@ export default class Plugin {
     const libraryName = this.libraryName;
     const types = this.types;
     const pluginState = this.getPluginState(state);
-    if (value === libraryName) {
+    const valid = typeof libraryName === 'function' ? libraryName(value) : value === libraryName;
+
+    if (valid) {
+      pluginState.sourceLibraryVars[this.libraryName] = value;
       node.specifiers.forEach(spec => {
         if (types.isImportSpecifier(spec)) {
           pluginState.specified[spec.local.name] = spec.imported.name;
