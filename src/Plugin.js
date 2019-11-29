@@ -67,28 +67,24 @@ export default class Plugin {
     if (!pluginState.selectedMethods[methodName]) {
       const libraryDirectory = this.libraryDirectory;
       const style = this.style;
+      const sourceLibraryVar = pluginState.sourceLibraryVars[this.libraryName];
       const transformedMethodName = this.camel2UnderlineComponentName  // eslint-disable-line
         ? transCamel(methodName, '_')
         : this.camel2DashComponentName
           ? transCamel(methodName, '-')
           : methodName;
       const path = winPath(
-        this.customName ? this.customName(transformedMethodName) : join(pluginState.sourceLibraryVars[this.libraryName], libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
+        this.customName ? this.customName(transformedMethodName, sourceLibraryVar) : join(sourceLibraryVar, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
       pluginState.selectedMethods[methodName] = this.transformToDefaultImport  // eslint-disable-line
         ? addDefault(file.path, path, { nameHint: methodName })
         : addNamed(file.path, methodName, path);
       if (this.customStyleName) {
-        const stylePath = winPath(this.customStyleName(transformedMethodName));
+        const stylePath = winPath(this.customStyleName(transformedMethodName, sourceLibraryVar));
         addSideEffect(file.path, `${stylePath}`);
       } else if (this.styleLibraryDirectory) {
         const stylePath = winPath(
-          join(
-            pluginState.sourceLibraryVars[this.libraryName],
-            this.styleLibraryDirectory,
-            transformedMethodName,
-            this.fileName
-          )
+          join(sourceLibraryVar, this.styleLibraryDirectory, transformedMethodName, this.fileName)
         );
         addSideEffect(file.path, `${stylePath}`);
       } else if (style === true) {

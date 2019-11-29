@@ -62,7 +62,7 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'plat/antd',
-            customName: (name) => `antd/lib/${name}`,
+            customName: (name, libraryName) => `${libraryName}/lib/${name}`,
           },
         ];
       } else if (caseName === 'custom-name-source-file') {
@@ -107,7 +107,7 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'element-ui',
-            customStyleName: (name) => `element-ui/lib/theme-light/${name}`,
+            customStyleName: (name, libraryName) => `${libraryName}/lib/theme-light/${name}`,
           },
         ];
       } else {
