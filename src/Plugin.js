@@ -1,5 +1,6 @@
-import { join } from 'path';
+import { join, parse, resolve } from 'path';
 import { addSideEffect, addDefault, addNamed } from '@babel/helper-module-imports';
+import { isRelativePath } from './utils';
 
 function transCamel(_str, symbol) {
   const str = _str[0].toLowerCase() + _str.substr(1);
@@ -149,7 +150,24 @@ export default class Plugin {
     const libraryName = this.libraryName;
     const types = this.types;
     const pluginState = this.getPluginState(state);
-    if (value === libraryName) {
+    let isLibraryNameValid = false;
+
+    if (typeof libraryName === 'function') {
+      const isRelative = isRelativePath(value);
+      const currentFile = state.file.opts.filename;
+
+      isLibraryNameValid = libraryName({
+        sourceValue: value,
+        isRelativePath: isRelative,
+        getLibraryFileIfRelative: () => (
+          isRelative ? resolve(parse(currentFile).dir, value) : undefined
+        ),
+      });
+    } else {
+      isLibraryNameValid = value === libraryName;
+    }
+
+    if (isLibraryNameValid) {
       node.specifiers.forEach(spec => {
         if (types.isImportSpecifier(spec)) {
           pluginState.specified[spec.local.name] = spec.imported.name;

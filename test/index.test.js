@@ -1,5 +1,5 @@
 import { transformFileSync, transform } from "@babel/core";
-import { join } from 'path';
+import { join, parse, resolve } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
 
@@ -150,6 +150,26 @@ describe('index', () => {
           return transformFileSync(actualFile, {
             plugins: [[plugin, { libraryName: 'antd' }]],
             babelrc: false,
+          }).code;
+        } else if (caseName === 'library-name-function') {
+          return transformFileSync(actualFile, {
+            plugins: [
+              [
+                plugin, {
+                  libraryName: ({ sourceValue }) => sourceValue === 'antd' || sourceValue === 'antd/index',
+                  customName: (name) => `antd/lib/${name}`
+                }
+              ],
+              [
+                plugin, {
+                  libraryName: ({getLibraryFileIfRelative}) => {
+                    return /[\//]test[\//]fixtures[\//]library-name-function[\//]components/.test(getLibraryFileIfRelative());
+                  },
+                  customName: (name) => `@library-name-function/components/${name}`
+                },
+                '@library-name-function/components'
+              ]
+            ]
           }).code;
         } else {
           return transformFileSync(actualFile, {
