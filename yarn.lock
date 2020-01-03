@@ -1453,9 +1453,9 @@ babel-preset-jest@^23.2.0:
     babel-plugin-syntax-object-rest-spread "^6.13.0"
 
 babel-preset-umi@^1.0.0, babel-preset-umi@^1.2.0:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-umi/-/babel-preset-umi-1.6.1.tgz#fe8317936059d2fb8eea3d154495797df8174b86"
-  integrity sha512-SdCGJOwJoA45dPIu/5VOyfzEBNd3LrGT3BBYKxlsK9dy1yemr7ZZsu1Fl8esIpsgf5nVKG1JekRnIJTLAuzGig==
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/babel-preset-umi/-/babel-preset-umi-1.8.2.tgz#c518bccd55fdc4160f2f2e91341629b2d0b1fa8b"
+  integrity sha512-IV0qDlHPeBhCIbl7uwnmyDHimkJZvH2HFqOCnDAelJyjUMbhKHB3YHPPLH6USuGEcXMgZU83BU9c1slteIau+A==
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-async-generator-functions" "7.2.0"
