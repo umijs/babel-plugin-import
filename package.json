@@ -37,7 +37,7 @@
     "np": "^5.0.3",
     "pre-commit": "~1.2.2",
     "react-toolbox": "^1.2.5",
-    "umi-tools": "^0.1.4"
+    "umi-tools": "^0.4.0"
   },
   "babel": {
     "presets": [
