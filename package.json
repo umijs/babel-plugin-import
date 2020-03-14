@@ -34,7 +34,7 @@
     "eslint": "^6.7.2",
     "eslint-config-airbnb": "^6.2.0",
     "material-ui": "^0.20.2",
-    "np": "^5.0.3",
+    "np": "^6.2.0",
     "pre-commit": "~1.2.2",
     "react-toolbox": "^1.2.5",
     "umi-tools": "^0.4.0"
