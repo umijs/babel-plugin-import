@@ -73,7 +73,7 @@ export default class Plugin {
           ? transCamel(methodName, '-')
           : methodName;
       const path = winPath(
-        this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
+        this.customName ? this.customName(transformedMethodName, file) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
       pluginState.selectedMethods[methodName] = this.transformToDefaultImport  // eslint-disable-line
         ? addDefault(file.path, path, { nameHint: methodName })
