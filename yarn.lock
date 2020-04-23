@@ -5876,9 +5876,9 @@ now-and-later@^2.0.0:
     once "^1.3.2"
 
 np@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/np/-/np-6.2.0.tgz#56f2106ddce19fd7b2683aae18cada2d74777027"
-  integrity sha512-4VKkGlCvl/iZCxWmS2VU8+s/Lh0TqLwdpuwOofspxEme1Hf7yF3cADG2TzSweuJXNsRDBQPjldZwTh6CxmZEKg==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/np/-/np-6.2.2.tgz#a63b19d00f444361d4c0103cc4c89263c3538fc5"
+  integrity sha512-C+5nIA9wnXlSK63TcoI5ajszCvjLVdXM9zC/4i80ewdxvGGeSiDlzo8bNbZ2LYBLNoezT487bE5J3qIzthIhGQ==
   dependencies:
     "@samverschueren/stream-to-observable" "^0.3.0"
     any-observable "^0.5.0"
