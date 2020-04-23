@@ -21,6 +21,20 @@ function normalizeCustomName(originCustomName) {
   return originCustomName;
 }
 
+function resolveTransformToDefaultImport(transformToDefaultImport) {
+  const type = typeof transformToDefaultImport;
+
+  return function (transformedMethodName) {
+    if (type === 'undefined') {
+      return true;
+    }
+    if (type === 'boolean') {
+      return transformToDefaultImport;
+    }
+    return transformToDefaultImport(transformedMethodName);
+  };
+}
+
 export default class Plugin {
   constructor(
     libraryName,
@@ -49,9 +63,7 @@ export default class Plugin {
     this.customStyleName = normalizeCustomName(customStyleName);
     this.fileName = fileName || '';
     this.customName = normalizeCustomName(customName);
-    this.transformToDefaultImport = typeof transformToDefaultImport === 'undefined'
-      ? true
-      : transformToDefaultImport;
+    this.transformToDefaultImport = resolveTransformToDefaultImport(transformToDefaultImport);
     this.types = types;
     this.pluginStateKey = `importPluginState${index}`;
   }
@@ -75,7 +87,7 @@ export default class Plugin {
       const path = winPath(
         this.customName ? this.customName(transformedMethodName, file) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
-      pluginState.selectedMethods[methodName] = this.transformToDefaultImport  // eslint-disable-line
+      pluginState.selectedMethods[methodName] = this.transformToDefaultImport(transformedMethodName)  // eslint-disable-line
         ? addDefault(file.path, path, { nameHint: methodName })
         : addNamed(file.path, methodName, path);
       if (this.customStyleName) {
