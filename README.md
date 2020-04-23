@@ -253,7 +253,40 @@ module.exports = function customName(name) {
 
 #### transformToDefaultImport
 
-Set this option to `false` if your module does not have a `default` export.
+Set this option to `false` if your module does not have a `default` export. 
+
+If `transformToDefaultImport` is a `Function`, your module will have a either `default` export or `named` export, depending on the function return value.
+
+```js
+import { PageHeader } from "custom"
+ReactDOM.render(
+  <PageHeader>xxxx</PageHeader>
+);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var _page = require('custom/layout/page');
+ReactDOM.render(<_page.PageHeader>xxxx</_page.PageHeader>);
+```
+
+```js
+[
+  "import",
+    {
+      "libraryName": "custom",
+      "customName": (name: string) => {
+        if (name === 'PageHeader'){
+          return 'custom/layout/page';
+        }
+        return `custom/${name}`;
+      },
+      "transformToDefaultImport": (name: string) => {
+        return name !== 'PageHeader';
+      },
+      "camel2DashComponentName": false
+    }
+]
+```
 
 ### Note
 
