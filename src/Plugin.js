@@ -52,6 +52,15 @@ export default class Plugin {
     this.pluginStateKey = `importPluginState${index}`;
   }
 
+  transformFilename(methodName) {
+    // eslint-disable-next-line no-nested-ternary
+    return this.camel2UnderlineComponentName
+      ? transCamel(methodName, '_')
+      : this.camel2DashComponentName
+      ? transCamel(methodName, '-')
+      : methodName;
+  }
+
   getPluginState(state) {
     if (!state[this.pluginStateKey]) {
       state[this.pluginStateKey] = {}; // eslint-disable-line
@@ -61,12 +70,9 @@ export default class Plugin {
 
   importMethod(methodName, file, pluginState) {
     if (!pluginState.selectedMethods[methodName]) {
-      const { style, libraryDirectory } = this;
-      const transformedMethodName = this.camel2UnderlineComponentName // eslint-disable-line
-        ? transCamel(methodName, '_')
-        : this.camel2DashComponentName
-        ? transCamel(methodName, '-')
-        : methodName;
+      const { libraryDirectory } = this;
+      const { style } = this;
+      const transformedMethodName = this.transformFilename(methodName);
       const path = winPath(
         this.customName
           ? this.customName(transformedMethodName, file)
@@ -146,17 +152,29 @@ export default class Plugin {
 
     const { value } = node.source;
     const { libraryName } = this;
+    const { libraryDirectory } = this;
     const { types } = this;
-    const pluginState = this.getPluginState(state);
     if (value === libraryName) {
-      node.specifiers.forEach(spec => {
-        if (types.isImportSpecifier(spec)) {
-          pluginState.specified[spec.local.name] = spec.imported.name;
-        } else {
-          pluginState.libraryObjs[spec.local.name] = true;
-        }
+      const newImports = node.specifiers.map(item => {
+        const transformedMethodName = this.transformFilename(
+          types.isImportSpecifier(item) ? item.imported.name : item.local.name,
+        );
+
+        const file = (path && path.hub && path.hub.file) || (state && state.file);
+        // eslint-disable-next-line new-cap
+        return types.ImportDeclaration(
+          [types.importDefaultSpecifier(item.local)],
+          // eslint-disable-next-line new-cap
+          types.StringLiteral(
+            winPath(
+              this.customName
+                ? this.customName(transformedMethodName, file)
+                : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName), // eslint-disable-line
+            ),
+          ),
+        );
       });
-      pluginState.pathsToRemove.push(path);
+      path.replaceWithMultiple(newImports);
     }
   }
 
