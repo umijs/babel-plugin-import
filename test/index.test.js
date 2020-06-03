@@ -1,10 +1,9 @@
-import { transformFileSync, transform } from "@babel/core";
+import { transformFileSync, transform } from '@babel/core';
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
 
 describe('index', () => {
-
   afterEach(() => {
     global.__clearBabelAntdPlugin();
   });
@@ -26,25 +25,21 @@ describe('index', () => {
       let pluginWithOpts;
       caseName = caseName.replace(/-only$/, '');
       if (caseName === 'import-css') {
-        pluginWithOpts = [
-          plugin, { libraryName: 'antd', style: true }
-        ];
+        pluginWithOpts = [plugin, { libraryName: 'antd', style: true }];
       } else if (caseName === 'material-ui') {
         pluginWithOpts = [
-          plugin, { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
+          plugin,
+          { libraryName: 'material-ui', libraryDirectory: '', camel2DashComponentName: false },
         ];
       } else if (caseName === 'keep-named-import') {
-        pluginWithOpts = [
-          plugin, { libraryName: 'stream', transformToDefaultImport: false },
-        ];
+        pluginWithOpts = [plugin, { libraryName: 'stream', transformToDefaultImport: false }];
       } else if (caseName === 'react-toolbox') {
         pluginWithOpts = [
-          plugin, { libraryName: 'react-toolbox', camel2UnderlineComponentName: true },
+          plugin,
+          { libraryName: 'react-toolbox', camel2UnderlineComponentName: true },
         ];
       } else if (caseName === 'use-multiple-times') {
-        pluginWithOpts = [
-          plugin, { libraryName: 'antd-mobile' },
-        ];
+        pluginWithOpts = [plugin, { libraryName: 'antd-mobile' }];
       } else if (caseName === 'file-name') {
         pluginWithOpts = [
           plugin,
@@ -58,7 +53,7 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'plat/antd',
-            customName: (name) => `antd/lib/${name}`,
+            customName: name => `antd/lib/${name}`,
           },
         ];
       } else if (caseName === 'custom-name-source-file') {
@@ -74,7 +69,7 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'antd',
-            style: (name) => `${name}/style/2x`,
+            style: name => `${name}/style/2x`,
           },
         ];
       } else if (caseName === 'custom-style-path-ignore') {
@@ -82,8 +77,8 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'antd',
-            style: (name) => {
-              if(name === 'antd/lib/animation'){
+            style: name => {
+              if (name === 'antd/lib/animation') {
                 return false;
               }
               return `${name}/style/2x`;
@@ -103,22 +98,18 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'element-ui',
-            customStyleName: (name) => `element-ui/lib/theme-light/${name}`,
+            customStyleName: name => `element-ui/lib/theme-light/${name}`,
           },
         ];
       } else {
-        pluginWithOpts = [
-          plugin, { libraryName: 'antd' }
-        ];
+        pluginWithOpts = [plugin, { libraryName: 'antd' }];
       }
 
-      const actual = function () {
+      const actual = (function () {
         if (caseName === 'modules-false') {
           return transform(readFileSync(actualFile), {
             presets: ['umi'],
-            plugins: [[
-              plugin, {libraryName: 'antd', style: true}
-            ]],
+            plugins: [[plugin, { libraryName: 'antd', style: true }]],
           }).code;
         } else if (caseName === 'multiple-libraries') {
           return transformFileSync(actualFile, {
@@ -133,17 +124,21 @@ describe('index', () => {
             presets: ['@babel/preset-react'],
             plugins: [
               [plugin, { libraryName: 'antd' }, 'antd'],
-              [plugin, {
-                libraryName: 'hilojs',
-                customName(name) {
-                  switch (name) {
-                    case 'class':
-                      return `hilojs/core/${name}`;
-                    default:
-                      return `hilojs/${name}`;
-                  }
+              [
+                plugin,
+                {
+                  libraryName: 'hilojs',
+                  customName(name) {
+                    switch (name) {
+                      case 'class':
+                        return `hilojs/core/${name}`;
+                      default:
+                        return `hilojs/${name}`;
+                    }
+                  },
                 },
-              }, 'hilojs'],
+                'hilojs',
+              ],
             ],
           }).code;
         } else if (caseName === 'super-class') {
@@ -157,7 +152,7 @@ describe('index', () => {
             plugins: [pluginWithOpts || plugin],
           }).code;
         }
-      }()
+      })();
 
       if (onlyFixtures.length) {
         console.warn();

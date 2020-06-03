@@ -1,6 +1,9 @@
 {
-  "extends": "eslint-config-airbnb/base",
+  "extends": ["airbnb/base", "plugin:prettier/recommended"],
   "rules": {
-    "no-console": [0]
+    "no-console": [0],
+    "prettier/prettier": 2,
+    "global-require": 0,
+    "func-names": 0
   }
 }
