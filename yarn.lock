@@ -997,14 +997,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.0", "@babel/runtime@^7.4.2":
-  version "7.8.4"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.4.tgz#d79f5a2040f7caa24d53e563aad49cbc05581308"
-  integrity sha512-neAp3zt80trRVBI1x0azq6c57aNBqYZH8KhMm3TaB7wEI5Q4A2SHfBHE8w9gOhI/lrqxtEbXZgQIrHP+wvSGwQ==
-  dependencies:
-    regenerator-runtime "^0.13.2"
-
-"@babel/runtime@^7.8.7":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.0", "@babel/runtime@^7.4.2", "@babel/runtime@^7.8.7":
   version "7.8.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.7.tgz#8fefce9802db54881ba59f90bb28719b4996324d"
   integrity sha512-+AATMUFppJDw6aiR5NVPHqIQBlV/Pj8wY/EZH+lmvRdUo9xBaz/rF3alAwFJQavvKfeOlPE7oaaDHVbcySbCsg==
@@ -1612,9 +1605,9 @@ babel-preset-jest@^23.2.0:
     babel-plugin-syntax-object-rest-spread "^6.13.0"
 
 babel-preset-umi@^1.0.0, babel-preset-umi@^1.2.0:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-umi/-/babel-preset-umi-1.8.2.tgz#c518bccd55fdc4160f2f2e91341629b2d0b1fa8b"
-  integrity sha512-IV0qDlHPeBhCIbl7uwnmyDHimkJZvH2HFqOCnDAelJyjUMbhKHB3YHPPLH6USuGEcXMgZU83BU9c1slteIau+A==
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/babel-preset-umi/-/babel-preset-umi-1.8.4.tgz#f7db66eca3aa394fda957a51f05dc24d2b77acb6"
+  integrity sha512-4IU0WuLZTiw7MstZJMwtjyYIGyOhWNUKcpSz1v5T9X8/ka2WXZ3qlkUe8dEb2kBNGrbOdXRw7u8FBEMtexqbow==
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-async-generator-functions" "7.2.0"
