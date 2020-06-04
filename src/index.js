@@ -5,11 +5,13 @@ export default function ({ types }) {
   let plugins = null;
 
   // Only for test
+  // eslint-disable-next-line no-underscore-dangle
   global.__clearBabelAntdPlugin = () => {
     plugins = null;
   };
 
   function applyInstance(method, args, context) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const plugin of plugins) {
       if (plugin[method]) {
         plugin[method].apply(plugin, [...args, context]);
@@ -22,34 +24,39 @@ export default function ({ types }) {
       // Init plugin instances once.
       if (!plugins) {
         if (Array.isArray(opts)) {
-          plugins = opts.map(({
-            libraryName,
-            libraryDirectory,
-            style,
-            styleLibraryDirectory,
-            customStyleName,
-            camel2DashComponentName,
-            camel2UnderlineComponentName,
-            fileName,
-            customName,
-            transformToDefaultImport,
-          }, index) => {
-            assert(libraryName, 'libraryName should be provided');
-            return new Plugin(
-              libraryName,
-              libraryDirectory,
-              style,
-              styleLibraryDirectory,
-              customStyleName,
-              camel2DashComponentName,
-              camel2UnderlineComponentName,
-              fileName,
-              customName,
-              transformToDefaultImport,
-              types,
-              index
-            );
-          });
+          plugins = opts.map(
+            (
+              {
+                libraryName,
+                libraryDirectory,
+                style,
+                styleLibraryDirectory,
+                customStyleName,
+                camel2DashComponentName,
+                camel2UnderlineComponentName,
+                fileName,
+                customName,
+                transformToDefaultImport,
+              },
+              index,
+            ) => {
+              assert(libraryName, 'libraryName should be provided');
+              return new Plugin(
+                libraryName,
+                libraryDirectory,
+                style,
+                styleLibraryDirectory,
+                customStyleName,
+                camel2DashComponentName,
+                camel2UnderlineComponentName,
+                fileName,
+                customName,
+                transformToDefaultImport,
+                types,
+                index,
+              );
+            },
+          );
         } else {
           assert(opts.libraryName, 'libraryName should be provided');
           plugins = [
@@ -64,15 +71,15 @@ export default function ({ types }) {
               opts.fileName,
               opts.customName,
               opts.transformToDefaultImport,
-              types
+              types,
             ),
           ];
         }
       }
-      applyInstance('ProgramEnter', arguments, this);  // eslint-disable-line
+      applyInstance('ProgramEnter', arguments, this); // eslint-disable-line
     },
     exit() {
-      applyInstance('ProgramExit', arguments, this);  // eslint-disable-line
+      applyInstance('ProgramExit', arguments, this); // eslint-disable-line
     },
   };
 
@@ -98,9 +105,11 @@ export default function ({ types }) {
     visitor: { Program },
   };
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const method of methods) {
-    ret.visitor[method] = function () { // eslint-disable-line
-      applyInstance(method, arguments, ret.visitor);  // eslint-disable-line
+    ret.visitor[method] = function () {
+      // eslint-disable-line
+      applyInstance(method, arguments, ret.visitor); // eslint-disable-line
     };
   }
 
