@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import assert from 'assert';
 import Plugin from './Plugin';
 
@@ -12,6 +11,7 @@ export default function ({ types }) {
   };
 
   function applyInstance(method, args, context) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const plugin of plugins) {
       if (plugin[method]) {
         plugin[method].apply(plugin, [...args, context]);
@@ -105,8 +105,9 @@ export default function ({ types }) {
     visitor: { Program },
   };
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const method of methods) {
-    ret.visitor[method] = () => {
+    ret.visitor[method] = function () {
       // eslint-disable-line
       applyInstance(method, arguments, ret.visitor); // eslint-disable-line
     };
