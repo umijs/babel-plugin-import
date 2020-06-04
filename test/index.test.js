@@ -10,15 +10,13 @@ describe('index', () => {
 
   const fixturesDir = join(__dirname, 'fixtures');
   let fixtures = readdirSync(fixturesDir);
-  const onlyFixtures = fixtures.filter(
-    (fixture) => fixture.indexOf('-only') > -1,
-  );
+  const onlyFixtures = fixtures.filter(fixture => fixture.indexOf('-only') > -1);
 
   if (onlyFixtures.length) {
     fixtures = onlyFixtures;
   }
 
-  fixtures.map((caseName) => {
+  fixtures.map(caseName => {
     const fixtureDir = join(fixturesDir, caseName);
     const actualFile = join(fixtureDir, 'actual.js');
     const expectedFile = join(fixtureDir, 'expected.js');
@@ -63,12 +61,7 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'plat/antd',
-            customName: join(
-              __dirname,
-              'fixtures',
-              'custom-name-source-file',
-              'customName.js',
-            ),
+            customName: join(__dirname, 'fixtures', 'custom-name-source-file', 'customName.js'),
           },
         ];
       } else if (caseName === 'custom-style-path') {
@@ -167,10 +160,6 @@ describe('index', () => {
       }
 
       const expected = readFileSync(expectedFile, 'utf-8');
-      if(caseName === 'import-order') {
-
-        console.log(actual.trim());
-      }
 
       expect(actual.trim()).toEqual(expected.trim());
     });

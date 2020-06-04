@@ -37,7 +37,6 @@
     "@babel/core": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-0",
-    "babel-plugin-istanbul": "^6.0.0",
     "babel-preset-umi": "^1.0.0",
     "coveralls": "^3.0.6",
     "eslint": "^7.1.0",
