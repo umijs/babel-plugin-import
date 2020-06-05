@@ -219,7 +219,7 @@ export default class Plugin {
             ),
           ];
         })
-        .flat()
+        .reduce((acc, val) => acc.concat(val), [])
         .filter(Boolean);
       path.replaceWithMultiple(newImports);
     }
