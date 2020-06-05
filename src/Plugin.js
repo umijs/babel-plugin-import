@@ -61,18 +61,34 @@ export default class Plugin {
       : methodName;
   }
 
-  getPluginState(state) {
-    if (!state[this.pluginStateKey]) {
-      state[this.pluginStateKey] = {}; // eslint-disable-line
+  getInjectStylePath(path, file, transformedMethodName) {
+    let stylePath;
+    const { style } = this;
+
+    if (this.customStyleName) {
+      stylePath = winPath(this.customStyleName(transformedMethodName));
+    } else if (this.styleLibraryDirectory) {
+      stylePath = winPath(
+        join(this.libraryName, this.styleLibraryDirectory, transformedMethodName, this.fileName),
+      );
+    } else if (style === true) {
+      stylePath = `${path}/style`;
+    } else if (style === 'css') {
+      stylePath = `${path}/style/css`;
+    } else if (typeof style === 'function') {
+      stylePath = style(path, file);
     }
-    return state[this.pluginStateKey];
+    return stylePath;
   }
 
   importMethod(methodName, file, pluginState) {
     if (!pluginState.selectedMethods[methodName]) {
-      const { libraryDirectory } = this;
-      const { style } = this;
-      const transformedMethodName = this.transformFilename(methodName);
+      const { style, libraryDirectory } = this;
+      const transformedMethodName = this.camel2UnderlineComponentName // eslint-disable-line
+        ? transCamel(methodName, '_')
+        : this.camel2DashComponentName
+        ? transCamel(methodName, '-')
+        : methodName;
       const path = winPath(
         this.customName
           ? this.customName(transformedMethodName, file)
@@ -101,6 +117,13 @@ export default class Plugin {
       }
     }
     return { ...pluginState.selectedMethods[methodName] };
+  }
+
+  getPluginState(state) {
+    if (!state[this.pluginStateKey]) {
+      state[this.pluginStateKey] = {}; // eslint-disable-line
+    }
+    return state[this.pluginStateKey];
   }
 
   buildExpressionHandler(node, props, path, state) {
@@ -151,57 +174,55 @@ export default class Plugin {
     if (!node) return;
 
     const { value } = node.source;
-    const { libraryName } = this;
-    const { libraryDirectory } = this;
-    const { types } = this;
+    const { libraryName, libraryDirectory, types } = this;
+    const pluginState = this.getPluginState(state);
     if (value === libraryName) {
-      const newImports = node.specifiers.map(item => {
-        const transformedMethodName = this.transformFilename(
-          types.isImportSpecifier(item) ? item.imported.name : item.local.name,
-        );
+      const newImports = node.specifiers
+        .map(item => {
+          /**
+           * LibraryObjs for @MemberExpression shaking, like
+           * import antd from 'antd'
+           * <antd.Button />
+           *
+           * to
+           *
+           * var Button =  require("antd/lib/button")
+           * <Button />
+           */
+          if (!types.isImportSpecifier(item)) {
+            pluginState.libraryObjs[item.local.name] = true;
+            return false;
+          }
 
-        const file = (path && path.hub && path.hub.file) || (state && state.file);
-        // eslint-disable-next-line new-cap
-        return types.ImportDeclaration(
-          [types.importDefaultSpecifier(item.local)],
+          const transformedMethodName = this.transformFilename(
+            types.isImportSpecifier(item) ? item.imported.name : item.local.name,
+          );
+
+          const file = (path && path.hub && path.hub.file) || (state && state.file);
+          const importPath = winPath(
+            this.customName
+              ? this.customName(transformedMethodName, file)
+              : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName), // eslint-disable-line
+          );
+          const stylePath = this.getInjectStylePath(importPath, file, transformedMethodName);
           // eslint-disable-next-line new-cap
-          types.StringLiteral(
-            winPath(
-              this.customName
-                ? this.customName(transformedMethodName, file)
-                : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName), // eslint-disable-line
+          return [
+            stylePath ? types.ImportDeclaration([], types.StringLiteral(stylePath)) : false,
+            types.ImportDeclaration(
+              [
+                this.transformToDefaultImport
+                  ? types.importDefaultSpecifier(item.local)
+                  : types.ImportNamespaceSpecifier(item.local),
+              ],
+              // eslint-disable-next-line new-cap
+              types.StringLiteral(importPath),
             ),
-          ),
-        );
-      });
+          ];
+        })
+        .flat()
+        .filter(Boolean);
       path.replaceWithMultiple(newImports);
     }
-  }
-
-  CallExpression(path, state) {
-    const { node } = path;
-    const file = (path && path.hub && path.hub.file) || (state && state.file);
-    const { name } = node.callee;
-    const { types } = this;
-    const pluginState = this.getPluginState(state);
-
-    if (types.isIdentifier(node.callee)) {
-      if (pluginState.specified[name]) {
-        node.callee = this.importMethod(pluginState.specified[name], file, pluginState);
-      }
-    }
-
-    node.arguments = node.arguments.map(arg => {
-      const { name: argName } = arg;
-      if (
-        pluginState.specified[argName] &&
-        path.scope.hasBinding(argName) &&
-        path.scope.getBinding(argName).path.type === 'ImportSpecifier'
-      ) {
-        return this.importMethod(pluginState.specified[argName], file, pluginState);
-      }
-      return arg;
-    });
   }
 
   MemberExpression(path, state) {
@@ -215,77 +236,6 @@ export default class Plugin {
     if (pluginState.libraryObjs[node.object.name]) {
       // antd.Button -> _Button
       path.replaceWith(this.importMethod(node.property.name, file, pluginState));
-    } else if (pluginState.specified[node.object.name] && path.scope.hasBinding(node.object.name)) {
-      const { scope } = path.scope.getBinding(node.object.name);
-      // global variable in file scope
-      if (scope.path.parent.type === 'File') {
-        node.object = this.importMethod(pluginState.specified[node.object.name], file, pluginState);
-      }
     }
-  }
-
-  Property(path, state) {
-    const { node } = path;
-    this.buildDeclaratorHandler(node, 'value', path, state);
-  }
-
-  VariableDeclarator(path, state) {
-    const { node } = path;
-    this.buildDeclaratorHandler(node, 'init', path, state);
-  }
-
-  ArrayExpression(path, state) {
-    const { node } = path;
-    const props = node.elements.map((_, index) => index);
-    this.buildExpressionHandler(node.elements, props, path, state);
-  }
-
-  LogicalExpression(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['left', 'right'], path, state);
-  }
-
-  ConditionalExpression(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['test', 'consequent', 'alternate'], path, state);
-  }
-
-  IfStatement(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['test'], path, state);
-    this.buildExpressionHandler(node.test, ['left', 'right'], path, state);
-  }
-
-  ExpressionStatement(path, state) {
-    const { node } = path;
-    const { types } = this;
-    if (types.isAssignmentExpression(node.expression)) {
-      this.buildExpressionHandler(node.expression, ['right'], path, state);
-    }
-  }
-
-  ReturnStatement(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['argument'], path, state);
-  }
-
-  ExportDefaultDeclaration(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['declaration'], path, state);
-  }
-
-  BinaryExpression(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['left', 'right'], path, state);
-  }
-
-  NewExpression(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['callee', 'arguments'], path, state);
-  }
-
-  ClassDeclaration(path, state) {
-    const { node } = path;
-    this.buildExpressionHandler(node, ['superClass'], path, state);
   }
 }
