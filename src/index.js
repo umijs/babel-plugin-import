@@ -37,6 +37,7 @@ export default function ({ types }) {
                 fileName,
                 customName,
                 transformToDefaultImport,
+                mixedDefaultAndNamedExport,
               },
               index,
             ) => {
@@ -52,6 +53,7 @@ export default function ({ types }) {
                 fileName,
                 customName,
                 transformToDefaultImport,
+                mixedDefaultAndNamedExport,
                 types,
                 index,
               );
@@ -71,6 +73,7 @@ export default function ({ types }) {
               opts.fileName,
               opts.customName,
               opts.transformToDefaultImport,
+              opts.mixedDefaultAndNamedExport,
               types,
             ),
           ];

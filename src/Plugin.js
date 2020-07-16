@@ -33,6 +33,7 @@ export default class Plugin {
     fileName,
     customName,
     transformToDefaultImport,
+    mixedDefaultAndNamedExport,
     types,
     index = 0,
   ) {
@@ -45,6 +46,7 @@ export default class Plugin {
     this.styleLibraryDirectory = styleLibraryDirectory;
     this.customStyleName = normalizeCustomName(customStyleName);
     this.fileName = fileName || '';
+    this.mixedDefaultAndNamedExport = mixedDefaultAndNamedExport || false;
     this.customName = normalizeCustomName(customName);
     this.transformToDefaultImport =
       typeof transformToDefaultImport === 'undefined' ? true : transformToDefaultImport;
@@ -72,9 +74,20 @@ export default class Plugin {
           ? this.customName(transformedMethodName, file)
           : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName), // eslint-disable-line
       );
-      pluginState.selectedMethods[methodName] = this.transformToDefaultImport // eslint-disable-line
-        ? addDefault(file.path, path, { nameHint: methodName })
-        : addNamed(file.path, methodName, path);
+      if (this.mixedDefaultAndNamedExport) {
+        pluginState.selectedMethods[methodName] = this.mixedDefaultAndNamedExport(
+          // eslint-disable-line
+          transformedMethodName,
+          file,
+        )
+          ? addNamed(file.path, methodName, path)
+          : addDefault(file.path, path, { nameHint: methodName });
+      } else {
+        pluginState.selectedMethods[methodName] = this.transformToDefaultImport // eslint-disable-line
+          ? addDefault(file.path, path, { nameHint: methodName })
+          : addNamed(file.path, methodName, path);
+      }
+
       if (this.customStyleName) {
         const stylePath = winPath(this.customStyleName(transformedMethodName));
         addSideEffect(file.path, `${stylePath}`);

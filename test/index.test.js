@@ -33,6 +33,11 @@ describe('index', () => {
         ];
       } else if (caseName === 'keep-named-import') {
         pluginWithOpts = [plugin, { libraryName: 'stream', transformToDefaultImport: false }];
+      } else if (caseName === 'mixed-default-and-named-export') {
+        pluginWithOpts = [
+          plugin,
+          { libraryName: 'stream', mixedDefaultAndNamedExport: name => name === 'start' },
+        ];
       } else if (caseName === 'react-toolbox') {
         pluginWithOpts = [
           plugin,
