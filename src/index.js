@@ -10,6 +10,9 @@ export default function ({ types }) {
     plugins = null;
   };
 
+  const a = [];
+  console.log(a);
+
   function applyInstance(method, args, context) {
     // eslint-disable-next-line no-restricted-syntax
     for (const plugin of plugins) {
