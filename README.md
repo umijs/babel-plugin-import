@@ -207,9 +207,13 @@ And finally, you can use `customName` to customize each name parsing:
   "import",
     {
       "libraryName": "antd",
-      "customName": (name: string) => {
+      "customName": (name: string, file: object) => {
+        const filename = file.opts.filename;
         if (name === 'TimePicker'){
           return 'antd/lib/custom-time-picker';
+        }
+        if (filename.indexOf('/path/to/my/different.js') >= 0) {
+          return 'antd/lib/custom-name';
         }
         return `antd/lib/${name}`;
       }
