@@ -1,11 +1,11 @@
 "use strict";
 
-var _toast2 = _interopRequireDefault(require("antd/lib/toast"));
+var _toast = _interopRequireDefault(require("antd/lib/toast"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function a() {
-  return _toast2.default;
+  return _toast.default;
 }
 
 function b(toast) {
@@ -25,5 +25,5 @@ function d() {
 }
 
 var e = function e() {
-  return _toast2.default;
+  return _toast.default;
 };

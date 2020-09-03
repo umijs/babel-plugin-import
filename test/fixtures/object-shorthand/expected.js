@@ -1,10 +1,10 @@
 "use strict";
 
-var _message2 = _interopRequireDefault(require("antd/lib/message"));
+var _message = _interopRequireDefault(require("antd/lib/message"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _message2.default)('xxx');
+(0, _message.default)('xxx');
 
 function App() {
   var message = 'xxx';

@@ -1,3 +1,3 @@
-import _Button from "antd/lib/button";
+import Button from "antd/lib/button";
 
-class MyButton extends _Button {}
+class MyButton extends Button {}

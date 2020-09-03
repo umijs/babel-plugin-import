@@ -160,6 +160,7 @@ describe('index', () => {
       }
 
       const expected = readFileSync(expectedFile, 'utf-8');
+
       expect(actual.trim()).toEqual(expected.trim());
     });
   });
