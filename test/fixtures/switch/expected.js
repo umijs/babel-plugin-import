@@ -11,4 +11,3 @@ switch (_select.default) {
   default:
     console.log('bar');
 }
-

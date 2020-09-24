@@ -1,8 +1,8 @@
-import { Select as AntdSelect } from 'antd';
+import { Select } from 'antd';
 
-switch(AntdSelect){
-  case AntdSelect:
-    console.log('foo');
-  default:
-    console.log('bar')
-}
+  switch(Select){
+    case Select:
+      console.log('foo');
+    default:
+      console.log('bar')
+  }
