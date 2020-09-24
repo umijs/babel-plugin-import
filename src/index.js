@@ -99,6 +99,8 @@ export default function ({ types }) {
     'BinaryExpression',
     'NewExpression',
     'ClassDeclaration',
+    'SwitchStatement',
+    'SwitchCase',
   ];
 
   const ret = {
