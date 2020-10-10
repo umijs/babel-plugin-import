@@ -266,6 +266,16 @@ export default class Plugin {
     this.buildExpressionHandler(node, ['callee', 'arguments'], path, state);
   }
 
+  SwitchStatement(path, state) {
+    const { node } = path;
+    this.buildExpressionHandler(node, ['discriminant'], path, state);
+  }
+
+  SwitchCase(path, state) {
+    const { node } = path;
+    this.buildExpressionHandler(node, ['test'], path, state);
+  }
+
   ClassDeclaration(path, state) {
     const { node } = path;
     this.buildExpressionHandler(node, ['superClass'], path, state);
