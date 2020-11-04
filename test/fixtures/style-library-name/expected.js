@@ -2,10 +2,10 @@
 
 var _react = _interopRequireDefault(require("react"));
 
-require("element-ui/lib/theme-chalk/button");
+var _button = _interopRequireDefault(require("element-ui/lib/button"));
 
-var _button2 = _interopRequireDefault(require("element-ui/lib/button"));
+require("element-ui/lib/theme-chalk/button");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-ReactDOM.render(_react.default.createElement("div", null, _react.default.createElement(_button2.default, null, "xxxx")));
+ReactDOM.render( /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_button.default, null, "xxxx")));

@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-import",
-  "version": "1.13.1",
+  "version": "2.0.0",
   "description": "Component modular import plugin for babel.",
   "repository": {
     "type": "git",
@@ -8,9 +8,9 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "build": "umi-tools build",
-    "test": "umi-tools test --coverage",
-    "debug": "umi-tools test",
+    "build": "tsc",
+    "test": "father test --coverage",
+    "debug": "father test",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prepack": "npm run build",
@@ -36,7 +36,6 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-core": "^7.0.0-0",
     "babel-preset-umi": "^1.0.0",
     "coveralls": "^3.0.6",
     "eslint": "^7.1.0",
@@ -44,13 +43,14 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-prettier": "^3.1.3",
+    "father": "^2.29.10",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.8",
     "material-ui": "^0.20.2",
     "np": "^6.2.0",
     "prettier": "^2.0.5",
     "react-toolbox": "^1.2.5",
-    "umi-tools": "^0.4.0"
+    "typescript": "^4.0.5"
   },
   "babel": {
     "presets": [
@@ -64,7 +64,8 @@
     "README.md"
   ],
   "dependencies": {
-    "@babel/helper-module-imports": "^7.0.0",
-    "@babel/runtime": "^7.0.0"
+    "@babel/traverse": "^7.12.5",
+    "@babel/types": "^7.12.5",
+    "@types/babel__traverse": "^7.0.15"
   }
 }

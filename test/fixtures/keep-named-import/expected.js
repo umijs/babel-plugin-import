@@ -1,8 +1,8 @@
 "use strict";
 
-var _end2 = require("stream/lib/end");
+var _start = require("stream/lib/start");
 
-var _start2 = require("stream/lib/start");
+var _end = require("stream/lib/end");
 
-(0, _start2.start)();
-(0, _end2.end)();
+(0, _start.start)();
+(0, _end.end)();

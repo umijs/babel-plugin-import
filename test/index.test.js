@@ -1,4 +1,4 @@
-import { transformFileSync, transform } from '@babel/core';
+import { transformFileSync, transformSync } from '@babel/core';
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import plugin from '../src/index';
@@ -10,7 +10,7 @@ describe('index', () => {
 
   const fixturesDir = join(__dirname, 'fixtures');
   let fixtures = readdirSync(fixturesDir);
-  const onlyFixtures = fixtures.filter(fixture => fixture.indexOf('-only') > -1);
+  const onlyFixtures = fixtures.filter(fixture => fixture.endsWith('-only'));
 
   if (onlyFixtures.length) {
     fixtures = onlyFixtures;
@@ -107,7 +107,7 @@ describe('index', () => {
 
       const actual = (function () {
         if (caseName === 'modules-false') {
-          return transform(readFileSync(actualFile), {
+          return transformSync(readFileSync(actualFile), {
             presets: ['umi'],
             plugins: [[plugin, { libraryName: 'antd', style: true }]],
           }).code;
@@ -162,6 +162,32 @@ describe('index', () => {
       const expected = readFileSync(expectedFile, 'utf-8');
       expect(actual.trim()).toEqual(expected.trim());
     });
+  });
+
+  it('throws on namespaced import', () => {
+    expect(() =>
+      transformSync(
+        `
+      import * as antd from 'antd';
+    `,
+        {
+          plugins: [[plugin, { libraryName: 'antd' }]],
+        },
+      ),
+    ).toThrowError('babel-plugin-import only support named imports.');
+  });
+
+  it('throws on default import', () => {
+    expect(() =>
+      transformSync(
+        `
+      import antd from 'antd';
+    `,
+        {
+          plugins: [[plugin, { libraryName: 'antd' }]],
+        },
+      ),
+    ).toThrowError('babel-plugin-import only support named imports.');
   });
 
   xit(`tmp`, () => {

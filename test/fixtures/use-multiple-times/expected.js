@@ -1,8 +1,8 @@
 "use strict";
 
-var _button = _interopRequireDefault(require("antd-mobile/lib/button"));
-
 var _a = _interopRequireDefault(require("a"));
+
+var _button = _interopRequireDefault(require("antd-mobile/lib/button"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
