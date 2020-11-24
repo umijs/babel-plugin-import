@@ -116,13 +116,24 @@ export default class Plugin {
     const file = (path && path.hub && path.hub.file) || (state && state.file);
     const { types } = this;
     const pluginState = this.getPluginState(state);
-    if (!types.isIdentifier(node[prop])) return;
-    if (
-      pluginState.specified[node[prop].name] &&
-      path.scope.hasBinding(node[prop].name) &&
-      path.scope.getBinding(node[prop].name).path.type === 'ImportSpecifier'
-    ) {
+
+    const checkScope = targetNode =>
+      pluginState.specified[targetNode.name] && // eslint-disable-line
+      path.scope.hasBinding(targetNode.name) && // eslint-disable-line
+      path.scope.getBinding(targetNode.name).path.type === 'ImportSpecifier'; // eslint-disable-line
+
+    if (types.isIdentifier(node[prop]) && checkScope(node[prop])) {
       node[prop] = this.importMethod(pluginState.specified[node[prop].name], file, pluginState); // eslint-disable-line
+    } else if (types.isSequenceExpression(node[prop])) {
+      node[prop].expressions.forEach((expressionNode, index) => {
+        if (types.isIdentifier(expressionNode) && checkScope(expressionNode)) {
+          node[prop].expressions[index] = this.importMethod(
+            pluginState.specified[expressionNode.name],
+            file,
+            pluginState,
+          ); // eslint-disable-line
+        }
+      });
     }
   }
 
