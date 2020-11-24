@@ -70,5 +70,5 @@ var testFunction3 = function testFunction3(message) {
 
 function App() {
   var message = 'xxx';
-  return _react.default.createElement("div", null, message);
+  return /*#__PURE__*/_react.default.createElement("div", null, message);
 }
