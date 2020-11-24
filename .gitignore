@@ -1,7 +1,9 @@
-.idea
-tmp
-node_modules
-coverage
-lib
-*.log
-*.log.*
+/.idea
+/tmp
+/node_modules
+/coverage
+/lib
+/*.log
+/*.log.*
+/yarn.lock
+
