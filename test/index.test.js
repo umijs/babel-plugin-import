@@ -146,6 +146,12 @@ describe('index', () => {
             plugins: [[plugin, { libraryName: 'antd' }]],
             babelrc: false,
           }).code;
+        } else if (caseName === 'typescript-as-expression') {
+          return transformFileSync(actualFile, {
+            presets: [['@babel/preset-typescript', { allExtensions: true }]],
+            plugins: [[plugin, { libraryName: 'antd' }]],
+            babelrc: false,
+          }).code;
         } else {
           return transformFileSync(actualFile, {
             presets: ['@babel/preset-react'],

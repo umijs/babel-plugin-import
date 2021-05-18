@@ -36,6 +36,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.13.0",
     "@umijs/test": "^3.2.28",
     "babel-core": "^7.0.0-0",
     "babel-preset-umi": "^1.0.0",
