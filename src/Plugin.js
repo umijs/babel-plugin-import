@@ -291,4 +291,20 @@ export default class Plugin {
     const { node } = path;
     this.buildExpressionHandler(node, ['superClass'], path, state);
   }
+
+  TSAsExpression(path, state) {
+    const { types } = this;
+    const file = (path && path.hub && path.hub.file) || (state && state.file);
+    const pluginState = this.getPluginState(state);
+
+    let {
+      node
+    } = path;
+
+    do {
+      node = node.expression;
+    } while (types.isTSAsExpression(node));
+
+    path.replaceWith(this.importMethod(node.name, file, pluginState));
+  }
 }
