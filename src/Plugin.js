@@ -102,8 +102,7 @@ export default class Plugin {
     const { types } = this;
     const pluginState = this.getPluginState(state);
     props.forEach(prop => {
-      if (!types.isIdentifier(node[prop])) return;
-      if (
+      if (types.isIdentifier(node[prop]) &&
         pluginState.specified[node[prop].name] &&
         types.isImportSpecifier(path.scope.getBinding(node[prop].name).path)
       ) {
