@@ -97,6 +97,23 @@ export default class Plugin {
     return { ...pluginState.selectedMethods[methodName] };
   }
 
+  buildArgumentsHandler(argumentsNode, path, state) {
+    const file = (path && path.hub && path.hub.file) || (state && state.file);
+    const pluginState = this.getPluginState(state);
+
+    argumentsNode.forEach((arg, index) => {
+      const { name: argName } = arg;
+      if (
+        pluginState.specified[argName] &&
+        path.scope.hasBinding(argName) &&
+        path.scope.getBinding(argName).path.type === 'ImportSpecifier'
+      ) {
+        // eslint-disable-next-line no-param-reassign
+        argumentsNode[index] = this.importMethod(pluginState.specified[argName], file, pluginState);
+      }
+    });
+  }
+
   buildExpressionHandler(node, props, path, state) {
     const file = (path && path.hub && path.hub.file) || (state && state.file);
     const { types } = this;
@@ -184,17 +201,7 @@ export default class Plugin {
       }
     }
 
-    node.arguments = node.arguments.map(arg => {
-      const { name: argName } = arg;
-      if (
-        pluginState.specified[argName] &&
-        path.scope.hasBinding(argName) &&
-        path.scope.getBinding(argName).path.type === 'ImportSpecifier'
-      ) {
-        return this.importMethod(pluginState.specified[argName], file, pluginState);
-      }
-      return arg;
-    });
+    this.buildArgumentsHandler(node.arguments, path, state);
   }
 
   MemberExpression(path, state) {
@@ -274,7 +281,8 @@ export default class Plugin {
 
   NewExpression(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['callee', 'arguments'], path, state);
+    this.buildExpressionHandler(node, ['callee'], path, state);
+    this.buildArgumentsHandler(node.arguments, path, state);
   }
 
   SwitchStatement(path, state) {
