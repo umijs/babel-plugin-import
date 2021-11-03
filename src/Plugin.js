@@ -274,7 +274,10 @@ export default class Plugin {
 
   NewExpression(path, state) {
     const { node } = path;
-    this.buildExpressionHandler(node, ['callee', 'arguments'], path, state);
+    this.buildExpressionHandler(node, ['callee'], path, state);
+
+    const argumentsProps = node.arguments.map((_, index) => index);
+    this.buildExpressionHandler(node.arguments, argumentsProps, path, state);
   }
 
   SwitchStatement(path, state) {
