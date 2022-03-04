@@ -96,6 +96,7 @@ export default function ({ types }) {
     'ExpressionStatement',
     'ReturnStatement',
     'ExportDefaultDeclaration',
+    'ExportNamedDeclaration',
     'BinaryExpression',
     'NewExpression',
     'ClassDeclaration',

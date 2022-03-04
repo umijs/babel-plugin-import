@@ -267,6 +267,16 @@ export default class Plugin {
     this.buildExpressionHandler(node, ['declaration'], path, state);
   }
 
+  ExportNamedDeclaration(path, state) {
+    const { node } = path;
+    // export { Button } => export { _Button }
+    if (node.source === null && node.declaration === null) {
+      node.specifiers.forEach(spec => {
+        this.buildExpressionHandler(spec, ['local'], path, state);
+      });
+    }
+  }
+
   BinaryExpression(path, state) {
     const { node } = path;
     this.buildExpressionHandler(node, ['left', 'right'], path, state);
