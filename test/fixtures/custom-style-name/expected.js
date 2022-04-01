@@ -2,7 +2,7 @@
 
 var _react = _interopRequireDefault(require("react"));
 
-require("element-ui/lib/theme-light/button");
+require("../../../../element-ui/lib/theme-light/button");
 
 var _button2 = _interopRequireDefault(require("element-ui/lib/button"));
 

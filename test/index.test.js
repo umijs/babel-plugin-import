@@ -98,7 +98,13 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'element-ui',
-            customStyleName: name => `element-ui/lib/theme-light/${name}`,
+            customStyleName: (name, file) => {
+              const { root, filename } = file?.opts;
+              const diff = filename?.slice(root?.length);
+              const count = diff.match(/\//g).length;
+              const prefix = String.prototype.repeat.call('../', count);
+              return `${prefix}element-ui/lib/theme-light/${name}`;
+            },
           },
         ];
       } else {
