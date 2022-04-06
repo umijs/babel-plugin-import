@@ -105,7 +105,7 @@ export default class Plugin {
       if (!types.isIdentifier(node[prop])) return;
       if (
         pluginState.specified[node[prop].name] &&
-        types.isImportSpecifier(path.scope.getBinding(node[prop].name).path)
+        (prop === 'local' || types.isImportSpecifier(path.scope.getBinding(node[prop].name).path))
       ) {
         node[prop] = this.importMethod(pluginState.specified[node[prop].name], file, pluginState); // eslint-disable-line
       }
@@ -127,11 +127,12 @@ export default class Plugin {
     } else if (types.isSequenceExpression(node[prop])) {
       node[prop].expressions.forEach((expressionNode, index) => {
         if (types.isIdentifier(expressionNode) && checkScope(expressionNode)) {
+          // eslint-disable-next-line
           node[prop].expressions[index] = this.importMethod(
             pluginState.specified[expressionNode.name],
             file,
             pluginState,
-          ); // eslint-disable-line
+          );
         }
       });
     }
@@ -265,6 +266,39 @@ export default class Plugin {
   ExportDefaultDeclaration(path, state) {
     const { node } = path;
     this.buildExpressionHandler(node, ['declaration'], path, state);
+  }
+
+  ExportNamedDeclaration(path, state) {
+    const { node } = path;
+    if (node.declaration === null) {
+      if (node.source === null) {
+        node.specifiers.forEach(spec => {
+          this.buildExpressionHandler(spec, ['local'], path, state);
+        });
+      } else {
+        const file = (path && path.hub && path.hub.file) || (state && state.file);
+        const { value } = node.source;
+        const { libraryName, types } = this;
+        const pluginState = this.getPluginState(state);
+        const specifiers = [];
+        if (value === libraryName) {
+          node.specifiers.forEach((spec, index) => {
+            if (types.isExportSpecifier(spec)) {
+              pluginState.specified[spec.local.name] = spec.exported.name;
+              node.specifiers[index] = this.importMethod(spec.exported.name, file, pluginState);
+              specifiers.push(
+                types.exportSpecifier(
+                  types.identifier(spec.local.name),
+                  types.identifier(spec.exported.name),
+                ),
+              );
+            }
+          });
+          pluginState.pathsToRemove.push(path);
+          path.insertAfter(types.exportNamedDeclaration(null, specifiers));
+        }
+      }
+    }
   }
 
   BinaryExpression(path, state) {
