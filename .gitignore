@@ -6,4 +6,5 @@
 /*.log
 /*.log.*
 /yarn.lock
+/pnpm-lock.yaml
 
