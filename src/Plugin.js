@@ -76,7 +76,7 @@ export default class Plugin {
         ? addDefault(file.path, path, { nameHint: methodName })
         : addNamed(file.path, methodName, path);
       if (this.customStyleName) {
-        const stylePath = winPath(this.customStyleName(transformedMethodName));
+        const stylePath = winPath(this.customStyleName(transformedMethodName, file));
         addSideEffect(file.path, `${stylePath}`);
       } else if (this.styleLibraryDirectory) {
         const stylePath = winPath(
