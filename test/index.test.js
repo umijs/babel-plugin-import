@@ -98,6 +98,14 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'element-ui',
+            customStyleName: name => `element-ui/lib/theme-light/${name}`,
+          },
+        ];
+      } else if (caseName === 'custom-style-name-file') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'element-ui',
             customStyleName: (name, file) => {
               const { root, filename } = file?.opts;
               const diff = filename?.slice(root?.length);
