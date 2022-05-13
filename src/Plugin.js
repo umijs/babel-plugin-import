@@ -226,6 +226,11 @@ export default class Plugin {
     const { node } = path;
     this.buildDeclaratorHandler(node, 'init', path, state);
   }
+  
+  AssignmentPattern(path, state) {
+    const { node } = path;
+    this.buildExpressionHandler(node, ['left', 'right'], path, state);
+  }
 
   ArrayExpression(path, state) {
     const { node } = path;
