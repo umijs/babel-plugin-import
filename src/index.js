@@ -87,6 +87,7 @@ export default function ({ types }) {
     'ImportDeclaration',
     'CallExpression',
     'MemberExpression',
+    'AssignmentPattern',
     'Property',
     'VariableDeclarator',
     'ArrayExpression',
