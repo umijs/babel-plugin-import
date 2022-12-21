@@ -294,4 +294,11 @@ export default class Plugin {
     const { node } = path;
     this.buildExpressionHandler(node, ['superClass'], path, state);
   }
+
+  SequenceExpression(path, state) {
+    const { node } = path;
+
+    const expressionsProps = node.expressions.map((_, index) => index);
+    this.buildExpressionHandler(node.expressions, expressionsProps, path, state);
+  }
 }
