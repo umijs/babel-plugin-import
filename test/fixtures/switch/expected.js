@@ -1,13 +1,7 @@
-"use strict";
-
-var _select = _interopRequireDefault(require("antd/lib/select"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-switch (_select.default) {
-  case _select.default:
+import _Select from "antd/lib/select";
+switch (_Select) {
+  case _Select:
     console.log('foo');
-
   default:
     console.log('bar');
 }

@@ -16,6 +16,8 @@ describe('index', () => {
     fixtures = onlyFixtures;
   }
 
+  // fixtures = fixtures.slice(0, 1);
+
   fixtures.map(caseName => {
     const fixtureDir = join(fixturesDir, caseName);
     const actualFile = join(fixtureDir, 'actual.js');

@@ -1,9 +1,3 @@
-"use strict";
-
-var _modal = _interopRequireDefault(require("antd/lib/modal"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _Modal = bind()(_modal.default);
-
-var _newModal = new AnyClass(_modal.default);
+import _Modal2 from "antd/lib/modal";
+const _Modal = bind()(_Modal2);
+const _newModal = new AnyClass(_Modal2);

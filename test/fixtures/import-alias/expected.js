@@ -1,9 +1,4 @@
-"use strict";
-
-var _select = _interopRequireDefault(require("antd/lib/select"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-if (_select.default) {
+import _Select from "antd/lib/select";
+if (_Select) {
   console.log('foo');
 }

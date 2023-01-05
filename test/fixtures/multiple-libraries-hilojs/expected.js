@@ -1,13 +1,5 @@
-"use strict";
-
-var _abc = _interopRequireDefault(require("hilojs/abc"));
-
-var _class = _interopRequireDefault(require("hilojs/core/class"));
-
-var _select = _interopRequireDefault(require("antd/lib/select"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-if (_select.default) {}
-
-if (_class.default && _abc.default) {}
+import _Abc from "hilojs/abc";
+import _Class from "hilojs/core/class";
+import _Select from "antd/lib/select";
+if (_Select) {}
+if (_Class && _Abc) {}
