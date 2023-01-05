@@ -101,6 +101,7 @@ export default function ({ types }) {
     'ClassDeclaration',
     'SwitchStatement',
     'SwitchCase',
+    'SequenceExpression',
   ];
 
   const ret = {
