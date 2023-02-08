@@ -8,13 +8,13 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "build": "father-build",
+    "build": "father build",
     "test": "umi-test --coverage",
     "debug": "umi-test",
     "lint": "eslint --ext .js src",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prepack": "npm run build",
-    "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish --any-branch"
+    "prepublishOnly": "npm run build && father doctor && np --no-cleanup --yolo --no-publish --any-branch"
   },
   "husky": {
     "hooks": {
@@ -45,7 +45,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-prettier": "^3.1.3",
-    "father-build": "^1.22.1",
+    "father": "^4.0.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.8",
     "material-ui": "^0.20.2",

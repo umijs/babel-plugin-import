@@ -1,7 +1,3 @@
-
 export default {
-  target: 'node',
-  cjs: {
-    type: 'babel',
-  }
+  cjs: { output: 'lib' }
 }
