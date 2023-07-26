@@ -2,8 +2,11 @@ import { join } from 'path';
 import { addSideEffect, addDefault, addNamed } from '@babel/helper-module-imports';
 
 function transCamel(_str, symbol) {
-  const str = _str[0].toLowerCase() + _str.substr(1);
-  return str.replace(/([A-Z])/g, $1 => `${symbol}${$1.toLowerCase()}`);
+  // e.g. QRCode
+  // First match: QR
+  // Second match: Code
+  const cells = _str.match(/([A-Z]+(?=[A-Z]|$))|([A-Z]?[^A-Z]+)/g) || [];
+  return cells.map(c => c.toLowerCase()).join(symbol);
 }
 
 function winPath(path) {
