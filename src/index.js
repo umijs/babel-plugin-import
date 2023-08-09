@@ -10,6 +10,9 @@ export default function ({ types }) {
     plugins = null;
   };
 
+  const a = [];
+  console.log(a);
+
   function applyInstance(method, args, context) {
     // eslint-disable-next-line no-restricted-syntax
     for (const plugin of plugins) {
@@ -37,6 +40,7 @@ export default function ({ types }) {
                 fileName,
                 customName,
                 transformToDefaultImport,
+                mixedDefaultAndNamedExport,
               },
               index,
             ) => {
@@ -52,6 +56,7 @@ export default function ({ types }) {
                 fileName,
                 customName,
                 transformToDefaultImport,
+                mixedDefaultAndNamedExport,
                 types,
                 index,
               );
@@ -71,6 +76,7 @@ export default function ({ types }) {
               opts.fileName,
               opts.customName,
               opts.transformToDefaultImport,
+              opts.mixedDefaultAndNamedExport,
               types,
             ),
           ];

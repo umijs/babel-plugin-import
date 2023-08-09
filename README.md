@@ -259,6 +259,22 @@ module.exports = function customName(name) {
 
 Set this option to `false` if your module does not have a `default` export.
 
+#### mixedDefaultAndNamedExport
+we can decide which files should be used as named export
+```js
+[
+  "import",
+    {
+      "libraryName": "stream",
+      "mixedDefaultAndNamedExport": name => {
+        if (name === 'start'){
+          return true
+        }
+      }
+    }
+]
+```
+
 ### Note
 
 babel-plugin-import will not work properly if you add the library to the webpack config [vendor](https://webpack.js.org/concepts/entry-points/#separate-app-and-vendor-entries).
